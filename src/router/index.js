@@ -7,6 +7,22 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    component: () => import('../views/Home.vue')
+  },
+  {
+    path: '/mypage',
+    name: 'MyPage',
+    component: () => import('../views/MyPage.vue')
+  },
+  {
+    path: '/taskedit',
+    name: 'TaskEdit',
+    component: () => import('../views/TaskEdit.vue')
+  },
+  {
+    path: '/tasklog',
+    name: 'TaskLog',
+    component: () => import('../views/TaskLog.vue')
   },
   {
     path: '/about',

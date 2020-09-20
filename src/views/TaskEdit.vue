@@ -1,6 +1,6 @@
 <template>
-  <div class="MyPage">
-      <h1>This is a MyPage page</h1>
+  <div class="TaskEdit">
+      <h1>This is a TaskEdit page</h1>
   </div>
 </template>
 
@@ -8,8 +8,9 @@
 // @ is an alias to /src
 
 export default {
-  name: 'MyPage',
+  name: 'TaskEdit',
   components: {
+    
   }
 }
 </script>
