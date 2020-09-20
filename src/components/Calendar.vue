@@ -25,6 +25,12 @@
                 </v-sheet>
             </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+            <div id=pallet>
+            </div>
+          </v-col>
+        </v-row>
     </div>
 </template>
 
