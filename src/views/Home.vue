@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <p>this is home.vue</p>
     <v-main>
       <Calendar />
     </v-main>
@@ -8,7 +9,7 @@
 
 <script>
 // @ is an alias to /src
-import Calendar from './components/Calendar';
+import Calendar from '../components/Calendar';
 
 export default {
   name: 'Home',
