@@ -5,15 +5,23 @@
       </v-sheet>
         <v-row>
             <v-col>
-                <v-sheet height="70vw">
+                <v-sheet height="300">
                     <v-calendar
                     ref="calendar"
                     :now="getToday"
-                    :value="today"
+                    :value="getToday"
                     :events="events"
                     color="primary"
                     type="week"
-                ></v-calendar>
+                >
+                  <template #day-body="{ date, week }">
+                    <div
+                      class="v-current-time"
+                      :class="{ first: date === week[0].date }"
+                      :style="{ top: nowY }"
+                    ></div>
+                  </template>
+                </v-calendar>
                 </v-sheet>
             </v-col>
         </v-row>
@@ -28,7 +36,7 @@ var now, year, month, months, date, dates, today;
 
   export default {
       data: () => ({
-        today: '2019-01-08',
+        //today: '2019-01-08',
         events: [
           //予定入力
         ],
