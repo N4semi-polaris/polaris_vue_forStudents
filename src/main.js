@@ -5,6 +5,8 @@ import vuetify from './plugins/vuetify';
 import store from './store'
 
 Vue.config.productionTip = false
+var VueTouch = require('vue-touch')
+Vue.use(VueTouch, {name: 'v-touch'})
 
 new Vue({
   router,
