@@ -34,18 +34,24 @@
             </v-row>
         <v-row>
             <v-col id="palette_body">
+                <Task_Block />
             <!-- ここにタスクブロック -->
             </v-col>
         </v-row>
         </v-container>
 </template>
 <script>
+import Task_Block from '../components/Task_Block.vue'
+
 export default {
     name: 'Task_Palette',
     data: () => ({
         hight_ofPalette: 30,
         isSwiped: false,
     }),
+    components: {
+        Task_Block,
+    },
     methods:{
         onSwipeUp:function(){
             this.hight_ofPalette = 50;
