@@ -1,12 +1,14 @@
 <template>
     <v-container
-        v-touch="{
-            up: ()=>onSwipeUp(),
-            down: ()=>onSwipeDown(),
-        }"
         v-bind:style="{ height: hight_ofPalette+'vh' }"
         no-gutters pa-0
         id = "task_palette"
+        >
+        <div
+            v-touch="{
+                up: ()=>onSwipeUp(),
+                down: ()=>onSwipeDown(),
+            }"
         >
             <v-row id="palette_head">
                 <v-col class="text-center pa-0">
@@ -32,6 +34,7 @@
                     </v-btn>
                 </v-col>
             </v-row>
+        </div>
         <v-row>
             <v-col id="palette_body">
                 <Task_Block />
