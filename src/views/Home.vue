@@ -36,7 +36,6 @@ export default {
       var paletteHeight = document.getElementById("task_palette").clientHeight;
       var appbarHeight = document.getElementById("app_bar").clientHeight;
       this.calendarHeight = windowHeight - (YMareaHeigth + paletteHeight + appbarHeight);
-      console.log(this.calendarHeight)
     },
   },
   mounted:function() {
