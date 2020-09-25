@@ -22,7 +22,7 @@
         <v-spacer></v-spacer>
 
         <v-btn icon v-on:click="toMyPage" color="#ffc900">
-            <v-icon>mdi-account</v-icon> <!-- MyPage -->
+            <v-icon>mdi-account-circle</v-icon> <!-- MyPage -->
         </v-btn>
 
         <v-btn icon v-on:click="toHome" color="#ffc900">

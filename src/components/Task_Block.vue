@@ -1,73 +1,123 @@
 <template>
     <div>
-        <v-card color="selectColor" height="45">
-            <!-- ブロックの色とMAX_Height -->
+        <draggable :options="options">
+    <v-container>
+        <v-card :color="selectColor" height="auto" class="mx-auto">
             <v-container>
-                <v-row justify="space-around">
-                    <v-col>
-                        <v-card-title>
-                            <v-icon large left color="#ffffff">{{ selectIcon }}</v-icon>
-                            <span style="color:#ffffff">{{ task_name }}</span>
-                        </v-card-title>
-                    </v-col>
-                    <v-col class="px-0">
-                        <div class="place">
+                <v-row>
+                    <v-col cols="2">
+                    <div class="circle1"><!-- outer -->
+                    <div class="circle2"><!-- inner -->
+                    <v-icon :color="selectColor" size="50">{{ selectIcon }}</v-icon></div></div>
+                    </v-col><!-- 左端に表示するタスクアイコン -->
+                    <v-col >
+                    <div class="task_name"><p>{{ task_name }}</p></div>
+                    </v-col><!-- タスク名 -->
+
+                    <v-col cols="3">
                         <v-row>
-                            <v-card-text color="#ffffff">{{ place_name }}</v-card-text>
-                        </v-row>
-                        </div>
-                        <div class="deadline">
+                            <div class="place_name"><p>{{ place_name }}</p></div>
+                        </v-row><!-- 場所 -->
                         <v-row>
-                            <v-card-text color="selectColor">{{ deadLine }}まで</v-card-text>
-                        </v-row>
-                        </div>
+                            <div class="deadline"><p>{{ deadLine }}まで</p></div>
+                        </v-row><!-- 〆切日 -->
                     </v-col>
                 </v-row>
             </v-container>
         </v-card>
+    </v-container>
+        </draggable>
     </div>
 </template>
 
 <script>
+import draggable from 'vuedraggable'
+
 export default {
+    components: { draggable },
     data: () => ({
         task_name: '本屋うろうろ',
         place_name: '有隣堂',
         task_type: '本・文具',
-        deadline: '2020-09-30',
+        deadline: '2020-11-30',
 
+        /* 入力データと比較するためのリスト */
         task_type_list: [ 'スーパー・コンビニ', 'ファッション', '本・文具', '映画館', '飲食店', 'その他' ],
-        task_icon_list: [ 'mdi-shopping_cart', 'mdi-store', 'mdi-menu_book', 'mdi-local_movies', 'mdi-restaurant', 'mdi-star' ],
-        task_color_list: [ "#210e67", "#032b8d", "#033ba0", "#044eb7", "#0461cd", "#0575e6" ],
+        task_icon_list: [ 'mdi-shopping', 'mdi-store', 'mdi-book-open-blank-variant', 'mdi-movie-open', 'mdi-silverware-fork-knife', 'mdi-star' ],
+        task_color_list: [ '#210e67', '#032b8d', '#033ba0', '#044eb7', '#0461cd', '#0575e6' ],
+
+        options: { animation: 200 }
     }),
     computed: {
-        selectColor: function(){
+        selectColor: function(){ /* テーマカラーを選ぶ */
             var key = 100;
             for (var i=0; i<this.task_type_list.length; i++) {
                 if (this.task_type === this.task_type_list[i]) key = i;
             }
             return this.task_color_list[key];
         },
-        selectIcon: function(){
+        selectIcon: function(){ /* アイコンを選ぶ */
             var key = 100;
             for (var i=0; i<this.task_type_list.length; i++) {
                 if (this.task_type === this.task_type_list[i]) key = i;
             }
             return this.task_icon_list[key];
         },
-        deadLine: function(){
-            let spilit = this.deadline.spilit('-');
-            let spilit_month;
-            if (spilit[1].charAt(0) == '0') spilit_month = spilit[1].slice(1);
-            else spilit_month = spilit[1];
-            return spilit_month + '/' + spilit[2];
+        deadLine: function(){ /* 〆切日を「X月Y日」→「X/Y」に加工する */
+            let split = this.deadline.split('-');
+            let split_month;
+            if (split[1].charAt(0) == '0') split_month = split[1].slice(1);
+            else split_month = split[1];
+            return split_month + '/' + split[2];
         },
     },
 }
 </script>
 
 <style>
-#deadline {
-    background-color: white;
+.circle1 {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.circle2 {
+   width: 52px;
+   height: 52px;
+   background: #ffffff;
+   border-radius: 50px;
+}
+.task_name { /* 親要素 */
+    position: relative;
+    height: 50px;
+}
+.task_name p {
+    line-height: 60px;
+    color: #ffffff;
+    font-size:15pt;
+    font-weight: bold;
+}
+.place_name {
+    color: #ffffff;
+    font-size: 12pt;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-weight: bold;
+}
+.deadline {
+    width: 80px;
+    height: 22px;
+    background: #ffffff;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-weight: bold;
+}
+.deadline p{
+    color: #210e67;
+    /* 〆切日の文字色はブロックの色と合わせたいんだけど、
+    cssに関数ぶっ込むやり方が分からない... by小松 */
 }
 </style>
