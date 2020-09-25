@@ -1,31 +1,29 @@
 <template>
     <div>
         <draggable :options="options">
-    <v-container>
-        <v-card :color="selectColor" height="auto" class="mx-auto">
-            <v-container>
-                <v-row>
-                    <v-col cols="2">
-                    <div class="circle1"><!-- outer -->
-                    <div class="circle2"><!-- inner -->
-                    <v-icon :color="selectColor" size="50">{{ selectIcon }}</v-icon></div></div>
-                    </v-col><!-- 左端に表示するタスクアイコン -->
-                    <v-col >
-                    <div class="task_name"><p>{{ task_name }}</p></div>
-                    </v-col><!-- タスク名 -->
+            <v-card :color="selectColor" height="auto" class="mx-auto ma-2">
+                <v-container class="pa-2">
+                    <v-row no-gutters align="center">
+                        <v-col cols="2">
+                            <div class="circle1"><!-- outer -->
+                            <div class="circle2"><!-- inner -->
+                            <v-icon :color="selectColor" size="50">{{ selectIcon }}</v-icon></div></div>
+                        </v-col><!-- 左端に表示するタスクアイコン -->
+                        <v-col no-gutters>
+                            <div class="task_name"><p>{{ task_name }}</p></div>
+                        </v-col><!-- タスク名 -->
 
-                    <v-col cols="3">
-                        <v-row>
-                            <div class="place_name"><p>{{ place_name }}</p></div>
-                        </v-row><!-- 場所 -->
-                        <v-row>
-                            <div class="deadline"><p>{{ deadLine }}まで</p></div>
-                        </v-row><!-- 〆切日 -->
-                    </v-col>
-                </v-row>
-            </v-container>
-        </v-card>
-    </v-container>
+                        <v-col cols="3" no-gutters>
+                            <v-row>
+                                <div class="place_name"><p>{{ place_name }}</p></div>
+                            </v-row><!-- 場所 -->
+                            <v-row>
+                                <div class="deadline"><p v-bind:style="{color: selectColor}">{{ deadLine }}まで</p></div>
+                            </v-row><!-- 〆切日 -->
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-card>
         </draggable>
     </div>
 </template>
@@ -35,12 +33,8 @@ import draggable from 'vuedraggable'
 
 export default {
     components: { draggable },
+    props: ['task_name', 'place_name', 'task_type', 'deadline'],
     data: () => ({
-        task_name: '本屋うろうろ',
-        place_name: '有隣堂',
-        task_type: '本・文具',
-        deadline: '2020-11-30',
-
         /* 入力データと比較するためのリスト */
         task_type_list: [ 'スーパー・コンビニ', 'ファッション', '本・文具', '映画館', '飲食店', 'その他' ],
         task_icon_list: [ 'mdi-shopping', 'mdi-store', 'mdi-book-open-blank-variant', 'mdi-movie-open', 'mdi-silverware-fork-knife', 'mdi-star' ],
@@ -89,10 +83,11 @@ export default {
 }
 .task_name { /* 親要素 */
     position: relative;
-    height: 50px;
+    /*height: 50px;*/
 }
 .task_name p {
-    line-height: 60px;
+    /*line-height: 60px;*/
+    margin-left: 5px;
     color: #ffffff;
     font-size:15pt;
     font-weight: bold;
@@ -119,5 +114,10 @@ export default {
     color: #210e67;
     /* 〆切日の文字色はブロックの色と合わせたいんだけど、
     cssに関数ぶっ込むやり方が分からない... by小松 */
+    /*多分できたと思うので、消して影響ないかな？ by nyoronyoro
+    */
+}
+.v-application p {
+    margin-bottom: 0px;
 }
 </style>

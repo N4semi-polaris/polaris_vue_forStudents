@@ -36,12 +36,18 @@
             </v-row>
         </div>
         <v-row>
-            <v-col id="palette_body">
-                <Task_Block />
-            <!-- ここにタスクブロック -->
+            <v-col id="palette_body" class="pa-6 overflow-y-auto" v-bind:style="{ 'max-height': hight_ofScrollArea+'px' }">
+                <!-- タスクブロック -->
+                <Task_Block v-for="task in tasks" :key="task.id"
+                    :task_name="task.task_name"
+                    :place_name="task.place_name"
+                    :task_type="task.task_type"
+                    :deadline="task.deadline"
+                />
+                <div class="space"/>
             </v-col>
         </v-row>
-        </v-container>
+    </v-container>
 </template>
 <script>
 import Task_Block from '../components/Task_Block.vue'
@@ -49,8 +55,23 @@ import Task_Block from '../components/Task_Block.vue'
 export default {
     name: 'Task_Palette',
     data: () => ({
-        hight_ofPalette: 30,
+        hight_ofPalette: 30,//vh
+        hight_ofScrollArea: 0,//px ただの初期値、すぐ上書きするので意味はない
         isSwiped: false,
+        tasks: [{
+            id:1,
+            task_name: '本屋うろうろ',
+            place_name: '有隣堂',
+            task_type: '本・文具',
+            deadline: '2020-11-30',
+            },
+            {
+            id:2,
+            task_name: '新幹線の切符買う',
+            place_name: 'みどりの窓口',
+            task_type: 'その他',
+            deadline: '2020-10-20',
+            }],
     }),
     components: {
         Task_Block,
@@ -61,6 +82,7 @@ export default {
             this.isSwiped = true;
             this.$nextTick(()=>{
                 this.$emit('change-palettesize');
+                this.setHeight_ofScrollArea();
             });
         },
         onSwipeDown:function(){
@@ -68,6 +90,7 @@ export default {
             this.isSwiped = false;
             this.$nextTick(()=>{
                 this.$emit('change-palettesize');
+                this.setHeight_ofScrollArea();
             });
         },
         toTaskEdit:function(){
@@ -75,7 +98,15 @@ export default {
         },
         toTaskLog:function(){
             this.$router.push({ name:'TaskLog' });
-        }
+        },
+        setHeight_ofScrollArea:function(){
+            var h_ofPalette = document.getElementById("task_palette").clientHeight;
+            var h_ofPaletteHeader = document.getElementById("palette_head").clientHeight;
+            this.hight_ofScrollArea = h_ofPalette - h_ofPaletteHeader;
+        },
+    },
+    mounted:function() {
+    this.setHeight_ofScrollArea()
     },
 }
 </script>
@@ -86,5 +117,8 @@ export default {
     position: fixed;
     background-color: #fafafa;
     max-width: initial;
+}
+.space{
+    margin-bottom: 30px;
 }
 </style>
