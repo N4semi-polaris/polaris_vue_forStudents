@@ -26,6 +26,11 @@ const routes = [
     component: () => import('../views/TaskLog.vue')
   },
   {
+    path: '/favoritespot',
+    name: 'FavoriteSpot',
+    component: () => import('../views/FavoriteSpot.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     // route level code-splitting

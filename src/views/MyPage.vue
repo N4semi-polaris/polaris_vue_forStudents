@@ -42,7 +42,8 @@
       <br />
       <v-card class="mx-auto" min-width="300" height="100">
         <v-card-actions>
-          <v-btn rounded class="mx-auto text-center" color="primary" dark>
+          <v-btn v-on:click="toFavoriteSpotPage"
+          rounded class="mx-auto text-center" color="primary" dark>
             よく行く場所を編集する
             <v-icon dark right>fas fa-edit</v-icon>
           </v-btn>
@@ -75,5 +76,10 @@ export default {
     items: ["新幹線", "有料特急", "空路", "高速バス", "路線/連絡バス"],
     model: [],
   }),
+  methods: {
+    toFavoriteSpotPage:function(){
+            this.$router.push({ name:'FavoriteSpot' });
+    },
+  }
 };
 </script>
