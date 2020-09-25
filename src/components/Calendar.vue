@@ -1,11 +1,11 @@
 <template>
-    <div>
-      <v-sheet tile height="50" color="grey lighten-3" class="d-flex align-center">
+    <div id="calendar">
+      <v-sheet tile height="50" color="grey lighten-3" class="d-flex align-center" id="areaOfYM">
         <v-toolbar-title>{{ title }}</v-toolbar-title>
       </v-sheet>
-        <v-row>
+        <v-row no-gutters>
             <v-col>
-                <v-sheet height="300">
+                <v-sheet v-bind:height="calendar_height">
                     <v-calendar
                     ref="calendar"
                     :now="value"
@@ -42,6 +42,7 @@ import moment from 'moment';
           return moment(this.value).format('yyyy年 M月');
         }
       },
+      props: ['calendar_height'],
   }
 </script>
 
