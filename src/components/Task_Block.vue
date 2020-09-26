@@ -7,7 +7,7 @@
                         <v-col cols="2">
                             <div class="circle1"><!-- outer -->
                             <div class="circle2"><!-- inner -->
-                            <v-icon :color="selectColor" size="50">{{ selectIcon }}</v-icon></div></div>
+                            <v-icon :color="selectColor" size="45">{{ selectIcon }}</v-icon></div></div>
                         </v-col><!-- 左端に表示するタスクアイコン -->
                         <v-col no-gutters>
                             <div class="task_name"><p>{{ task_name }}</p></div>
@@ -70,14 +70,14 @@ export default {
 
 <style>
 .circle1 {
-    height: 60px;
+    height: 50px; /* heightを小さくするとブロックの縦幅も小さくなった！ */
     display: flex;
     align-items: center;
     justify-content: flex-start;
 }
 .circle2 {
-   width: 52px;
-   height: 52px;
+   width: 45px;
+   height: 45px;
    background: #ffffff;
    border-radius: 50px;
 }
@@ -109,13 +109,6 @@ export default {
     margin-right: auto;
     text-align: center;
     font-weight: bold;
-}
-.deadline p{
-    color: #210e67;
-    /* 〆切日の文字色はブロックの色と合わせたいんだけど、
-    cssに関数ぶっ込むやり方が分からない... by小松 */
-    /*多分できたと思うので、消して影響ないかな？ by nyoronyoro
-    */
 }
 .v-application p {
     margin-bottom: 0px;

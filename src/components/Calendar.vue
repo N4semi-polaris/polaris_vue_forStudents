@@ -1,7 +1,9 @@
 <template>
     <div id="calendar">
-      <v-sheet tile height="50" color="grey lighten-3" class="d-flex align-center" id="areaOfYM">
-        <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-sheet tile height="50" color="#ffffff" class="d-flex align-center" id="areaOfYM">
+        <v-container>
+        <v-toolbar-title><span style="color:#210e67">{{ title }}</span></v-toolbar-title>
+        </v-container>
       </v-sheet>
         <v-row no-gutters>
             <v-col>
