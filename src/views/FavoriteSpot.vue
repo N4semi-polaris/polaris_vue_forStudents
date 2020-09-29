@@ -9,9 +9,9 @@
         <div id="addArea">
             <v-dialog v-model="dialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn absolute bottom left style="font-size:18px;" v-bind="attrs" v-on="on" text>
+                    <v-btn dark fab bottom left color="#ffc900" v-bind="attrs" v-on="on">
                         <!-- お気に入りの場所追加ポップアップへ -->
-                        <v-icon  size="25" color="#ffc900" left>mdi-plus-circle</v-icon>新しくスポットを登録
+                        <v-icon>mdi-plus</v-icon>
                     </v-btn>
                 </template>
                 <v-card>
@@ -65,7 +65,9 @@ export default {
             id:3,
             name:"銀座コージーコーナーグランデュオ立川店",
             address:"東京都立川市042-540-5403",
-            }
+            },{
+            id:4,
+            },
         ]
     }),
 }
