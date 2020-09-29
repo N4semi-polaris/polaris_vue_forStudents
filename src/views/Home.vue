@@ -1,11 +1,12 @@
 <template>
   <div class="Home">
     <App_bar />
-    <v-main>
+
       <Calendar
         :calendar_height = "calendarHeight"
+        class = "pa-0"
       />
-    </v-main>
+
     <Task_Palette
       @change-palettesize = "setCalendarHeight"
     />
@@ -34,8 +35,9 @@ export default {
       var windowHeight = window.innerHeight;
       var YMareaHeigth = document.getElementById("areaOfYM").clientHeight;
       var paletteHeight = document.getElementById("task_palette").clientHeight;
-      var appbarHeight = document.getElementById("app_bar").clientHeight;
+      var appbarHeight = 48; //固定
       this.calendarHeight = windowHeight - (YMareaHeigth + paletteHeight + appbarHeight);
+      console.log("this.calendarH"+this.calendarHeight)
     },
   },
   mounted:function() {

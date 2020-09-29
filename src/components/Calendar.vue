@@ -1,6 +1,6 @@
 <template>
     <div id="calendar">
-      <v-sheet tile height="50" color="#ffffff" class="d-flex align-center" id="areaOfYM">
+      <v-sheet tile height="50" color="#ffffff" align-center id="areaOfYM">
         <v-container>
         <v-toolbar-title><span style="color:#210e67">{{ title }}</span></v-toolbar-title>
         </v-container>

@@ -4,6 +4,8 @@
             color="#210e67"
             dark
             dense
+            elevation="5"
+            app
         >
 
         <template v-slot:img="{ props }">

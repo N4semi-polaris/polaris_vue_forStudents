@@ -90,6 +90,7 @@ export default {
   data: () => ({
     items: ["新幹線", "有料特急", "空路", "高速バス", "路線/連絡バス"],
     model: [],
+    disabled: false,
   }),
   methods: {
     toFavoriteSpotPage: function () {
