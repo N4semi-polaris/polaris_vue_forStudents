@@ -28,9 +28,9 @@
                     </v-btn>
                 </v-col>
                 <v-col class="text-right pa-0" >
-                    <v-btn icon v-on:click="toTaskEdit">
+                    <v-btn icon v-on:click="toTaskEdit" style="padding-right:50px">
                         <!-- タスクログページへ -->
-                        <v-icon style="padding-right:50px">mdi-notebook</v-icon>
+                        <v-icon>mdi-notebook</v-icon>
                     </v-btn>
                 </v-col>
             </v-row>
@@ -106,7 +106,7 @@ export default {
         },
     },
     mounted:function() {
-    this.setHeight_ofScrollArea()
+        this.setHeight_ofScrollArea();
     },
 }
 </script>
