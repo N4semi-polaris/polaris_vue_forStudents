@@ -2,8 +2,8 @@
   <v-app>
     <div class="InitialSetting">
       <App_var />
-      <h1>This is an InitialSetting page</h1>
-      <v-container class="grey lighten-5">
+      <h1></h1>
+      <v-container>
         <v-form>
           <v-row>
             <v-col align="center">
@@ -54,7 +54,7 @@
 
           <v-row align="center">
             <v-col align="center">
-              <v-btn rounded class="text-center" color="primary" dark
+              <v-btn rounded class="text-center" color="#0461cd" dark
                 >保存</v-btn
               >
             </v-col>
