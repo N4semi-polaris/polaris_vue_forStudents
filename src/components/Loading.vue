@@ -27,7 +27,7 @@ export default {
   data:()=>({
       PolarisLogo: PolarisLogo,
       GoogleLogin: GoogleLogin,
-      isLogined: false,
+      isLogin: false,
   }),
 }
 </script>
