@@ -9,7 +9,7 @@
             <v-row class="pa-3"><v-col/></v-row>
             <v-row class="justify-center" no-gutters>
                 <v-col class="flex-grow-0">
-                    <v-img v-if="!isLogined" :src="GoogleLogin" width="200px" />
+                    <v-img v-if="!isLogin" :src="GoogleLogin" width="200px" />
                     <v-progress-circular v-else indeterminate color="grey" :size="50" />
                 </v-col>
             </v-row>
