@@ -9,10 +9,11 @@
         <div id="addArea">
             <v-dialog v-model="dialog" persistent max-width="600px">
                 <template v-slot:activator="{ on, attrs }">
+                    <v-container class="pa-2">
                     <v-btn dark fab bottom left color="#ffc900" v-bind="attrs" v-on="on">
                         <!-- お気に入りの場所追加ポップアップへ -->
                         <v-icon>mdi-plus</v-icon>
-                    </v-btn>
+                    </v-btn></v-container>
                 </template>
                 <v-card>
                     <v-card-title>
