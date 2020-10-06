@@ -72,7 +72,7 @@
                   <v-expansion-panel-header>回数指定で繰り返す</v-expansion-panel-header>
                     <v-expansion-panel-content>
                       <div class="count-form">
-                      <v-text-field outlined full-width></v-text-field></div>
+                      <v-text-field outlined full-width suffix="回"></v-text-field></div>
                     </v-expansion-panel-content>
                 </v-expansion-panel>
               </v-expansion-panels>
@@ -86,8 +86,9 @@
           <div class="timerequired-form">
           <v-text-field
               v-model="timerequired"
-              label="所要時間（分単位）"
+              label="所要時間"
               prepend-icon="mdi-clock-time-five-outline"
+              suffix="分"
               required
               ></v-text-field></div>
         </v-col></v-row>

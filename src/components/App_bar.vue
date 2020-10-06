@@ -15,11 +15,8 @@
             ></v-img>
         </template>
 
-        <v-btn icon color="#ffc900">
-            <v-icon>mdi-reply</v-icon> <!-- 戻る -->
-        </v-btn>
-
         <v-toolbar-title>Polaris</v-toolbar-title>
+        <!-- ロゴも含めてツールバーの左端はPolarisのアイコンを挿入 -->
 
         <v-spacer></v-spacer>
 
