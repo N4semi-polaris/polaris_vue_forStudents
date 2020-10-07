@@ -12,14 +12,14 @@
         <v-sheet v-bind:height="calendar_height">
           <v-calendar
             ref="calendar"
-            :now="value"
-            :value="value"
+            :now="today"
+            :value="today"
             :events="events"
             :event-color="getEventColor"
             color="primary"
             type="week"
-            @click:event="showWindow"
-            @change="events"
+            v-on:click:event="showWindow"
+            v-on:change="events"
           >
             <template #day-body="{ date, week }">
               <div
@@ -185,7 +185,7 @@ import moment from "moment";
 
 export default {
   data: () => ({
-    value: moment().format("yyyy-MM-DD"),
+    today: moment().format("yyyy-MM-DD"),
     ready: false,
     events: [
       {
@@ -213,7 +213,7 @@ export default {
     enabled3: false,
   }),
   mounted() {
-    this.$refs.calendar.scrollToTime("08:00");
+    //this.$refs.calendar.scrollToTime('18:00');
     this.ready = true;
     this.scrollToTime();
     this.updateTime();
@@ -258,9 +258,7 @@ export default {
       if (this.scheduleDialog_p > 0) this.scheduleDialog_p -= 1;
     },
     getCurrentTime() {
-      return this.cal
-        ? this.cal.times.now.hour * 60 + this.cal.times.now.minute
-        : 0;
+      return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0;
     },
     scrollToTime() {
       const time = this.getCurrentTime();
@@ -303,7 +301,7 @@ export default {
 <style lang="scss">
 .v-current-time {
   height: 2px;
-  background-color: #ea4335;
+  background-color: #000000;
   position: absolute;
   left: -1px;
   right: 0;
@@ -312,7 +310,7 @@ export default {
   &.first::before {
     content: "";
     position: absolute;
-    background-color: #ea4335;
+    background-color: #000000;
     width: 12px;
     height: 12px;
     border-radius: 50%;
