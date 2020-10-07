@@ -29,7 +29,7 @@ export default {
         GoogleLogin: GoogleLogin,
         isLogin: false,
     }),
-    mounted:{
+    mounted: function (){
         //ログインする必要がないとき、ログインをスキップさせる
         //tokenがローカルストレージにあって、Emailを取得するAPIを正しくcallできたとき
         //tokenがローカルストレージにあったが、Emailを取得するAPIを期限切れで利用できなかったとき
