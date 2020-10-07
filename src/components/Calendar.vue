@@ -19,7 +19,6 @@
             color="primary"
             type="week"
             v-on:click:event="showWindow"
-            v-on:change="events"
           >
             <template #day-body="{ date, week }">
               <div
@@ -185,7 +184,7 @@ import moment from "moment";
 
 export default {
   data: () => ({
-    today: moment().format("yyyy-MM-DD"),
+    today: moment().format("yyyy-MM-DD hh:mm"),
     ready: false,
     events: [
       {
@@ -220,13 +219,17 @@ export default {
   },
   computed: {
     title() {
-      return moment(this.value).format("yyyy年 M月");
+      return moment(this.today).format("yyyy年 M月");
     },
     cal() {
       return this.ready ? this.$refs.calendar : null;
     },
-    nowY() {
-      return this.cal ? this.cal.timeToY(this.cal.times.now) + "px" : "-10px";
+    nowY() { //0:00が0pxとして、hour分48px・minute分0.8px足した
+      var m_today = moment(this.today);
+      var hour = Number(m_today.format('h'));
+      var minute = Number(m_today.format('m'));
+      var answer = 0 + 48 * hour + 0.8 * minute;
+      return this.cal ? answer + "px" : "-10px";
     },
   },
   methods: {
