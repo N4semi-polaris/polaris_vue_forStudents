@@ -184,7 +184,7 @@ import moment from "moment";
 
 export default {
   data: () => ({
-    today: moment().format("yyyy-MM-DD hh:mm"),
+    today: moment().format("yyyy-MM-DD hh:mm a"),
     ready: false,
     events: [
       {
@@ -226,7 +226,13 @@ export default {
     },
     nowY() { //0:00が0pxとして、hour分48px・minute分0.8px足した
       var m_today = moment(this.today);
-      var hour = Number(m_today.format('h'));
+      var hour;
+      if (m_today.format('a') == 'AM') { //午前だったら
+        hour = Number(m_today.format('h'));
+      } else { //午後だったら
+        hour = Number(m_today.format('h')) + 12;
+      }
+      console.log(hour);
       var minute = Number(m_today.format('m'));
       var answer = 0 + 48 * hour + 0.8 * minute;
       return this.cal ? answer + "px" : "-10px";
