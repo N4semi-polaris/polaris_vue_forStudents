@@ -42,11 +42,10 @@ export default {
                 console.log("authCode", authCode);
                 this.isLogin = this.$gAuth.isAuthorized
                 //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
-                //カレンダーAPIを呼ぶ
+                //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
                 //this.$emit('complete-loading') //カレンダーを読み込み終わったら、カレンダーを表示
             }).catch((error) => {
-                //on fail do something
-                console.log("you have not logined: "+error)
+                console.log("notLogin: "+error)
             });
         },
         async handleClickSignIn(){
@@ -56,41 +55,23 @@ export default {
                 this.isLogin = this.$gAuth.isAuthorized
                 console.log(googleUser)
                 //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
-                //カレンダーAPIを呼ぶ
+                //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
                 //this.$emit('complete-loading') //カレンダーを読み込み終わったら、カレンダーを表示
             } catch(error){
                 console.error("[error]サインインに失敗: "+error)
                 return null
             }
         },
-        requestAndSave_token: function(code){
-            /* eslint-disable */ // eslint-disable-lineこれで一行無視
-            
-            if(code==null || code=="code" || code==""){
-                console.log("[error] your method param (code) is an illegal value.")
-                return;
-            }
-            const url_format =({code, client_id, client_secret, redirect_uri}) => `https://oauth2.googleapis.com/token?code=${code}&client_id=${client_id}&client_secret=${client_secret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`;
-            var url = url_format({
-                code: code,
-                client_id: "72932482906-k3puh7jplg07nq3o5ekliff0n0epenkb.apps.googleusercontent.com",
-                client_secret :"fODbxel84LlkMWbjPw8CBOaL",
-                redirect_uri :"http://localhost:8080/",
-                });
-
-            this.$axios.post(url).then((response) => {
-                console.log("post success. status is: ${status}");
-                //tokenを保存する。以下が取得されるはず。
-                //data["access_token"],data["expires_in"],data["scope"],data["token_type"],["id_token"]
-                this.$emit('complete-loading');
-            },(error) => {
-                console.log("post failed")
-            });
-            /* eslint-enable */
-        },
-        
         call_Calendar: function(){
-
+            var params = {
+                "token": "",
+            }
+            var url = "http://localhost:8000/accounts/google/calendar"
+            this.$axios.post(url, params).then(response => {
+                console.log(response)
+            },(error) => {
+                console.log(error)
+            });
         },
         call_refreshToken: function(){
 
