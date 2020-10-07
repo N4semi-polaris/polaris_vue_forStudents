@@ -1,8 +1,11 @@
 <template>
   <v-app>
     <v-main>
-      <Loading v-if="isLoading" />
-      <router-view v-if="!isLoading" />
+      <Loading
+        v-if="isLoading"
+        @complete-loading = "changeIsLoading"
+      />
+      <router-view v-else />
     </v-main>
   </v-app>
 </template>
@@ -16,10 +19,10 @@ export default {
   data: ()=>({
     isLoading: true,
   }),
-  mounted(){
-    setTimeout(()=>{
-      this.isLoading=false;
-    },3000);
+  methods: {
+    changeIsLoading: function(){
+      this.isLoading = !this.isLoading;
+    }
   },
   components: {
     Loading,
