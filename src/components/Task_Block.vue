@@ -1,8 +1,12 @@
 <template>
-    <div>
+    <div v-touch="{
+        left: () => onSwipeDelete(),
+        right: () => onSwipeBack(),
+    }">
         <draggable :options="options">
-            <v-card :color="selectColor()" height="auto" class="mx-auto ma-2">
+            <v-card :color="selectColor()" class="mx-auto ma-2">
                 <v-container class="pa-2">
+                    <div v-show="isSwipe == true">
                     <v-row no-gutters align="center">
                         <v-col cols="2">
                             <div class="circle1"><!-- outer -->
@@ -22,6 +26,23 @@
                             </v-row><!-- 〆切日 -->
                         </v-col>
                     </v-row>
+                    </div>
+                    <div v-show="isSwipe == false" class="text-right">
+                        <v-row no-gutters><v-col>
+                            <v-btn
+                                class="ma-2"
+                                color="#ffffff"
+                                outlined
+                            ><v-icon dark left>mdi-pencil</v-icon>
+                            編集</v-btn>
+                            <v-btn
+                                class="ma-2"
+                                color="#ffffff"
+                                outlined
+                            ><v-icon>mdi-trash-can-outline</v-icon>
+                            削除</v-btn>
+                        </v-col></v-row>
+                    </div>
                 </v-container>
             </v-card>
         </draggable>
@@ -43,7 +64,11 @@ export default {
 
         options: { animation: 200 },
         today: moment().format("YYYY-MM-DD hh:mm"),
+        isSwipe: false,
     }),
+    mounted() {
+        this.isSwipe = true;
+    },
     computed: {
         selectIcon: function(){ /* アイコンを選ぶ */
             var key = 100;
@@ -79,6 +104,12 @@ export default {
                 answer = moment(this.deadline).format('M/D');
             }
             return answer;
+        },
+        onSwipeDelete: function(){ /* 左にスワイプしたら削除 */
+            this.isSwipe = false;
+        },
+        onSwipeBack: function(){ /* 右にスワイプしたら元に戻る */
+            this.isSwipe = true;
         },
     }
 }

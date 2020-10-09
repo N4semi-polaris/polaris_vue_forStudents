@@ -23,7 +23,7 @@
                         <v-container>
                             <v-row>
                                 <v-col cols="12">
-                                    <v-text-field label="名前*" required></v-text-field>
+                                    <v-text-field label="名前" required :rules="spotnameRules"></v-text-field>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -67,7 +67,10 @@ export default {
             name:"銀座コージーコーナーグランデュオ立川店",
             address:"東京都立川市042-540-5403",
             },
-        ]
+        ],
+        spotnameRules: [
+            v => !!v || '必ず入力してください！',
+        ],
     }),
 }
 </script>

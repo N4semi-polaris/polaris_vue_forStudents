@@ -22,15 +22,13 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="pa-0">
-          <v-btn v-on:click="toTaskEdit" style="padding-left: 30px" text>
+        <v-col class="pa-2">
+          <v-btn v-on:click="toTaskEdit" text absolute left>
             <!-- タスクブロック追加ページへ -->
             <v-icon color="#ffc900" left>mdi-plus-circle</v-icon
             >新規寄り道予定作成
           </v-btn>
-        </v-col>
-        <v-col class="text-right pa-0">
-          <v-btn icon v-on:click="toTaskLog" style="padding-right: 50px">
+          <v-btn icon v-on:click="toTaskLog" text absolute right>
             <!-- タスクログページへ -->
             <v-icon>mdi-notebook</v-icon>
           </v-btn>
@@ -72,14 +70,14 @@ export default {
         task_name: "本屋うろうろ",
         place_name: "有隣堂",
         task_type: "本・文具",
-        deadline: "2020-10-7 13:00",
+        deadline: "2020-10-13 13:00",
       },
       {
         id: 2,
         task_name: "新幹線の切符買う",
         place_name: "みどりの窓口",
         task_type: "その他",
-        deadline: "2020-10-5 15:00",
+        deadline: "2020-10-14 15:00",
       },
     ],
   }),
