@@ -12,8 +12,8 @@
         <v-sheet v-bind:height="calendar_height">
           <v-calendar
             ref="calendar"
-            :now="today"
-            :value="today"
+            :now="value"
+            :value="value"
             :events="events"
             :event-color="getEventColor"
             color="primary"
@@ -23,7 +23,7 @@
             <template #day-body="{ date, week }">
               <div
                 class="v-current-time"
-                :class="{ first: date === week[0].date }"
+                :class="{ first: date === week[putDateWeek].date }"
                 :style="{ top: nowY }"
               ></div>
             </template>
@@ -185,6 +185,7 @@ import moment from "moment";
 export default {
   data: () => ({
     today: moment().format("yyyy-MM-DD hh:mm a"),
+    value: moment().format("yyyy-MM-DD"),
     ready: false,
     events: [
       {
@@ -227,15 +228,19 @@ export default {
     nowY() { //0:00が0pxとして、hour分48px・minute分0.8px足した
       var m_today = moment(this.today);
       var hour;
-      if (m_today.format('a') == 'AM') { //午前だったら
-        hour = Number(m_today.format('h'));
+      if (m_today.format('a') == 'am') { //午前だったら
+        if (m_today.format('h') == '12') hour = 0; //AM12:00とかいう変わった表示仕様のせいで...
+        else hour = Number(m_today.format('h'));
       } else { //午後だったら
         hour = Number(m_today.format('h')) + 12;
       }
-      console.log(hour);
       var minute = Number(m_today.format('m'));
       var answer = 0 + 48 * hour + 0.8 * minute;
       return this.cal ? answer + "px" : "-10px";
+    },
+    putDateWeek() {
+      var date_week = moment().format('d');
+      return date_week;
     },
   },
   methods: {
@@ -261,7 +266,7 @@ export default {
     },
     turnTo_nextScheduleDialog() {
       this.scheduleDialog_p += 1;
-      this.scheduleDialog_p %= 3;
+      if (this.scheduleDialog_p == 3) this.scheduleDialog_p == -1;
     },
     backTo_nextScheduleDialog() {
       if (this.scheduleDialog_p > 0) this.scheduleDialog_p -= 1;
@@ -309,10 +314,11 @@ export default {
 </style>
 <style lang="scss">
 .v-current-time {
-  height: 2px;
+  height: 1px;
+  width: 100px;
   background-color: #000000;
   position: absolute;
-  left: -1px;
+  left: 0px;
   right: 0;
   pointer-events: none;
 
@@ -320,10 +326,10 @@ export default {
     content: "";
     position: absolute;
     background-color: #000000;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    margin-top: -5px;
+    margin-top: -4px;
     margin-left: -6.5px;
   }
 }

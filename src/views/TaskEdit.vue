@@ -6,7 +6,7 @@
           <v-col cols="12">
             <v-text-field
               v-model="taskname"
-              :rules="nameRules"
+              :rules="tasknameRules"
               :counter="10"
               label="タスク名"
               prepend-icon="mdi-calendar-check"
@@ -21,6 +21,8 @@
               :items="task_type"
               label="タスクタイプ"
               prepend-icon="mdi-tag"
+              required
+              :rules="tasktypeRules"
             ></v-select>
           </v-col>
           <v-col cols="6">
@@ -48,7 +50,7 @@
             </v-col></v-row>
             <v-row><v-col>
             <v-datetime-picker
-            label="終了時間"
+            label="締切時間"
             v-model="tasktime"
           ></v-datetime-picker>
             </v-col></v-row>
@@ -125,12 +127,14 @@
             color="#032b8d"
             class="ma-2 white--text"
             fab
+            v-on:click="toHome"
           ><v-icon large>mdi-download-multiple</v-icon><!-- 保存ボタン -->
           </v-btn>
           <v-btn
             color="#0575e6"
             class="ma-2 white--text"
             fab
+            v-on:click="toHome"
           ><v-icon large>mdi-trash-can-outline</v-icon><!-- 消去ボタン -->
           </v-btn>
         </v-row>
@@ -152,14 +156,22 @@ export default {
     tasktype: '',
     tasktime: '',
     timerequired: '',
-    nameRules: [
+    tasknameRules: [
       v => !!v || '必ず入力してください！',
       v => v.length <= 15 || '15文字以内で入力してください',
+    ],
+    tasktypeRules: [
+      v => !!v || '必ず選んで下さい！',
     ],
     task_type: [ 'スーパー・コンビニ', 'ファッション', '本・文具', '映画館', '飲食店', 'その他' ],
     datetime: moment(new Date).format('yyyy-MM-DD HH:mm'),
     //今日の日付を分単位まで取得
   }),
+  methods: {
+    toHome: function () {
+      this.$router.push({ name: "Home" });
+    },
+  }
 }
 </script>
 
