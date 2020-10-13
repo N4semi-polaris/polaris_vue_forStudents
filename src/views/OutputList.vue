@@ -12,7 +12,7 @@
 
         <v-list shaped>
         <template v-for="(result, index) in results">
-            <v-list-item :key="result.id" @click="toListDetails()">
+            <v-list-item :key="result.id" @click="toListDetails(result)">
                 <v-list-item-content>
                     <v-row no-gutters align="center">
                         <v-col cols="1">
@@ -137,8 +137,17 @@ export default {
         taskOption: function(option) { /* タスクラベルをつけるかどうか */
             return option ? true : false;
         },
-        toListDetails: function() {
-            this.$router.push({ name: "ListDetails" });
+        toListDetails: function(result) {
+            this.$router.push({ 
+                name: "ListDetails", 
+                query: {
+                    place_name: result.place_name,
+                    start_time: result.start_time,
+                    end_time: result.end_time,
+                    trans_costs: result.trans_costs,
+                    task_option: result.task_option 
+                    }
+            });
             this.isShowDetails = true;
         },
     },

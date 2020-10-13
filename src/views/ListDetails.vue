@@ -102,14 +102,14 @@ export default {
         App_bar,
     },
     data:() => ({
-        place_name: '津田塾大学',
         useFoot: true,
         useBus: false,
         useTrain: true,
-        start_time: '20:26',
-        end_time: '22:28',
+        place_name: "",
+        start_time: "",
+        end_time: "",
+        trans_costs: "",
         trans_time: '2時間2分',
-        trans_costs: '649',
         nearest_station: '新小平駅',
         nearest_route: 'JR武蔵野線',
         isRainy: true,
@@ -117,6 +117,10 @@ export default {
     }),
     mounted() {
         this.rainAvoid = false;
+        this.place_name = this.$route.query.place_name;
+        this.start_time = this.$route.query.start_time;
+        this.end_time = this.$route.query.end_time;
+        this.trans_costs = this.$route.query.trans_costs;
     },
     methods: {
         displayRainAvoid() {
