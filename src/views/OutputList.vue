@@ -2,17 +2,17 @@
     <div class="OutputList">
         <App_bar />
 
-        <v-tool-bar flat>
+        <v-toolbar flat>
             <v-toolbar-title class="marginBarLR">
                 検索結果<span class="ml-3">全{{ getListLength }}件</span>
             </v-toolbar-title>
-        </v-tool-bar>
+        </v-toolbar>
 
         <v-sheet color="#f5f5f5" height="15px"></v-sheet>
 
         <v-list shaped>
         <template v-for="(result, index) in results">
-            <v-list-item :key="result.id" @click="toListDetails(result)">
+            <v-list-item :key="'outputlist'+result.id" @click="toListDetails(result)">
                 <v-list-item-content>
                     <v-row no-gutters align="center">
                         <v-col cols="1">
