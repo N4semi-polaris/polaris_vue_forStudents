@@ -34,6 +34,16 @@ const routes = [{
     name: 'InitialSetting',
     component: () => import('../views/InitialSetting.vue')
   },
+  {
+    path: '/outputlist',
+    name: 'OutputList',
+    component: () => import('../views/OutputList.vue')
+  },
+  {
+    path: '/listdetails',
+    name: 'ListDetails',
+    component: () => import('../views/ListDetails')
+  },
 
   {
     path: '/about',

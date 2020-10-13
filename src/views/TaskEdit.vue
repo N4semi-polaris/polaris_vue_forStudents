@@ -59,7 +59,7 @@
                 <v-expansion-panel>
                   <v-expansion-panel-header>固定曜日で繰り返す</v-expansion-panel-header>
                     <v-expansion-panel-content>
-                      <v-row justify="space-around">
+                      <v-row align-content="start">
                       <v-checkbox class="nx-2" label="月"></v-checkbox>
                       <v-checkbox class="nx-2" label="火"></v-checkbox>
                       <v-checkbox class="nx-2" label="水"></v-checkbox>
@@ -92,6 +92,7 @@
               prepend-icon="mdi-clock-time-five-outline"
               suffix="分"
               required
+              :rules="timerequiredRules"
               ></v-text-field></div>
         </v-col></v-row>
 
@@ -106,7 +107,7 @@
               <v-expansion-panel>
                 <v-expansion-panel-header>定休日</v-expansion-panel-header>
                 <v-expansion-panel-content>
-                  <v-row justify="space-around">
+                  <v-row align-content="start">
                       <v-checkbox class="nx-2" label="月"></v-checkbox>
                       <v-checkbox class="nx-2" label="火"></v-checkbox>
                       <v-checkbox class="nx-2" label="水"></v-checkbox>
@@ -162,6 +163,9 @@ export default {
     ],
     tasktypeRules: [
       v => !!v || '必ず選んで下さい！',
+    ],
+    timerequiredRules: [
+      v => !!v || '必ず入力してください！',
     ],
     task_type: [ 'スーパー・コンビニ', 'ファッション', '本・文具', '映画館', '飲食店', 'その他' ],
     datetime: moment(new Date).format('yyyy-MM-DD HH:mm'),

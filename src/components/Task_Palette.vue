@@ -21,7 +21,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-row>
+      <v-row id="palette_under_head">
         <v-col class="pa-2">
           <v-btn v-on:click="toTaskEdit" text absolute left>
             <!-- タスクブロック追加ページへ -->
@@ -129,5 +129,8 @@ export default {
 }
 .space {
   margin-bottom: 30px;
+}
+#palette_under_head {
+  font-family: 'M PLUS Rounded 1c';
 }
 </style>

@@ -3,6 +3,7 @@
         left: () => onSwipeDelete(),
         right: () => onSwipeBack(),
     }">
+    <div id="task_block">
         <draggable :options="options">
             <v-card :color="selectColor()" class="mx-auto ma-2">
                 <v-container class="pa-2">
@@ -33,6 +34,7 @@
                                 class="ma-2"
                                 color="#ffffff"
                                 outlined
+                                v-on:click="toTaskEdit"
                             ><v-icon dark left>mdi-pencil</v-icon>
                             編集</v-btn>
                             <v-btn
@@ -46,6 +48,7 @@
                 </v-container>
             </v-card>
         </draggable>
+    </div>
     </div>
 </template>
 
@@ -79,7 +82,7 @@ export default {
         },
     },
     methods :{
-        compareDeadLine: function (){ //今日の日付と〆切日の差を計算する｜現在ここがおかしいらしい
+        compareDeadLine: function (){ //今日の日付と〆切日の差を計算する
             return moment(this.deadline).diff(moment(this.today), 'days');
         },
         selectColor: function(){ /* テーマカラーを選ぶ */
@@ -110,6 +113,9 @@ export default {
         },
         onSwipeBack: function(){ /* 右にスワイプしたら元に戻る */
             this.isSwipe = true;
+        },
+        toTaskEdit: function () {
+            this.$router.push({ name: "TaskEdit" });
         },
     }
 }
@@ -159,5 +165,8 @@ export default {
 }
 .v-application p {
     margin-bottom: 0px;
+}
+#task_block {
+    font-family: 'M PLUS Rounded 1c';
 }
 </style>

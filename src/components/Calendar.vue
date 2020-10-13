@@ -190,15 +190,15 @@ export default {
     events: [
       {
         name: "Free", //nameは空欄でも大丈夫そう
-        start: moment("2020-10-04 10:10").toDate(), //UIデザインを忠実に再現するなら
-        end: moment("2020-10-04 12:20").toDate(), //時刻は非表示にしたいけどできるのかしら..
+        start: moment("2020-10-16 10:10").toDate(), //UIデザインを忠実に再現するなら
+        end: moment("2020-10-16 12:20").toDate(), //時刻は非表示にしたいけどできるのかしら..
         color: "#ffc900",
         timed: true, //終日ならfalse
       },
       {
         name: "Free",
-        start: moment("2020-10-04 15:00").toDate(),
-        end: moment("2020-10-04 16:00").toDate(),
+        start: moment("2020-10-17 15:00").toDate(),
+        end: moment("2020-10-17 16:00").toDate(),
         color: "#ffc900",
         timed: true,
       },
@@ -232,7 +232,8 @@ export default {
         if (m_today.format('h') == '12') hour = 0; //AM12:00とかいう変わった表示仕様のせいで...
         else hour = Number(m_today.format('h'));
       } else { //午後だったら
-        hour = Number(m_today.format('h')) + 12;
+        if (m_today.format('h') == '12') hour = 12;
+        else hour = Number(m_today.format('hh')) + 12;
       }
       var minute = Number(m_today.format('m'));
       var answer = 0 + 48 * hour + 0.8 * minute;
@@ -266,7 +267,7 @@ export default {
     },
     turnTo_nextScheduleDialog() {
       this.scheduleDialog_p += 1;
-      if (this.scheduleDialog_p == 3) this.scheduleDialog_p == -1;
+      if (this.scheduleDialog_p == 3) this.toOutputList();
     },
     backTo_nextScheduleDialog() {
       if (this.scheduleDialog_p > 0) this.scheduleDialog_p -= 1;
@@ -282,6 +283,9 @@ export default {
     },
     updateTime() {
       setInterval(() => this.cal.updateTimes(), 60 * 1000);
+    },
+    toOutputList: function () {
+      this.$router.push({ name: "OutputList" });
     },
   },
   props: ["calendar_height"],

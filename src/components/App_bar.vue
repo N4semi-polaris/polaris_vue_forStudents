@@ -11,7 +11,7 @@
         <template v-slot:img="{ props }">
             <v-img
             v-bind="props"
-            gradient="to right, rgba(33,14,103,7), rgba(5,117,230,7)"
+            gradient="to right, rgba(33,14, 103,7), rgba(5,117,230,7)"
             ></v-img>
         </template>
 
@@ -19,6 +19,10 @@
         <!-- ロゴも含めてツールバーの左端はPolarisのアイコンを挿入 -->
 
         <v-spacer></v-spacer>
+
+        <v-btn icon color="#ffc900">
+            <v-icon>mdi-calendar-sync</v-icon> <!-- Googleカレンダーと同期 -->
+        </v-btn>
 
         <v-btn icon v-on:click="toMyPage" color="#ffc900">
             <v-icon>mdi-account-circle</v-icon> <!-- MyPage -->
@@ -44,3 +48,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#app_bar {
+    font-family: 'M PLUS Rounded 1c';
+}
+</style>
