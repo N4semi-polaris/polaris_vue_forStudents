@@ -220,7 +220,6 @@ export default {
     this.scrollToTime();
     this.updateTime();
     this.setWeekdays();
-    console.log(this.weekdays)
   },
   computed: {
     title() {
