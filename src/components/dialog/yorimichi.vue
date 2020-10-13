@@ -1,10 +1,11 @@
 <template>
-    <v-menu
+    <v-dialog
         v-model="selectedOpen"
         :close-on-content-click="false"
         :close-on-click="false"
         :activator="selectedElement"
         offset-x
+        width="400px"
         >
         <div v-show="scheduleDialog_p >= 0 && scheduleDialog_p <= 2">
             <v-card color="white" flat width="400px">
@@ -141,7 +142,7 @@
             </v-card-actions>
             </v-card>
         </div>
-        </v-menu>
+    </v-dialog>
 </template>
 
 <script>
