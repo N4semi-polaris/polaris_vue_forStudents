@@ -13,6 +13,7 @@
           <v-calendar
             ref="calendar"
             :now="value"
+            :weekdays="weekdays"
             :value="value"
             :events="events"
             :event-color="getEventColor"
@@ -186,6 +187,7 @@ export default {
   data: () => ({
     today: moment().format("yyyy-MM-DD hh:mm a"),
     value: moment().format("yyyy-MM-DD"),
+    weekdays: [0, 1, 2, 3, 4, 5, 6],
     ready: false,
     events: [
       {
@@ -217,6 +219,8 @@ export default {
     this.ready = true;
     this.scrollToTime();
     this.updateTime();
+    this.setWeekdays();
+    console.log(this.weekdays)
   },
   computed: {
     title() {
@@ -287,6 +291,11 @@ export default {
     toOutputList: function () {
       this.$router.push({ name: "OutputList" });
     },
+    setWeekdays(){
+      var dateNum = moment().format('d');
+      var week = [0, 1, 2, 3, 4, 5, 6]
+      this.weekdays = week.slice(dateNum).concat(week.slice(0,dateNum))
+    }
   },
   props: ["calendar_height"],
 };
