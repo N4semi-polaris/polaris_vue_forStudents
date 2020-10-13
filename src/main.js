@@ -11,8 +11,9 @@ Vue.config.productionTip = false
 Vue.use(GAuth,{
   clientId: '72932482906-k3puh7jplg07nq3o5ekliff0n0epenkb.apps.googleusercontent.com',
   scope: 'email openid https://www.googleapis.com/auth/calendar',
-  prompt: 'select_account',
-  fetch_basic_profile: false,
+  accessType: 'offline',
+  prompt: 'consent',
+  fetch_basic_profile: true,
 })
 
 new Vue({

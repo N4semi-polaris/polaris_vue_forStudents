@@ -36,24 +36,32 @@ export default {
             //tokenをrefreshしたら復活した場合
     },
     methods:{
+        /*
         handleClickLogin() {//既にログイン済みならsuccess
             this.$gAuth.getAuthCode().then((authCode) => {
                 //on success
-                console.log("authCode", authCode);
-                this.isLogin = this.$gAuth.isAuthorized
+                //console.log("authCode", authCode);
+                //this.isLogin = this.$gAuth.isAuthorized
                 //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
                 //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
                 //this.$emit('complete-loading') //カレンダーを読み込み終わったら、カレンダーを表示
             }).catch((error) => {
                 console.log("notLogin: "+error)
             });
-        },
+        },*/
         async handleClickSignIn(){
             try {
-                const googleUser = await this.$gAuth.signIn()
-                if(!googleUser)return null
+                const authCode = await this.$gAuth.getAuthCode()
+                console.log(authCode)
+                if(!authCode)return null
                 this.isLogin = this.$gAuth.isAuthorized
-                console.log(googleUser)
+                var url = "http://localhost:8000/accounts/google/login/"
+                this.$axios.get(url, {params:{code:authCode}}).then(response => {
+                    console.log(response)
+                },(error) => {
+                    console.log(error)
+                });
+                //console.log(googleUser)
                 //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
                 //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
                 //this.$emit('complete-loading') //カレンダーを読み込み終わったら、カレンダーを表示
@@ -66,7 +74,7 @@ export default {
             var params = {
                 "token": "",
             }
-            var url = "http://localhost:8000/accounts/google/calendar"
+            var url = "/accounts/google/calendar/"
             this.$axios.post(url, params).then(response => {
                 console.log(response)
             },(error) => {
