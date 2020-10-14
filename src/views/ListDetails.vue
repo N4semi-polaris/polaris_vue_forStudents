@@ -39,10 +39,10 @@
                 </v-card-title>
 
                 <v-card-subtitle class="ml-10">
-                    {{ start_time }}
+                    {{ makeStartTime(start_time) }}
                     <v-icon color="#0575e6" dense>mdi-arrow-right-bold</v-icon>
-                    {{ end_time }}
-                    <span class="ml-1">（{{ trans_time }}）</span><br>
+                    {{ makeEndTime(end_time) }}
+                    <span class="ml-1">{{ getTransTime(start_time, end_time) }}</span><br>
                     {{ trans_costs }}円
                     <span class="ml-3">{{ nearest_station }}／{{ nearest_route }}</span>
                 </v-card-subtitle>
@@ -95,6 +95,7 @@
 
 <script>
 import App_bar from '../components/App_bar';
+import moment from 'moment';
 
 export default {
     name: "ListDetails",
@@ -123,6 +124,33 @@ export default {
         this.trans_costs = this.$route.query.trans_costs;
     },
     methods: {
+        makeStartTime: function(start_time) { /* 出発時間を返す */
+            return this.adjustAMPM(moment(start_time, 'YYYY-MM-DD hh:mm a'));
+        },
+        makeEndTime: function(end_time) { /* 到着時間を返す */
+            return this.adjustAMPM(moment(end_time, 'YYYY-MM-DD hh:mm a'));
+        },
+        adjustAMPM: function(time) { /* 出発・到着時間のAM/PMを調整する */
+            var hour;
+            if (time.format('a') == 'am') {
+                if (time.format('h') == '12') hour = 0
+                else hour = Number(time.format('h'));
+            } else {
+                if (time.format('h') == '12') hour = 12
+                else hour = Number(time.format('h')) + 12;
+            }
+            return hour + ':' + time.format('mm');
+        },
+        getTransTime: function(start_time, end_time) { /* 移動時間を計算する */
+            var start = moment(start_time, 'YYYY-MM-DD hh:mm a');
+            var end = moment(end_time, 'YYYY-MM-DD hh:mm a');
+            var minute = end.diff(start, 'minutes');
+            var hour = end.diff(start, 'hours');
+            var transtime;
+            if (hour == 0) transtime = '（' + minute + '分）';
+            else transtime = '（' + hour + '時間' + (minute - 60 * hour) + '分）';
+            return transtime;
+        },
         displayRainAvoid() {
             this.rainAvoid = !this.rainAvoid;
         },

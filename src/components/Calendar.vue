@@ -24,7 +24,7 @@
             <template #day-body="{ date, week }">
               <div
                 class="v-current-time"
-                :class="{ first: date === week[putDateWeek].date }"
+                :class="{ first: date === week[0].date }"
                 :style="{ top: nowY }"
               ></div>
             </template>
@@ -97,10 +97,6 @@ export default {
       var answer = 0 + 48 * hour + 0.8 * minute;
       return this.cal ? answer + "px" : "-10px";
     },
-    putDateWeek() {
-      var date_week = moment().format('d');
-      return date_week;
-    },
   },
   methods: {
     getEventColor(event) {
@@ -158,7 +154,7 @@ export default {
 <style lang="scss">
 .v-current-time {
   height: 1px;
-  width: 100px;
+  width: 200px;
   background-color: #000000;
   position: absolute;
   left: 0px;
