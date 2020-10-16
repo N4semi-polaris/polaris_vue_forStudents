@@ -38,7 +38,7 @@
 
         <v-row align="center">
           <v-col cols="2">
-            <v-btn icon><v-icon size="26">mdi-calendar-clock</v-icon></v-btn>
+            <v-icon size="26">mdi-calendar-clock</v-icon>
             <!-- 開始時間と終了時間に入力があったら色を変える、みたいなのやりたい -->
           </v-col>
           <v-col cols="10">
@@ -185,5 +185,8 @@ export default {
 }
 .timerequired-form {
   width: 200px;
+}
+.TaskEdit {
+  font-family: 'M PLUS Rounded 1c';
 }
 </style>
