@@ -1,51 +1,130 @@
 <template>
-    <div id="calendar">
-      <v-sheet tile height="50" color="#ffffff" align-center id="areaOfYM">
-        <v-container>
-        <v-toolbar-title><span style="color:#210e67">{{ title }}</span></v-toolbar-title>
-        </v-container>
-      </v-sheet>
-        <v-row no-gutters>
-            <v-col>
-                <v-sheet v-bind:height="calendar_height">
-                    <v-calendar
-                    ref="calendar"
-                    :now="value"
-                    :value="value"
-                    :events="events"
-                    color="primary"
-                    type="week"
-                >
-                </v-calendar>
-                </v-sheet>
-            </v-col>
-        </v-row>
-    </div>
+  <div id="calendar">
+    <v-sheet tile height="50" color="#ffffff" align-center id="areaOfYM">
+      <v-container>
+        <v-toolbar-title
+          ><span style="color: #210e67">{{ title }}</span></v-toolbar-title
+        >
+      </v-container>
+    </v-sheet>
+    <v-row no-gutters>
+      <v-col>
+        <v-sheet v-bind:height="calendar_height">
+          <v-calendar
+            ref="calendar"
+            :now="value"
+            :weekdays="weekdays"
+            :value="value"
+            :events="events"
+            :event-color="getEventColor"
+            color="primary"
+            type="week"
+            v-on:click:event="show_yorimitiDialog"
+          >
+            <template #day-body="{ date, week }">
+              <div
+                class="v-current-time"
+                :class="{ first: date === week[0].date }"
+                :style="{ top: nowY }"
+              ></div>
+            </template>
+          </v-calendar>
+          <!-- 寄り道提案ポップアップ -->
+          <yorimichi ref="yorimichiDialog" />
+          
+        </v-sheet>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 
 <script>
-import moment from 'moment';
+import moment from "moment";
+import yorimichi from "@/components/dialog/yorimichi"
 
+export default {
+  components: {
+    yorimichi,
+  },
+  data: () => ({
+    today: moment().format("yyyy-MM-DD hh:mm a"),
+    value: moment().format("yyyy-MM-DD"),
+    weekdays: [0, 1, 2, 3, 4, 5, 6],
+    ready: false,
+    events: [
+      {
+        name: "Free", //nameは空欄でも大丈夫そう
+        start: moment("2020-10-16 10:10").toDate(), //UIデザインを忠実に再現するなら
+        end: moment("2020-10-16 12:20").toDate(), //時刻は非表示にしたいけどできるのかしら..
+        color: "#ffc900",
+        timed: true, //終日ならfalse
+      },
+      {
+        name: "Free",
+        start: moment("2020-10-17 15:00").toDate(),
+        end: moment("2020-10-17 16:00").toDate(),
+        color: "#ffc900",
+        timed: true,
+      },
+    ],
+  }),
+  mounted() {
+    //this.$refs.calendar.scrollToTime('18:00');
+    this.ready = true;
+    this.scrollToTime();
+    this.updateTime();
+    this.setWeekdays();
+  },
+  computed: {
+    title() {
+      return moment(this.today).format("yyyy年 M月");
+    },
+    cal() {
+      return this.ready ? this.$refs.calendar : null;
+    },
+    nowY() { //0:00が0pxとして、hour分48px・minute分0.8px足した
+      var m_today = moment(this.today);
+      var hour;
+      if (m_today.format('a') == 'am') { //午前だったら
+        if (m_today.format('h') == '12') hour = 0; //AM12:00とかいう変わった表示仕様のせいで...
+        else hour = Number(m_today.format('h'));
+      } else { //午後だったら
+        if (m_today.format('h') == '12') hour = 12;
+        else hour = Number(m_today.format('hh')) + 12;
+      }
+      var minute = Number(m_today.format('m'));
+      var answer = 0 + 48 * hour + 0.8 * minute;
+      return this.cal ? answer + "px" : "-10px";
+    },
+  },
+  methods: {
+    getEventColor(event) {
+      return event.color;
+    },
+    getCurrentTime() {
+      return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0;
+    },
+    scrollToTime() {
+      const time = this.getCurrentTime();
+      const first = Math.max(0, time - (time % 30) - 30);
 
-  export default {
-      data: () => ({
-        //today: '2019-01-08',
-        events: [
-          //予定入力
-        ],
-        value: moment().format('yyyy-MM-DD'),
-      }),
-      mounted () {
-        this.$refs.calendar.scrollToTime('08:00')
-      },
-      computed: {
-        title() {
-          return moment(this.value).format('yyyy年 M月');
-        }
-      },
-      props: ['calendar_height'],
-  }
+      this.cal.scrollToTime(first);
+    },
+    updateTime() {
+      setInterval(() => this.cal.updateTimes(), 60 * 1000);
+    },
+    setWeekdays(){
+      var dateNum = moment().format('d');
+      var week = [0, 1, 2, 3, 4, 5, 6]
+      this.weekdays = week.slice(dateNum).concat(week.slice(0,dateNum))
+    },
+    show_yorimitiDialog({ nativeEvent, event }){
+      this.$refs.yorimichiDialog.showWindow({ nativeEvent, event });
+    }
+  },
+  props: ["calendar_height"],
+};
 </script>
 
 
@@ -70,5 +149,27 @@ import moment from 'moment';
   position: absolute;
   right: 4px;
   margin-right: 0px;
+}
+</style>
+<style lang="scss">
+.v-current-time {
+  height: 1px;
+  width: 200px;
+  background-color: #000000;
+  position: absolute;
+  left: 0px;
+  right: 0;
+  pointer-events: none;
+
+  &.first::before {
+    content: "";
+    position: absolute;
+    background-color: #000000;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-top: -4px;
+    margin-left: -6.5px;
+  }
 }
 </style>

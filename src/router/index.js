@@ -34,6 +34,21 @@ const routes = [{
     name: 'InitialSetting',
     component: () => import('../views/InitialSetting.vue')
   },
+  {
+    path: '/outputlist',
+    name: 'OutputList',
+    component: () => import('../views/OutputList.vue')
+  },
+  {
+    path: '/listdetails',
+    name: 'ListDetails',
+    component: () => import('../views/ListDetails')
+  },
+  {
+    path: '/hometime',
+    name: 'SettingHomeTime',
+    component: () => import('../views/SettingHomeTime')
+  },
 
   {
     path: '/about',
