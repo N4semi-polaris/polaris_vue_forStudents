@@ -186,4 +186,7 @@ export default {
 .timerequired-form {
   width: 200px;
 }
+.TaskEdit {
+  font-family: 'M PLUS Rounded 1c';
+}
 </style>

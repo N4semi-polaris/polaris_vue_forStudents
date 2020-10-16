@@ -162,4 +162,7 @@ export default {
     text-align: center;
     font-weight: bold;
 }
+.OutputList {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>

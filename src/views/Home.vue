@@ -50,3 +50,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.Home {
+  font-family: 'M PLUS Rounded 1c';
+}
+</style>

@@ -162,4 +162,7 @@ export default {
 .placeName {
     font-weight: bold;
 }
+.ListDetails {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>

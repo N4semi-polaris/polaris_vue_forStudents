@@ -9,7 +9,7 @@
         v-for="task in tasks"
         :key="task.id"
         :task_name="task.task_name"
-        :place_name="'tasklog'+task.place_name"
+        :place_name="task.place_name"
         :task_type="task.task_type"
         :deadline="task.deadline"
       />
@@ -18,6 +18,7 @@
     </v-container>
   </div>
 </template>
+
 <script>
 import App_var from "../components/App_bar";
 import Task_Block from "../components/Task_Block.vue";
@@ -91,3 +92,9 @@ export default {
   methods: {},
 };
 </script>
+
+<style scoped>
+.TaskLog {
+  font-family: 'M PLUS Rounded 1c';
+}
+</style>

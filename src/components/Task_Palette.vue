@@ -130,7 +130,4 @@ export default {
 .space {
   margin-bottom: 30px;
 }
-#palette_under_head {
-  font-family: 'M PLUS Rounded 1c';
-}
 </style>

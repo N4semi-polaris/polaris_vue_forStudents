@@ -119,3 +119,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.MyPage {
+  font-family: 'M PLUS Rounded 1c';
+}
+</style>

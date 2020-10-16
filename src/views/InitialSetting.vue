@@ -86,3 +86,9 @@ export default {
   }),
 };
 </script>
+
+<style scoped>
+.InitialSetting {
+  font-family: 'M PLUS Rounded 1c';
+}
+</style>

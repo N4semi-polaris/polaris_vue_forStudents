@@ -79,4 +79,7 @@ export default {
 #spotlist{
     padding: 10px;
 }
+.FavoriteSpot {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>
