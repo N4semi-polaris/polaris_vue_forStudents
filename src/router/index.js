@@ -44,6 +44,11 @@ const routes = [{
     name: 'ListDetails',
     component: () => import('../views/ListDetails')
   },
+  {
+    path: '/hometime',
+    name: 'SettingHomeTime',
+    component: () => import('../views/SettingHomeTime')
+  },
 
   {
     path: '/about',

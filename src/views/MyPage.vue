@@ -1,7 +1,6 @@
 <template>
   <div class="MyPage">
     <App_var />
-    <h1></h1>
     <v-form>
       <v-container>
         <v-row align="center">
@@ -70,6 +69,21 @@
 
         <v-row align="center">
           <v-col align="center">
+            <v-btn
+              v-on:click="toSettingHomeTime"
+              rounded
+              class="mx-auto text-center"
+              color="#0461cd"
+              dark
+              >在宅時間を設定する</v-btn
+            >
+          </v-col>
+        </v-row>
+
+        <v-divider></v-divider>
+
+        <v-row align="center">
+          <v-col align="center">
             <v-switch
               v-model="disabled1"
               class="ma-2"
@@ -115,6 +129,9 @@ export default {
     },
     toInitialSettingPage: function () {
       this.$router.push({ name: "InitialSetting" });
+    },
+    toSettingHomeTime: function () {
+      this.$router.push({ name: "SettingHomeTime" });
     },
   },
 };
