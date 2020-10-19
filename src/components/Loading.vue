@@ -55,7 +55,7 @@ export default {
                 console.log(authCode)
                 if(!authCode)return null
                 this.isLogin = this.$gAuth.isAuthorized
-                var url = "http://localhost:8000/accounts/google/login/"
+                var url = "http://localhost:8000/accounts/google/signup/"
                 this.$axios.get(url, {params:{code:authCode}}).then(response => {
                     console.log(response)
                 },(error) => {
