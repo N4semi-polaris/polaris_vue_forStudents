@@ -6,30 +6,33 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   plugins: [createPersistedState({
-        key: 'YorimichiApp',
-        paths: ['userEmail',"userAuthCode"],
-        storage: window.sessionStorage
-    })],
+    key: 'YorimichiApp',
+    paths: ['loginState'],
+    storage: window.sessionStorage
+  })],
+
   state: {
-    userEmail: "",
-    userAuthCode: "",
-  },
+    loginState: {
+      userEmail: string,
+      userAuthCode: string,
+    },
+},
   mutations: {
-    setUserData(state,payload) {
-      state.userEmail = payload.userEmail
-      state.userAuthCode = payload.userAuthCode
-    },
+  setUserData(state, payload) {
+    state.loginState.userEmail = payload.userEmail
+    state.loginState.userAuthCode = payload.userAuthCode
   },
+},
   getters: {
-    getUserEmail() {
-      return state.userEmail;
-    },
-    getUserAuthCode() {
-      return state.userAuthCode;
-    },
+  getUserEmail() {
+    return state.userEmail;
   },
+  getUserAuthCode() {
+    return state.userAuthCode;
+  },
+},
   actions: {
-  },
+},
   modules: {
-  }
+}
 })
