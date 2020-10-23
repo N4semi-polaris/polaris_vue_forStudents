@@ -13,12 +13,16 @@ export default new Vuex.Store({
   state: {
     userEmail: "",
     userAuthCode: "",
+    token: "",
+    refreshToken:"",
   },
   
   mutations: {
     setUserData(state, payload) {
       state.userEmail = payload.userEmail
       state.userAuthCode = payload.userAuthCode
+      state.token = payload.token
+      state.refreshToken = payload.refreshToken
     },
   },
   getters: {
@@ -27,6 +31,12 @@ export default new Vuex.Store({
     },
     getUserAuthCode() {
       return state.userAuthCode;
+    },
+    gettoken() {
+      return state.token;
+    },
+    getRefreshToken() {
+      return state.refreshToken;
     },
   },
     actions: {
