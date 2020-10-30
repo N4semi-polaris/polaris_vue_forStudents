@@ -13,31 +13,34 @@ export default new Vuex.Store({
   state: {
     userEmail: "",
     userAuthCode: "",
-    token: "",
-    refreshToken:"",
+    authToken: localStorage.getItem('token'),
   },
   
   mutations: {
     setUserData(state, payload) {
-      state.userEmail = payload.userEmail
-      state.userAuthCode = payload.userAuthCode
-      state.token = payload.token
-      state.refreshToken = payload.refreshToken
+      console.log("setUserDataが実行されたよ！");
+      state.userEmail = payload.email
+      state.userAuthCode = payload.authCode
+      console.log("payload.emailに代入されたよ！" + payload.email);
+      console.log("payload.authCodeに代入されたよ！"+payload.authCode);
+    },
+    
+    updateToken(state, newToken) {
+      // TODO: For security purposes, take localStorage out of the project.
+      localStorage.setItem('token', newToken);
+      state.authToken = newToken;
     },
   },
   getters: {
-    getUserEmail() {
+    getUserEmail(state) {
+      console.log("getUserEmailが実行されたよ！");
       return state.userEmail;
     },
-    getUserAuthCode() {
+    getUserAuthCode(state) {
+      console.log("getUserAuthCodeが実行されたよ！");
       return state.userAuthCode;
     },
-    gettoken() {
-      return state.token;
-    },
-    getRefreshToken() {
-      return state.refreshToken;
-    },
+    
   },
     actions: {
   },

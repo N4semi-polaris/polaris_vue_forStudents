@@ -56,19 +56,21 @@ export default {
     async handleClickSignIn() {
       try {
         const authCode = await this.$gAuth.getAuthCode();
-        console.log(authCode);
         if (!authCode) return null;
         this.isLogin = this.$gAuth.isAuthorized;
         var url = "http://localhost:8000/accounts/google/signup/";
         this.$axios.get(url, { params: { code: authCode } }).then(
           (response) => {
-            console.log(response);
+            response.data.authCode = authCode;
+            console.log(response.data);
+            this.$store.commit("setUserData", response.data);
+            console.log("保存した内容：" + this.$store.getters.getUserEmail);
+            console.log("保存した内容：" + this.$store.getters.getUserAuthCode);
           },
           (error) => {
             console.log(error);
           }
         );
-        this.$store.commit("setUserData", response);
         //console.log(googleUser)
         //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
         //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
