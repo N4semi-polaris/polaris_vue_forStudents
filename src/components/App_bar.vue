@@ -31,6 +31,9 @@
         <v-btn icon v-on:click="toHome" color="#ffc900">
             <v-icon>mdi-home</v-icon> <!-- Home -->
         </v-btn>
+        <v-btn icon v-on:click="logout" color="#ffc900">
+            <v-icon>mdi-logout</v-icon> <!-- Home -->
+        </v-btn>
         </v-app-bar>
     </div>
 </template>
@@ -45,6 +48,10 @@ export default {
         toHome:function(){
             this.$router.push({ name:'Home' });
         },
+        logout:function(){
+            this.$store.commit("logout");
+            this.$router.push({name :"Login", params: { redirect: this.$router.path }});
+        }
     }
 }
 </script>

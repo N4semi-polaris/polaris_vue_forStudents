@@ -1,20 +1,21 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import axios from 'axios';
 import createPersistedState from "vuex-persistedstate";
+import router from "@/router/index.js";
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   plugins: [createPersistedState({
     key: 'YorimichiApp',
-    paths: ['userEmail',"userAuthCode"],
+    paths: ['userEmail',"userAuthCode","authToken"],
     storage: window.sessionStorage
   })],
   state: {
     userEmail: "",
     userAuthCode: "",
-    authToken: localStorage.getItem('token'),
+    authToken: "",
   },
   mutations: {
     setUserData(state, payload) {
@@ -27,7 +28,7 @@ export default new Vuex.Store({
     logout(state){//googleのtokenが死んだ時にemailやcodeやauthTokenを削除する
       state.userEmail = "";
       state.userAuthCode = "";
-      localStorage.removeItem('token');
+      state.authToken = "";
     }
   },
   getters: {
@@ -53,13 +54,15 @@ export default new Vuex.Store({
         data.append('password', code);
         axios.post("http://localhost:8000/accounts/api-auth/obtain/", data).then(
           (response)=>{
-            localStorage.setItem('token', response.data.token);
+            this.state.authToken = response.data.token;
             return true;
           },
           (error) => {
             console.log("tokenの取得に失敗_401ならgoogleの期限切れを疑え: " +error);
             if(error.response.status == 401)this.$store.commit("logout");
-            this.$router.push({ name:'Login' });
+            if(router.path != '/login' || router.path != '/'){
+              router.push({ path:'/login' },()=>{},()=>{});
+            }
           }
         );
         return false;

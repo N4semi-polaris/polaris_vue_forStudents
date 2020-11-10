@@ -54,14 +54,14 @@ export default {
                         this.$store.commit("setUserData", response.data);
                         console.log("保存した内容：" + this.$store.getters.getUserEmail);
                         console.log("保存した内容：" + this.$store.getters.getUserAuthCode);
+                        this.$store.dispatch("obtainToken");
+                        this.$router.push(this.$route.query.redirect);
                     },
                     (error) => {
                         console.error("[error, axios]サインインに失敗: " +error);
+                        return null;
                     }
                 );
-                this.$store.dispatch("obtainToken");
-                console.log(this.$router.query.redirect);
-                this.$router.push(this.$route.query.redirect);
             } catch (error) {
                 console.error("[error]サインインに失敗: " + error);
             }
