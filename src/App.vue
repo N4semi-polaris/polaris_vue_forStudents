@@ -3,7 +3,7 @@
     <v-main>
       <Loading
         v-if="isLoading"
-        @complete-loading = "changeIsLoading"
+        @swich-isloading = "switchIsLoading"
       />
       <router-view v-else />
     </v-main>
@@ -17,10 +17,14 @@ import Loading from './components/Loading'
 export default {
   name: "App",
   data: ()=>({
-    isLoading: true,
+    isLoading: false,
   }),
+  mounted:function() {
+    var path = this.$router.path;
+    if(path === "/login")this.isLoading = false;
+  },
   methods: {
-    changeIsLoading: function(){
+    switchIsLoading: function(){
       this.isLoading = !this.isLoading;
     }
   },

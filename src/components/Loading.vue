@@ -9,13 +9,7 @@
       <v-row class="pa-3"><v-col /></v-row>
       <v-row class="justify-center" no-gutters>
         <v-col class="flex-grow-0">
-          <v-img
-            v-if="!isLogin"
-            :src="GoogleLogin"
-            width="200px"
-            @click.prevent="handleClickSignIn"
-          />
-          <v-progress-circular v-else indeterminate color="grey" :size="50" />
+          <v-progress-circular v-if="isLoading" indeterminate color="grey" :size="50" />
         </v-col>
       </v-row>
     </v-container>
@@ -24,62 +18,18 @@
 
 <script>
 import PolarisLogo from "@/assets/Polaris.png";
-import GoogleLogin from "@/assets/btn_google_signin_light.png";
 export default {
   name: "loading",
   components: {},
   data: () => ({
     PolarisLogo: PolarisLogo,
-    GoogleLogin: GoogleLogin,
-    isLogin: false,
+    isLoading: true,
   }),
   mounted: function () {
-    //ログインする必要がないとき、ログインをスキップさせる
-    //tokenがローカルストレージにあって、Emailを取得するAPIを正しくcallできたとき
-    //tokenがローカルストレージにあったが、Emailを取得するAPIを期限切れで利用できなかったとき
-    //tokenをrefreshしたら復活した場合
+    //email等のユーザデータがあるかどうか確認してなければLogin.vueへ飛ばす
+    //tokenが生きているかどうか試して、ダメならrefreshする
   },
   methods: {
-    /*
-        handleClickLogin() {//既にログイン済みならsuccess
-            this.$gAuth.getAuthCode().then((authCode) => {
-                //on success
-                //console.log("authCode", authCode);
-                //this.isLogin = this.$gAuth.isAuthorized
-                //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
-                //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
-                //this.$emit('complete-loading') //カレンダーを読み込み終わったら、カレンダーを表示
-            }).catch((error) => {
-                console.log("notLogin: "+error)
-            });
-        },*/
-    async handleClickSignIn() {
-      try {
-        const authCode = await this.$gAuth.getAuthCode();
-        if (!authCode) return null;
-        this.isLogin = this.$gAuth.isAuthorized;
-        var url = "http://localhost:8000/accounts/google/signup/";
-        this.$axios.get(url, { params: { code: authCode } }).then(
-          (response) => {
-            response.data.authCode = authCode;
-            console.log(response.data);
-            this.$store.commit("setUserData", response.data);
-            console.log("保存した内容：" + this.$store.getters.getUserEmail);
-            console.log("保存した内容：" + this.$store.getters.getUserAuthCode);
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-        //console.log(googleUser)
-        //this.$sotre.commit('setUserInfo', googleUser.getAuthResponse())
-        //カレンダーAPIを呼んで、取得したデータをpropsでApp.vueへ
-        //this.$emit('complete-loading') //カレンダーを読み込み終わったら、カレンダーを表示
-      } catch (error) {
-        console.error("[error]サインインに失敗: " + error);
-        return null;
-      }
-    },
     call_Calendar: function () {
       var params = {
         token: "",
