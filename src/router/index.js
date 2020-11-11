@@ -83,7 +83,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.authToken ) {
-    if (router.path != '/login' && router.path != '/')next({ name: 'Login', query:{redirect:to.fullpath}});
+    if (to.path != '/login' && to.path != '/') next({ path: '/login'});
   }else next();
 });
 
