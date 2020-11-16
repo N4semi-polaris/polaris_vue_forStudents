@@ -9,7 +9,12 @@
       <v-row class="pa-3"><v-col /></v-row>
       <v-row class="justify-center" no-gutters>
         <v-col class="flex-grow-0">
-          <v-progress-circular v-if="isLoading" indeterminate color="grey" :size="50" />
+          <v-progress-circular
+            v-if="isLoading"
+            indeterminate
+            color="grey"
+            :size="50"
+          />
         </v-col>
       </v-row>
     </v-container>
@@ -44,7 +49,6 @@ export default {
         }
       );
     },
-    call_refreshToken: function () {},
   },
 };
 </script>
