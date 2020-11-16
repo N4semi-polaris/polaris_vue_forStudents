@@ -48,7 +48,7 @@ export default new Vuex.Store({
       obtainToken(){
         var email = this.getters.getUserEmail;
         var code = this.getters.getUserAuthCode;
-        if(email.length < 0 && code.length < 0)this.$router.push({ name:'Login' });
+        if(email.length <= 0 || code.length <= 0)this.$router.push({ name:'Login' });
         let data = new URLSearchParams();
         data.append('email', email);
         data.append('password', code);
