@@ -22,8 +22,9 @@ export default new Vuex.Store({
       console.log("setUserDataが実行されたよ！");
       state.userEmail = payload.email
       state.userAuthCode = payload.authCode
-      console.log("payload.emailに代入されたよ！" + payload.email);
-      console.log("payload.authCodeに代入されたよ！"+payload.authCode);
+    },
+    setAuthToken(state,token) {
+      state.authToken = token;
     },
     logout(state){//googleのtokenが死んだ時にemailやcodeやauthTokenを削除する
       state.userEmail = "";
@@ -33,35 +34,42 @@ export default new Vuex.Store({
   },
   getters: {
     getUserEmail(state) {
-      console.log("getUserEmailが実行されたよ！");
+      //console.log("getUserEmailが実行されたよ！");
       return state.userEmail;
     },
     getUserAuthCode(state) {
-      console.log("getUserAuthCodeが実行されたよ！");
+      //console.log("getUserAuthCodeが実行されたよ！");
       return state.userAuthCode;
     },
-    getToken(state){
+    getToken(state) {
+      console.log("getTokenが実行されたよ！");
       return state.authToken;
     },
   },
     actions: {
-      obtainToken(){
+      obtainToken() {     
+        console.log("obtainToken()@store が実行されたよ！");
         var email = this.getters.getUserEmail;
         var code = this.getters.getUserAuthCode;
-        if(email.length <= 0 || code.length <= 0)this.$router.push({ name:'Login' });
+        if(email.length <= 0 || code.length <= 0) router.push({ name:'Login'});
         let data = new URLSearchParams();
         data.append('email', email);
         data.append('password', code);
         axios.post("http://localhost:8000/accounts/api-auth/obtain/", data).then(
-          (response)=>{
-            this.state.authToken = response.data.token;
+          (response) => {
+            this.commit('setAuthToken',response.data.token);
+            console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
+           /* if ( redirectPath != null) {
+              router.push({ path: redirectPath });
+            }else router.push({ path : '/'})*/
             return true;
+            
           },
           (error) => {
             console.log("tokenの取得に失敗_401ならgoogleの期限切れを疑え: " +error);
             if(error.response.status == 401)this.$store.commit("logout");
-            if(router.path != '/login' || router.path != '/'){
-              router.push({ path:'/login' },()=>{},()=>{});
+            if(router.path !== '/login'){
+              router.push({ path:'/login' });
             }
           }
         );

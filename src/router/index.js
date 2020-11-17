@@ -82,9 +82,11 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.authToken ) {
-    if (to.path != '/login') next({ path: '/login'});
-  }else next();
+  if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.authToken) {
+    if (to.path !== '/login') {
+      next({ path: '/login', query: { redirect: to.fullPath } });
+    } else { next(); }
+  }else { next(); }
 });
 
-export default router
+export default router 
