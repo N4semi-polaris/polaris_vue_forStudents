@@ -52,22 +52,7 @@ export default {
     value: moment().format("yyyy-MM-DD"),
     weekdays: [0, 1, 2, 3, 4, 5, 6],
     ready: false,
-    events: [
-      {
-        name: "Free", //nameは空欄でも大丈夫そう
-        start: moment("2020-10-16 10:10").toDate(), //UIデザインを忠実に再現するなら
-        end: moment("2020-10-16 12:20").toDate(), //時刻は非表示にしたいけどできるのかしら..
-        color: "#ffc900",
-        timed: true, //終日ならfalse
-      },
-      {
-        name: "Free",
-        start: moment("2020-10-17 15:00").toDate(),
-        end: moment("2020-10-17 16:00").toDate(),
-        color: "#ffc900",
-        timed: true,
-      },
-    ],
+    events: [],
   }),
   mounted() {
     //this.$refs.calendar.scrollToTime('18:00');
@@ -75,6 +60,37 @@ export default {
     this.scrollToTime();
     this.updateTime();
     this.setWeekdays();
+    this.$axios.get("/calendar/",{
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "JWT " + this.$store.getters.getToken,
+      },
+      data: {},
+    }).then(
+      (response)=>{
+        for(var d of response.data){
+          var colorAllocater = function (type){
+            if(type==4)return "#778899";
+            else if(type==1)return "#ffc900";//空きブロック
+            else if(type==2)return "0575e6";
+            else return "";
+          }
+          this.events.push({//idとdiscriptionとlocationは使われていない
+            id: d.google_id ?? "",//左辺がnullなら右辺を返す
+            name: d.summary ?? "",
+            discription: d.discription ?? "",
+            location: d.location ?? "",
+            start: moment(d.bk.start, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
+            end: moment(d.bk.end, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
+            color: colorAllocater(d.bk.blockType),
+            timed: true,
+          });
+        }
+      },
+      (error)=>{
+        if(error.response.status == 401)this.$store.commit("logout");
+      }
+    )
   },
   computed: {
     title() {
