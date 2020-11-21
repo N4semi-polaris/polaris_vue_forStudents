@@ -72,7 +72,7 @@ export default {
           var colorAllocater = function (type){
             if(type==4)return "#778899";
             else if(type==1)return "#ffc900";//空きブロック
-            else if(type==2)return "0575e6";
+            else if(type==2)return "#0575e6";
             else return "";
           }
           this.events.push({//idとdiscriptionとlocationは使われていない
