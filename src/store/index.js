@@ -19,7 +19,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setUserData(state, payload) {
-      console.log("setUserDataが実行されたよ！");
+      //console.log("setUserDataが実行されたよ！");
       state.userEmail = payload.email
       state.userAuthCode = payload.authCode
     },
@@ -42,12 +42,12 @@ export default new Vuex.Store({
       return state.userAuthCode;
     },
     getToken(state) {
-      console.log("getTokenが実行されたよ！");
+      //console.log("getTokenが実行されたよ！");
       return state.authToken;
     },
   },
     actions: {
-      obtainToken() {     
+       async obtainToken() {//jwt(drf)のtokenを取得/googleのトークン切れ確認     
         console.log("obtainToken()@store が実行されたよ！");
         var email = this.getters.getUserEmail;
         var code = this.getters.getUserAuthCode;
@@ -55,14 +55,14 @@ export default new Vuex.Store({
         let data = new URLSearchParams();
         data.append('email', email);
         data.append('password', code);
-        axios.post("http://localhost:8000/accounts/api-auth/obtain/", data).then(
-          (response) => {
-            this.commit('setAuthToken',response.data.token);
+        await axios.post("http://localhost:8000/accounts/api-auth/obtain/", data).then(
+        (response) => {
+          this.commit('setAuthToken',response.data.token);
             console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
            /* if ( redirectPath != null) {
               router.push({ path: redirectPath });
             }else router.push({ path : '/'})*/
-            return true;
+           return true;
             
           },
           (error) => {

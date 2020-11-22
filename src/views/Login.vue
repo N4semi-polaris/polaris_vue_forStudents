@@ -28,20 +28,24 @@ export default {
   name: "Login",
   components: {},
   mounted: function () {
+    console.log("Login.vueのmountedが実行されたよ！");
     if (this.$store.getters.getUserEmail !== "") {
-      const isSuccess = this.$store.dispatch("obtainToken");
+      //store内のemailが入ってたら
+      var isSuccess = this.$store.dispatch("obtainToken"); //googleのトークン切れを確認
       if (isSuccess) {
-        this.$router.push({ name: "Home" });
+        //トークン切れてないなら
+        this.$router.push({ name: "Home" }); //そのままHOMEへ
       }
     }
   },
+
   data: () => ({
     PolarisLogo: PolarisLogo,
     GoogleLogin: GoogleLogin,
   }),
   methods: {
     async handleClickSignIn() {
-      let isSuccess = false;
+      //codeとemailを再度取得保存・googleのトークンとcodeをdrfに保存・drfのトークンを取得したのち保存
       try {
         console.log("handleClickSignIn()が実行されたよ！");
         const authCode = await this.$gAuth.getAuthCode();
@@ -52,12 +56,17 @@ export default {
           (response) => {
             response.data.authCode = authCode;
             console.log(response.data);
-            this.$store.commit("setUserData", response.data);
-            isSuccess = this.$store.dispatch("obtainToken");
-            console.log(
-              "tokenの取得に成功@Login.vue:" + this.$store.getters.getToken
-            );
-            //this.$router.push({ path: "/" });
+            this.$store.commit("setUserData", response.data); //codeとemailをvuexに保存
+
+            console.log("handleClickSignIn()内のbtainTokenが実行されたよ！:1");
+            const isSuccess = this.$store.dispatch("obtainToken");
+            console.log("handleClickSignIn()内のbtainTokenが実行されたよ！:2");
+
+            if (isSuccess) {
+              console.log("handleClickSignIn内のif文が実行されたよ！");
+              this.$router.push({ name: "Home" }); //そのままHOMEへ
+              console.log("handleClickSignInでHomeにrouter.pushされたよ！");
+            }
             /*if ("redirect" in this.$router.query) {
               console.log("redirectのifが実行");
               this.$router.push(this.$router.query.redirect);
@@ -74,7 +83,6 @@ export default {
       } catch (error) {
         console.error("[error]サインインに失敗: " + error);
       }
-      if (isSuccess) this.$router.push({ path: "/" });
     },
   },
 };
