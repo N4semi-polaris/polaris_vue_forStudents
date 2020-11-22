@@ -9,13 +9,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState({
     key: 'YorimichiApp',
-    paths: ['userEmail',"userAuthCode","authToken"],
+    paths: ['userEmail',"userAuthCode","authToken","isLogin"],
     storage: window.sessionStorage
   })],
   state: {
     userEmail: "",
     userAuthCode: "",
     authToken: "",
+    isLogin: false,
   },
   mutations: {
     setUserData(state, payload) {
@@ -26,10 +27,14 @@ export default new Vuex.Store({
     setAuthToken(state,token) {
       state.authToken = token;
     },
+    setIsLogin(state,isLogin) {
+      state.isLogin = isLogin;
+    },
     logout(state){//googleのtokenが死んだ時にemailやcodeやauthTokenを削除する
       state.userEmail = "";
       state.userAuthCode = "";
       state.authToken = "";
+      state.isLogin = false;
     }
   },
   getters: {
@@ -45,6 +50,9 @@ export default new Vuex.Store({
       //console.log("getTokenが実行されたよ！");
       return state.authToken;
     },
+    getIsLogin(state) {
+      return state.isLogin;
+    },
   },
     actions: {
        async obtainToken() {//jwt(drf)のtokenを取得/googleのトークン切れ確認     
@@ -59,11 +67,8 @@ export default new Vuex.Store({
         (response) => {
           this.commit('setAuthToken',response.data.token);
             console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
-           /* if ( redirectPath != null) {
-              router.push({ path: redirectPath });
-            }else router.push({ path : '/'})*/
-           return true;
-            
+            this.commit("setIsLogin", true)
+            console.log("obtainTokenでログイン状態の取得に成功: " + this.getters.getIsLogin);
           },
           (error) => {
             console.log("tokenの取得に失敗_401ならgoogleの期限切れを疑え: " +error);
@@ -73,7 +78,6 @@ export default new Vuex.Store({
             }
           }
         );
-        return false;
       },
   },
     modules: {

@@ -28,12 +28,18 @@ export default {
   name: "Login",
   components: {},
   mounted: function () {
-    console.log("Login.vueのmountedが実行されたよ！");
+    //console.log("Login.vueのmountedが実行されたよ！");
     if (this.$store.getters.getUserEmail !== "") {
       //store内のemailが入ってたら
-      var isSuccess = this.$store.dispatch("obtainToken"); //googleのトークン切れを確認
+      const isSuccess = this.$store.dispatch("obtainToken"); //googleのトークン切れを確認
+      //console.log("isSuccessのなかみ@mounted" + isSuccess);
       if (isSuccess) {
         //トークン切れてないなら
+        /*console.log(
+          "isSuccessのなかみ@mounted" +
+            isSuccess +
+            "でif文に入ってHOMEへ飛ばされたよ！"
+        );*/
         this.$router.push({ name: "Home" }); //そのままHOMEへ
       }
     }
@@ -57,23 +63,7 @@ export default {
             response.data.authCode = authCode;
             console.log(response.data);
             this.$store.commit("setUserData", response.data); //codeとemailをvuexに保存
-
-            console.log("handleClickSignIn()内のbtainTokenが実行されたよ！:1");
-            const isSuccess = this.$store.dispatch("obtainToken");
-            console.log("handleClickSignIn()内のbtainTokenが実行されたよ！:2");
-
-            if (isSuccess) {
-              console.log("handleClickSignIn内のif文が実行されたよ！");
-              this.$router.push({ name: "Home" }); //そのままHOMEへ
-              console.log("handleClickSignInでHomeにrouter.pushされたよ！");
-            }
-            /*if ("redirect" in this.$router.query) {
-              console.log("redirectのifが実行");
-              this.$router.push(this.$router.query.redirect);
-            } else {
-              console.log("redirectのelseが実行");
-              this.$router.push({ name: "Home" });
-            }*/
+            this.enterPage();
           },
           (error) => {
             console.error("[error, axios]サインインに失敗: " + error);
@@ -82,6 +72,18 @@ export default {
         );
       } catch (error) {
         console.error("[error]サインインに失敗: " + error);
+      }
+    },
+    async enterPage() {
+      console.log("enterPage()内のobtainTokenが実行される前だよ！");
+      await this.$store.dispatch("obtainToken");
+      console.log("enterPage()内のbtainoTokenが実行された後よ！");
+
+      if (this.$store.getters.getIsLogin) {
+        this.$router.push({ name: "Home" }); //そのままHOMEへ
+        //console.log("enterPage()でHomeにrouter.pushされたよ！");
+      } else {
+        console.log("enterPage()内のelse文を実行してるよ！");
       }
     },
   },
