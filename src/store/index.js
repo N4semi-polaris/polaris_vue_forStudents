@@ -55,8 +55,8 @@ export default new Vuex.Store({
     },
   },
     actions: {
-       async obtainToken() {//jwt(drf)のtokenを取得/googleのトークン切れ確認     
-        console.log("obtainToken()@store が実行されたよ！");
+       async obtainToken() {//jwt(drf)のtokenを取得&googleのトークン切れ確認     
+        //console.log("obtainToken()@store が実行されたよ！");
         var email = this.getters.getUserEmail;
         var code = this.getters.getUserAuthCode;
         if(email.length <= 0 || code.length <= 0) router.push({ name:'Login'});
@@ -64,10 +64,10 @@ export default new Vuex.Store({
         data.append('email', email);
         data.append('password', code);
         await axios.post("http://localhost:8000/accounts/api-auth/obtain/", data).then(
-        (response) => {
-          this.commit('setAuthToken',response.data.token);
+          (response) => {
+            this.commit('setAuthToken', response.data.token);
             console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
-            this.commit("setIsLogin", true)
+            this.commit("setIsLogin", true);
             console.log("obtainTokenでログイン状態の取得に成功: " + this.getters.getIsLogin);
           },
           (error) => {

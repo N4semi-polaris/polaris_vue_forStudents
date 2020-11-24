@@ -75,6 +75,8 @@ export default {
   },
 
   data: () => ({
+    selectTime: [],
+    selectWalkSpeed: [],
     items_Time: ["5分前", "10分前", "15分前", "30分前", "1時間前"],
     items_WalkSpeed: ["ゆっくり", "少しゆっくり", "ゆっくり急いで", "急いで"],
     adress: "",
@@ -89,6 +91,6 @@ export default {
 
 <style scoped>
 .InitialSetting {
-  font-family: 'M PLUS Rounded 1c';
+  font-family: "M PLUS Rounded 1c";
 }
 </style>

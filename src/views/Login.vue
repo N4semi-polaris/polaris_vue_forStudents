@@ -51,9 +51,9 @@ export default {
   }),
   methods: {
     async handleClickSignIn() {
-      //codeとemailを再度取得保存・googleのトークンとcodeをdrfに保存・drfのトークンを取得したのち保存
+      //codeとemailを取得保存&googleのトークンとcodeをdrfに保存&drfのトークンを取得したのち保存
       try {
-        console.log("handleClickSignIn()が実行されたよ！");
+        //console.log("handleClickSignIn()が実行されたよ！");
         const authCode = await this.$gAuth.getAuthCode();
         if (authCode === null) return;
         let data = new URLSearchParams();
@@ -61,8 +61,8 @@ export default {
         this.$axios.post("/accounts/google/signup/", data).then(
           (response) => {
             response.data.authCode = authCode;
-            console.log(response.data);
-            this.$store.commit("setUserData", response.data); //codeとemailをvuexに保存
+            //console.log(response.data);
+            this.$store.commit("setUserData", response.data); //codeとemailを取得→vuexに保存
             this.enterPage();
           },
           (error) => {
@@ -74,13 +74,13 @@ export default {
         console.error("[error]サインインに失敗: " + error);
       }
     },
+
     async enterPage() {
       console.log("enterPage()内のobtainTokenが実行される前だよ！");
-      await this.$store.dispatch("obtainToken");
-      console.log("enterPage()内のbtainoTokenが実行された後よ！");
-
+      await this.$store.dispatch("obtainToken"); //codeとemailを使用してtokenを取得→vuexに保存
+      console.log("enterPage()内のbtainoTokenが実行された後だよ！");
       if (this.$store.getters.getIsLogin) {
-        this.$router.push({ name: "Home" }); //そのままHOMEへ
+        this.$router.push({ name: "Home" });
         //console.log("enterPage()でHomeにrouter.pushされたよ！");
       } else {
         console.log("enterPage()内のelse文を実行してるよ！");
