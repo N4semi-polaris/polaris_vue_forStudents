@@ -60,35 +60,15 @@ export default {
     this.scrollToTime();
     this.updateTime();
     this.setWeekdays();
-    this.$axios.get("/calendar/",{
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "JWT " + this.$store.getters.getToken,
-      },
-      data: {},
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "JWT " + this.$store.getters.getToken,
+    }
+    this.$axios.post("/calendar/",new URLSearchParams(),{
+      headers: headers,
     }).then(
-      (response)=>{
-        for(var d of response.data){
-          var colorAllocater = function (type){
-            if(type==4)return "#778899";
-            else if(type==1)return "#ffc900";//空きブロック
-            else if(type==2)return "#0575e6";
-            else return "";
-          }
-          this.events.push({//idとdiscriptionとlocationは使われていない
-            id: d.google_id ?? "",//左辺がnullなら右辺を返す
-            name: d.summary ?? "",
-            discription: d.discription ?? "",
-            location: d.location ?? "",
-            start: moment(d.bk.start, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
-            end: moment(d.bk.end, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
-            color: colorAllocater(d.bk.blockType),
-            timed: true,
-          });
-        }
-      },
-      (error)=>{
-        if(error.response.status == 401)this.$store.commit("logout");
+      ()=>{
+        this.setEvents();
       }
     )
   },
@@ -120,6 +100,40 @@ export default {
     },
     getCurrentTime() {
       return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0;
+    },
+    setEvents(){//drfにアクセスして、カレンダーデータを取得する(更新はしない取得だけ)
+      const headers = {
+        "Content-Type": "application/json",
+        "Authorization": "JWT " + this.$store.getters.getToken,
+      }
+      this.$axios.get("/calendar/",{
+        headers: headers,
+        data: {},
+      }).then(
+        (response)=>{
+          for(var d of response.data){
+            var colorAllocater = function (type){
+              if(type==4)return "#778899";
+              else if(type==1)return "#ffc900";//空きブロック
+              else if(type==2)return "#0575e6";
+              else return "";
+            }
+            this.events.push({//idとdiscriptionとlocationは使われていない
+              id: d.google_id ?? "",//左辺がnullなら右辺を返す
+              name: d.summary ?? "",
+              discription: d.discription ?? "",
+              location: d.location ?? "",
+              start: moment(d.bk.start, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
+              end: moment(d.bk.end, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
+              color: colorAllocater(d.bk.blockType),
+              timed: true,
+            });
+          }
+        },
+        (error)=>{
+          if(error.response.status == 401)this.$store.commit("logout");
+        }
+      )
     },
     scrollToTime() {
       const time = this.getCurrentTime();
