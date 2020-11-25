@@ -50,7 +50,7 @@
             </v-col></v-row>
             <v-row><v-col>
             <v-datetime-picker
-            label="締切時間"
+            label="締切日時"
             v-model="tasktime"
           ></v-datetime-picker>
             </v-col></v-row>
@@ -167,7 +167,7 @@ export default {
     timerequiredRules: [
       v => !!v || '必ず入力してください！',
     ],
-    task_type: [ 'スーパー・コンビニ', 'ファッション', '本・文具', '映画館', '飲食店', 'その他' ],
+    task_type: [ '飲食店', '買い物', 'レジャー・エンタメ施設', 'その他' ],
     datetime: moment(new Date).format('yyyy-MM-DD HH:mm'),
     //今日の日付を分単位まで取得
   }),

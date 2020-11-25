@@ -23,7 +23,7 @@
                                 <div class="place_name"><p>{{ place_name }}</p></div>
                             </v-row><!-- 場所 -->
                             <v-row>
-                                <div class="deadline"><p v-bind:style="{color: selectColor()}">{{ deadLine() }}まで</p></div>
+                                <div class="deadline"><p v-bind:style="{color: selectColor()}">{{ deadLine() }}</p></div>
                             </v-row><!-- 〆切日 -->
                         </v-col>
                     </v-row>
@@ -61,9 +61,9 @@ export default {
     props: ['task_name', 'place_name', 'task_type', 'deadline'],
     data: () => ({
         /* 入力データと比較するためのリスト */
-        task_type_list: [ 'スーパー・コンビニ', 'ファッション', '本・文具', '映画館', '飲食店', 'その他' ],
-        task_icon_list: [ 'mdi-shopping', 'mdi-store', 'mdi-book-open-blank-variant', 'mdi-movie-open', 'mdi-silverware-fork-knife', 'mdi-star' ],
-        task_color_list: [ '#210e67', '#032b8d', '#033ba0', '#044eb7', '#0461cd', '#0575e6', '#ff6340' /*赤色*/, '#778899' /*灰色*/ ],
+        task_type_list: [ '飲食店', '買い物', 'レジャー・エンタメ施設', 'その他' ],
+        task_icon_list: [ 'mdi-silverware-fork-knife', 'mdi-shopping', 'mdi-stadium-variant', 'mdi-star' ],
+        task_color_list: [ '#210e67', '#033ba0', '#044eb7', '#0575e6', '#ff6340' /*赤色*/, '#778899' /*灰色*/ ],
 
         options: { animation: 200 },
         today: moment().format("YYYY-MM-DD hh:mm"),
@@ -83,7 +83,11 @@ export default {
     },
     methods :{
         compareDeadLine: function (){ //今日の日付と〆切日の差を計算する
-            return moment(this.deadline).diff(moment(this.today), 'days');
+            var diff_days = null;
+            if (this.deadline.length != 0) {
+                diff_days = moment(this.deadline).diff(moment(this.today), 'days');
+            }
+            return diff_days;
         },
         selectColor: function(){ /* テーマカラーを選ぶ */
             var key = 100;
@@ -91,9 +95,11 @@ export default {
                 if (this.task_type === this.task_type_list[i]) key = i;
             }
             if (this.compareDeadLine() >= 0 && this.compareDeadLine() <= 3) {
-                key = 6;
+                if (this.deadline.length != 0) {
+                    key = 4;
+                }
             } else if (this.compareDeadLine() < 0) {
-                key = 7;
+                key = 5;
             }
             return this.task_color_list[key];
         },
@@ -103,6 +109,8 @@ export default {
                 answer = "明日";
             } else if (this.compareDeadLine() == 0) {
                 answer = "今日";
+            } else if (this.compareDeadLine() == null) {
+                answer = "なし"
             } else {
                 answer = moment(this.deadline).format('M/D');
             }
