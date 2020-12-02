@@ -28,7 +28,7 @@ export default {
   name: "Login",
   components: {},
   mounted: function () {
-    //console.log("Login.vueのmountedが実行されたよ！");
+    console.log("Login.vueのmountedが実行されたよ！");
     if (this.$store.getters.getUserEmail !== "") {
       //store内のemailが入ってたら
       const isSuccess = this.$store.dispatch("obtainToken"); //googleのトークン切れを確認

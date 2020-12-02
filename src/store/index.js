@@ -63,7 +63,7 @@ export default new Vuex.Store({
         let data = new URLSearchParams();
         data.append('email', email);
         data.append('password', code);
-        await axios.post("http://localhost:8000/accounts/api-auth/obtain/", data).then(
+        await axios.post("/accounts/api-auth/obtain/", data).then(
           (response) => {
             this.commit('setAuthToken', response.data.token);
             console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
@@ -79,6 +79,31 @@ export default new Vuex.Store({
           }
         );
       },
+      checkTokenExpiration() {//12/1_未完成(ページ遷移毎に実行されるがレスポンスが400しかこない)
+        console.log("checkTokenExpirationが実行されたよ！");
+        const headers = { "Content-Type": "application/json" };
+        let data = new URLSearchParams();
+        data.append("token", this.getters.getToken);
+        //let data = { "token": this.getters.getToken };
+        axios
+          .post("/accounts/api-auth/verify/", data, { headers: headers })
+          .then(
+            //console.log("response.status = " + headers["status"]);
+        (response) => {   
+              if (response.headers.status == 200) { console.log("tokenは有効だと判断されたよ！"); }         
+          },
+          (error) => {
+            console.log("checkTokenExpiration()のerrorに入ったよ！");
+            console.log("error.response.status = "+error.response.status);
+            if (error.response.status == 400) { console.log("tokenは有効期限切れ以外のエラーだと判断されたよ！"); }
+            else if (error.response.status == 401) {
+              console.log("tokenは有効期限切れだと判断されたよ！");
+             this.$store.commit("logout");
+            }
+          }
+           
+        );
+    },
   },
     modules: {
   }
