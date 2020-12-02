@@ -64,8 +64,8 @@ const routes = [{
     component: () => import('../views/SettingHomeTime'),
     meta: { requiresAuth: true }
   },
-]
 
+]
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -73,7 +73,9 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.authToken) {
+  console.log("router.beforeEachが実行されたよ！");
+  Store.dispatch("checkTokenExpiration");
+  if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.isLogin) {
     if (to.path !== '/login') {
       next({ path: '/login', query: { redirect: to.fullPath } });
     } else { next(); }
