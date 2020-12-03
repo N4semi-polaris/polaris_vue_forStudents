@@ -28,18 +28,13 @@ export default {
   name: "Login",
   components: {},
   mounted: function () {
+    //いらないかも
     console.log("Login.vueのmountedが実行されたよ！");
     if (this.$store.getters.getUserEmail !== "") {
       //store内のemailが入ってたら
-      const isSuccess = this.$store.dispatch("obtainToken"); //googleのトークン切れを確認
-      //console.log("isSuccessのなかみ@mounted" + isSuccess);
+      const isSuccess = this.$store.dispatch("checkTokenExpiration"); //googleのトークン切れを確認
+      console.log("mountedのcheckTokenExpirationの戻り値：" + isSuccess);
       if (isSuccess) {
-        //トークン切れてないなら
-        /*console.log(
-          "isSuccessのなかみ@mounted" +
-            isSuccess +
-            "でif文に入ってHOMEへ飛ばされたよ！"
-        );*/
         this.$router.push({ name: "Home" }); //そのままHOMEへ
       }
     }

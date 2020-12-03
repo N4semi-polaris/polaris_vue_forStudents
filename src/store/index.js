@@ -63,48 +63,42 @@ export default new Vuex.Store({
         let data = new URLSearchParams();
         data.append('email', email);
         data.append('password', code);
-        await axios.post("/accounts/api-auth/obtain/", data).then(
-          (response) => {
+        await axios.post("/accounts/api-auth/obtain/", data)
+          .then(response => {
             this.commit('setAuthToken', response.data.token);
             console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
             this.commit("setIsLogin", true);
             console.log("obtainTokenでログイン状態の取得に成功: " + this.getters.getIsLogin);
-          },
-          (error) => {
-            console.log("tokenの取得に失敗_401ならgoogleの期限切れを疑え: " +error);
-            if(error.response.status == 401)this.$store.commit("logout");
+          })
+          .catch(error => {
+            //console.log("tokenの取得に失敗_401ならgoogleの期限切れを疑え: " + error);
+            console.log("tokenの取得に失敗: " +error);
+            /*if(error.response.status == 401)this.$store.commit("logout");
             if(router.path !== '/login'){
               router.push({ path:'/login' });
-            }
-          }
-        );
+            }*/
+          });
       },
-      checkTokenExpiration() {//12/1_未完成(ページ遷移毎に実行されるがレスポンスが400しかこない)
-        //12_3追記(headers を指定しなければ無事に200が返ってくるようになった)
+
+      checkTokenExpiration() {//12_3追記(headers を指定しなければ無事に200が返ってくるようになった)
         console.log("checkTokenExpirationが実行されたよ！");
         //const headers = {"content-type": "application/json"};
         let data = new URLSearchParams();
         data.append("token", this.getters.getToken);
-        //console.log("dataの中身："+data);
         //let data = { "token": this.getters.getToken };
-        axios
-          .post("/accounts/api-auth/verify/", data)
+        axios.post("/accounts/api-auth/verify/", data)
           //.post("/accounts/api-auth/verify/", data,{ headers: {"content-type": "application/json"}})
           .then(response => {
-            //let isAlive = response.headers['connection'];
             if (response.status == 200) { console.log("tokenは有効だと判断されたよ！"); }
-            //if (isAlive == "keep-alive") { console.log("tokenは有効だと判断されたよ！"); }
           })
           .catch(error => {
             console.log("checkTokenExpiration()のerrorに入ったよ！");
-            console.log("error.response.status = " + error.response.status);
             if (error.response.status == 400) { console.log("tokenは有効期限切れ以外のエラーだと判断されたよ！"); }
             else if (error.response.status == 401) {
               console.log("tokenは有効期限切れだと判断されたよ！");
               this.$store.commit("logout");
             }
-          })
-          .then(() => { console.log("response.status = " + data.response.status) });
+          });
     },
   },
     modules: {

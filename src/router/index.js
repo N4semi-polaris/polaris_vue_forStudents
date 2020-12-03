@@ -72,9 +72,10 @@ const router = new VueRouter({
   routes
 })
 
+//以下ページ遷移毎の処理
 router.beforeEach((to, from, next) => {
   console.log("router.beforeEachが実行されたよ！");
-  Store.dispatch("checkTokenExpiration");
+  Store.dispatch("checkTokenExpiration");//tokenの期限切れを確認するアクションを実行
   if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.isLogin) {
     if (to.path !== '/login') {
       next({ path: '/login', query: { redirect: to.fullPath } });
