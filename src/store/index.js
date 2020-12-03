@@ -80,29 +80,31 @@ export default new Vuex.Store({
         );
       },
       checkTokenExpiration() {//12/1_未完成(ページ遷移毎に実行されるがレスポンスが400しかこない)
+        //12_3追記(headers を指定しなければ無事に200が返ってくるようになった)
         console.log("checkTokenExpirationが実行されたよ！");
-        const headers = { "Content-Type": "application/json" };
+        //const headers = {"content-type": "application/json"};
         let data = new URLSearchParams();
         data.append("token", this.getters.getToken);
+        //console.log("dataの中身："+data);
         //let data = { "token": this.getters.getToken };
         axios
-          .post("/accounts/api-auth/verify/", data, { headers: headers })
-          .then(
-            //console.log("response.status = " + headers["status"]);
-        (response) => {   
-              if (response.headers.status == 200) { console.log("tokenは有効だと判断されたよ！"); }         
-          },
-          (error) => {
+          .post("/accounts/api-auth/verify/", data)
+          //.post("/accounts/api-auth/verify/", data,{ headers: {"content-type": "application/json"}})
+          .then(response => {
+            //let isAlive = response.headers['connection'];
+            if (response.status == 200) { console.log("tokenは有効だと判断されたよ！"); }
+            //if (isAlive == "keep-alive") { console.log("tokenは有効だと判断されたよ！"); }
+          })
+          .catch(error => {
             console.log("checkTokenExpiration()のerrorに入ったよ！");
-            console.log("error.response.status = "+error.response.status);
+            console.log("error.response.status = " + error.response.status);
             if (error.response.status == 400) { console.log("tokenは有効期限切れ以外のエラーだと判断されたよ！"); }
             else if (error.response.status == 401) {
               console.log("tokenは有効期限切れだと判断されたよ！");
-             this.$store.commit("logout");
+              this.$store.commit("logout");
             }
-          }
-           
-        );
+          })
+          .then(() => { console.log("response.status = " + data.response.status) });
     },
   },
     modules: {
