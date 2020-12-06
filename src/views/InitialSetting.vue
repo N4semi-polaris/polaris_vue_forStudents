@@ -80,6 +80,7 @@ export default {
       choices:{1:"急いで", 2:"少し急いで", 3:"少しゆっくり", 4:"ゆっくり"},
       name:"typeOfWalkSpeed", selected:2},
     adress: "",
+    spots:[{code:222,name:"",selected:false}],//こんな感じのやつを想定
     spot_1: false,
     spot_2: false,
     spot_3: false,
