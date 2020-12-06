@@ -31,13 +31,15 @@
                     :value="item"
                     color="#0461cd"
                     active-class=""
+                    v-on:click="switch_itemVal(item)"
                   >
                     <template v-slot:default="{ active }">
                       <v-list-item-content>
-                        <v-list-item-title v-text="item"></v-list-item-title>
+                        <v-list-item-title v-text="item.displyname"></v-list-item-title>
                       </v-list-item-content>
                       <v-list-item-action>
                         <v-checkbox
+                          v-model="item.check"
                           :input-value="active"
                           color="#044eb7"
                         ></v-checkbox>
@@ -118,11 +120,31 @@ export default {
     App_var,
   },
   data: () => ({
-    items: ["新幹線", "有料特急", "空路", "高速バス", "路線/連絡バス"],
+    items: [
+      {displyname:"新幹線", name:"isShin", check:false},
+      {displyname:"有料特急", name:"isExTrain", check:false},
+      {displyname:"空路", name:"isAirPlane", check:false},
+      {displyname:"高速バス", name:"isHighwayBus", check:false},
+      {displyname:"路線/連絡バス", name:"isBus", check:false}],
     model: [],
     disabled1: false,
     disabled2: false,
   }),
+  mounted(){
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "JWT " + this.$store.getters.getToken,
+    }
+    this.$axios.get("/accounts/setting/transportation/",{
+      headers: headers, data: {},
+    }).then(
+      (response)=>{
+        for(var i of this.items)i.check = response.data[0][i.name]
+      },
+      (error)=>{
+        if(error.response.status == 401)this.$store.commit("logout");
+      })
+  },
   methods: {
     toFavoriteSpotPage: function () {
       this.$router.push({ name: "FavoriteSpot" });
@@ -133,6 +155,16 @@ export default {
     toSettingHomeTime: function () {
       this.$router.push({ name: "SettingHomeTime" });
     },
+    switch_itemVal: function(item) {
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken,}
+      var data = {[item['name'].toString()]: item['check']};
+      this.$axios.post("/accounts/setting/transportation/",data,{
+        headers: headers,
+      }).then(
+        (error)=>{
+          if(error.response.status == 401)this.$store.commit("logout");
+        })
+    }
   },
 };
 </script>
