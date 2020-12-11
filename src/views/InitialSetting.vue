@@ -13,6 +13,15 @@
               <v-checkbox v-model="spot_3" label="レジャー施設"></v-checkbox>
               <v-checkbox v-model="spot_4" label="神社・寺院"></v-checkbox>
               <v-checkbox v-model="spot_5" label="カフェ"></v-checkbox>
+
+              <v-select
+                v-model="selected"
+                :items="items_Spot"
+                item-text="category"
+                item-value="name"
+                label="スポット選択"
+              >
+              </v-select>
             </v-col>
           </v-row>
 
@@ -88,99 +97,103 @@ export default {
       selected: 2,
     },
     adress: "",
-    selectedSpotKey: "",
-    selectedSpotItem: "",
-    items_spot: {
-      Cafe: [
-        { name: "飲食がメインのカフェ・喫茶店" },
-        { name: "軽食(パンケーキ、個人経営ファストフード等)" },
-        { name: "その他のカフェ(動物カフェ、コンセプトカフェ等)" },
-      ],
-      Shopping: [
-        { name: "ドラッグストア" },
-        { name: "家電" },
-        { name: "携帯電話販売店" },
-        { name: "デパート、百貨店" },
-        { name: "ショッピングセンター" },
-        { name: "アウトレットショップ" },
-        { name: "ホームセンター" },
-        { name: "商店街" },
-        { name: "コンビニ、スーパー" },
-        { name: "リサイクル、ディスカウントショップ" },
-        { name: "家具屋" },
-        { name: "日用雑貨、インテリア用品" },
-        { name: "文房具、事務用品" },
-        { name: "フラワーショップ" },
-        { name: "100円ショップ" },
-        { name: "作業服屋" },
-        { name: "CD、DVD、ビデオ屋" },
-        { name: "書店" },
-        { name: "玩具屋" },
-        { name: "煙草屋" },
-        { name: "アパレルショップ、アクセサリーショップ、時計屋" },
-        { name: "食品専門店" },
-        { name: "スポーツショップ" },
-      ],
-      Entertainment: [
-        { name: "スポーツ施設" },
-        { name: "麻雀" },
-        { name: "ゲームセンター" },
-        { name: "パチンコ、パチスロ" },
-        { name: "ボウリング場" },
-        { name: "ビリヤード" },
-        { name: "遊園地、テーマパーク" },
-        { name: "動物園" },
-        { name: "水族館" },
-        { name: "植物園" },
-        { name: "海水浴場、遊泳場" },
-        { name: "キャンプ場" },
-        { name: "アウトドア施設" },
-        { name: "ボート、ヨット" },
-        { name: "釣り堀、釣り船" },
-        { name: "プール" },
-        { name: "観光農園" },
-        { name: "映画館" },
-        { name: "美術館" },
-        { name: "画廊" },
-        { name: "博物館、科学館" },
-        { name: "コンサートホール" },
-        { name: "ライブハウス" },
-        { name: "公園" },
-        { name: "道の駅" },
-        { name: "パーキングエリア" },
-        { name: "ドライブイン" },
-      ],
-      Living: [
-        { name: "マッサージ、整体、治療院" },
-        { name: "ベビー用品、子供服" },
-        { name: "郵便、郵便局" },
-        { name: "宅配便" },
-        { name: "コインランドリー" },
-        { name: "レンタルCD、DVD、ビデオ" },
-        { name: "レンタルサイクル" },
-        { name: "ガソリンスタンド" },
-        { name: "靴修理" },
-        { name: "クリーニング" },
-        { name: "質屋" },
-        { name: "洗車場" },
-        { name: "銀行" },
-        { name: "ペットショップ、動物病院" },
-        { name: "銭湯" },
-        { name: "スーパー銭湯" },
-        { name: "健康ランド" },
-        { name: "温泉浴場" },
-        { name: "岩盤浴" },
-        { name: "サウナ" },
-        { name: "官公庁" },
-        { name: "美容院、サロン" },
-        { name: "寺院、神社、教会" },
-      ],
-    },
+    selectSpot: [],
+    items_Spot: [
+      { category: "Cafe", name: "飲食がメインのカフェ・喫茶店" },
+      { category: "Cafe", name: "軽食(パンケーキ、個人経営ファストフード等)" },
+      {
+        category: "Cafe",
+        name: "その他のカフェ(動物カフェ、コンセプトカフェ等)",
+      },
+
+      { category: "Shopping", name: "ドラッグストア" },
+      { category: "Shopping", name: "家電" },
+      { category: "Shopping", name: "携帯電話販売店" },
+      { category: "Shopping", name: "デパート、百貨店" },
+      { category: "Shopping", name: "ショッピングセンター" },
+      { category: "Shopping", name: "アウトレットショップ" },
+      { category: "Shopping", name: "ホームセンター" },
+      { category: "Shopping", name: "商店街" },
+      { category: "Shopping", name: "コンビニ、スーパー" },
+      { category: "Shopping", name: "リサイクル、ディスカウントショップ" },
+      { category: "Shopping", name: "家具屋" },
+      { category: "Shopping", name: "日用雑貨、インテリア用品" },
+      { category: "Shopping", name: "文房具、事務用品" },
+      { category: "Shopping", name: "フラワーショップ" },
+      { category: "Shopping", name: "100円ショップ" },
+      { category: "Shopping", name: "作業服屋" },
+      { category: "Shopping", name: "CD、DVD、ビデオ屋" },
+      { category: "Shopping", name: "書店" },
+      { category: "Shopping", name: "玩具屋" },
+      { category: "Shopping", name: "煙草屋" },
+      {
+        category: "Shopping",
+        name: "アパレルショップ、アクセサリーショップ、時計屋",
+      },
+      { category: "Shopping", name: "食品専門店" },
+      { category: "Shopping", name: "スポーツショップ" },
+
+      { category: "Entertainment", name: "スポーツ施設" },
+      { category: "Entertainment", name: "麻雀" },
+      { category: "Entertainment", name: "ゲームセンター" },
+      { category: "Entertainment", name: "パチンコ、パチスロ" },
+      { category: "Entertainment", name: "ボウリング場" },
+      { category: "Entertainment", name: "ビリヤード" },
+      { category: "Entertainment", name: "遊園地、テーマパーク" },
+      { category: "Entertainment", name: "動物園" },
+      { category: "Entertainment", name: "水族館" },
+      { category: "Entertainment", name: "植物園" },
+      { category: "Entertainment", name: "海水浴場、遊泳場" },
+      { category: "Entertainment", name: "キャンプ場" },
+      { category: "Entertainment", name: "アウトドア施設" },
+      { category: "Entertainment", name: "ボート、ヨット" },
+      { category: "Entertainment", name: "釣り堀、釣り船" },
+      { category: "Entertainment", name: "プール" },
+      { category: "Entertainment", name: "観光農園" },
+      { category: "Entertainment", name: "映画館" },
+      { category: "Entertainment", name: "美術館" },
+      { category: "Entertainment", name: "画廊" },
+      { category: "Entertainment", name: "博物館、科学館" },
+      { category: "Entertainment", name: "コンサートホール" },
+      { category: "Entertainment", name: "ライブハウス" },
+      { category: "Entertainment", name: "公園" },
+      { category: "Entertainment", name: "道の駅" },
+      { category: "Entertainment", name: "パーキングエリア" },
+      { category: "Entertainment", name: "ドライブイン" },
+
+      { category: "Living", name: "マッサージ、整体、治療院" },
+      { category: "Living", name: "ベビー用品、子供服" },
+      { category: "Living", name: "郵便、郵便局" },
+      { category: "Living", name: "宅配便" },
+      { category: "Living", name: "コインランドリー" },
+      { category: "Living", name: "レンタルCD、DVD、ビデオ" },
+      { category: "Living", name: "レンタルサイクル" },
+      { category: "Living", name: "ガソリンスタンド" },
+      { category: "Living", name: "靴修理" },
+      { category: "Living", name: "クリーニング" },
+      { category: "Living", name: "質屋" },
+      { category: "Living", name: "洗車場" },
+      { category: "Living", name: "銀行" },
+      { category: "Living", name: "ペットショップ、動物病院" },
+      { category: "Living", name: "銭湯" },
+      { category: "Living", name: "スーパー銭湯" },
+      { category: "Living", name: "健康ランド" },
+      { category: "Living", name: "温泉浴場" },
+      { category: "Living", name: "岩盤浴" },
+      { category: "Living", name: "サウナ" },
+      { category: "Living", name: "官公庁" },
+      { category: "Living", name: "美容院、サロン" },
+      { category: "Living", name: "寺院、神社、教会" },
+    ],
   }),
 
   mounted() {},
   methods: {
-    postSettingData() {
+    /*showSelectedSpotItem: function () {
+      return items_Spot[this.selectedSpot];
+    },*/
+
+    /*postSettingData() {
       //作っている最中
       const headers = { Authorization: "JWT" + this.$store.getters.getToken };
       this.$axios
@@ -195,7 +208,7 @@ export default {
         .catch((error) => {
           if (error.response.status == 401) this.$store.commit("logout");
         });
-    },
+    },*/
     getSettingData() {
       const headers = { Authorization: "JWT" + this.$store.getters.getToken };
       this.$axios
@@ -210,9 +223,6 @@ export default {
         .catch((error) => {
           if (error.response.status == 401) this.$store.commit("logout");
         });
-    },
-    selectedSpot: function () {
-      this.selectedSpotItem = this.items_spot[this.selectedSpotKey];
     },
   },
 };
