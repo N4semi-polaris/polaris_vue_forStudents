@@ -8,15 +8,22 @@
           <v-row>
             <v-col align="center">
               <v-subheader>好きなスポット</v-subheader>
-              <v-btn color="primary" @click.stop="openGdialog">
+              <v-spacer></v-spacer>
+              <v-btn color="#0461cd" dark @click.stop="openGdialog">
                 飲食店を選ぶ
               </v-btn>
               <selectSpotGourmet ref="GourmetDialog" />
-              <v-divider></v-divider>
-              <v-btn color="primary" @click.stop="openOdialog">
+              <v-spacer></v-spacer>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-spacer></v-spacer>
+              <v-btn color="#0461cd" dark @click.stop="openOdialog">
                 飲食店以外を選ぶ
               </v-btn>
               <selectSpotOther ref="OtherDialog" />
+              <v-spacer></v-spacer>
             </v-col>
           </v-row>
 
@@ -37,7 +44,11 @@
 
           <v-row align="center">
             <v-col align="center">
-              <v-text-field v-model="adress" label="住所"></v-text-field>
+              <v-text-field
+                v-model="adress"
+                label="住所"
+                hint="例：東京都小平市津田町2-1-1"
+              ></v-text-field>
             </v-col>
           </v-row>
 
@@ -56,13 +67,13 @@
 
           <v-divider></v-divider>
 
-          <v-row align="center">
+          <!--<v-row align="center">
             <v-col align="center">
               <v-btn rounded class="text-center" color="#0461cd" dark
                 >保存</v-btn
               >
             </v-col>
-          </v-row>
+          </v-row>-->
         </v-form>
       </v-container>
     </div>
@@ -117,11 +128,7 @@ export default {
       return selections;
     },
   },
-  watch: {
-    /*selected() {
-      this.search = "";
-    },*/
-  },
+  watch: {},
   mounted() {},
   methods: {
     openGdialog() {

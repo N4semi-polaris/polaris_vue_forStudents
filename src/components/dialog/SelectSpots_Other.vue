@@ -3,7 +3,7 @@
   <v-dialog v-model="dialog_Other_Open" persistent width="600px">
     <v-card>
       <v-card-text>
-        <h2 class="title mb-2">3つ選択してください</h2>
+        <h2 class="title mb-2">7つ選択してください</h2>
         <v-chip-group
           v-model="selectSpot_Other"
           active-class="primary--text"
@@ -19,10 +19,10 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn color="green darken-1" text @click="dialog_Other_Open = false">
+        <v-btn color="#0461cd" text @click="dialog_Other_Open = false">
           閉じる
         </v-btn>
-        <v-btn color="green darken-1" text @click="dialog_Other_Open = false"
+        <v-btn color="#0461cd" text @click="dialog_Other_Open = false"
           ><!--axiosメソッドを発火-->
           保存
         </v-btn>

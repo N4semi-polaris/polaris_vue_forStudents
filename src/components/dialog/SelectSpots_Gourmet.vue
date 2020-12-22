@@ -1,12 +1,9 @@
 
 <template>
-  <v-dialog v-model="dialog_Gourmet_Open" width="600px">
-    <template>
-      <v-btn color="primary"> 飲食店を選ぶ </v-btn>
-    </template>
+  <v-dialog v-model="dialog_Gourmet_Open" persistent width="600px">
     <v-card>
       <v-card-title>
-        <h2 class="title mb-2">3つ選択してください</h2>
+        <h2 class="title mb-2">5つ選択してください</h2>
       </v-card-title>
       <v-card-text>
         <v-chip-group
@@ -14,7 +11,7 @@
           active-class="primary--text"
           column
           multiple
-          max="3"
+          max="5"
         >
           <v-chip filter v-for="tag in items_Spot_Gourmet" :key="tag" small>
             {{ tag }}
@@ -24,10 +21,10 @@
       <v-card-actions>
         <v-spacer></v-spacer>
 
-        <v-btn color="green darken-1" text @click="dialog_Gourmet_Open = false">
+        <v-btn color="#0461cd" text @click="dialog_Gourmet_Open = false">
           閉じる
         </v-btn>
-        <v-btn color="green darken-1" text @click="dialog_Gourmet_Open = false">
+        <v-btn color="#0461cd" text @click="dialog_Gourmet_Open = false">
           保存
         </v-btn>
       </v-card-actions>
