@@ -31,7 +31,6 @@
           </v-calendar>
           <!-- 寄り道提案ポップアップ -->
           <yorimichi ref="yorimichiDialog" />
-          
         </v-sheet>
       </v-col>
     </v-row>
@@ -41,7 +40,7 @@
 
 <script>
 import moment from "moment";
-import yorimichi from "@/components/dialog/yorimichi"
+import yorimichi from "@/components/dialog/yorimichi";
 
 export default {
   components: {
@@ -62,15 +61,15 @@ export default {
     this.setWeekdays();
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": "JWT " + this.$store.getters.getToken,
-    }
-    this.$axios.post("/calendar/",new URLSearchParams(),{
-      headers: headers,
-    }).then(
-      ()=>{
+      Authorization: "JWT " + this.$store.getters.getToken,
+    };
+    this.$axios
+      .post("/calendar/", new URLSearchParams(), {
+        headers: headers,
+      })
+      .then(() => {
         this.setEvents();
-      }
-    )
+      });
   },
   computed: {
     title() {
@@ -79,17 +78,21 @@ export default {
     cal() {
       return this.ready ? this.$refs.calendar : null;
     },
-    nowY() { //0:00が0pxとして、hour分48px・minute分0.8px足した
+    nowY() {
+      //0:00が0pxとして、hour分48px・minute分0.8px足した
       var m_today = moment(this.today);
       var hour;
-      if (m_today.format('a') == 'am') { //午前だったら
-        if (m_today.format('h') == '12') hour = 0; //AM12:00とかいう変わった表示仕様のせいで...
-        else hour = Number(m_today.format('h'));
-      } else { //午後だったら
-        if (m_today.format('h') == '12') hour = 12;
-        else hour = Number(m_today.format('hh')) + 12;
+      if (m_today.format("a") == "am") {
+        //午前だったら
+        if (m_today.format("h") == "12") hour = 0;
+        //AM12:00とかいう変わった表示仕様のせいで...
+        else hour = Number(m_today.format("h"));
+      } else {
+        //午後だったら
+        if (m_today.format("h") == "12") hour = 12;
+        else hour = Number(m_today.format("hh")) + 12;
       }
-      var minute = Number(m_today.format('m'));
+      var minute = Number(m_today.format("m"));
       var answer = 0 + 48 * hour + 0.8 * minute;
       return this.cal ? answer + "px" : "-10px";
     },
@@ -99,41 +102,49 @@ export default {
       return event.color;
     },
     getCurrentTime() {
-      return this.cal ? this.cal.times.now.hour * 60 + this.cal.times.now.minute : 0;
+      return this.cal
+        ? this.cal.times.now.hour * 60 + this.cal.times.now.minute
+        : 0;
     },
-    setEvents(){//drfにアクセスして、カレンダーデータを取得する(更新はしない取得だけ)
+    setEvents() {
+      //drfにアクセスして、カレンダーデータを取得する(更新はしない取得だけ)
       const headers = {
         "Content-Type": "application/json",
-        "Authorization": "JWT " + this.$store.getters.getToken,
-      }
-      this.$axios.get("/calendar/",{
-        headers: headers,
-        data: {},
-      }).then(
-        (response)=>{
-          for(var d of response.data){
-            var colorAllocater = function (type){
-              if(type==4)return "#778899";
-              else if(type==1)return "#fef4ce"//空きブロック
-              else if(type==2)return "#cccccc";//在宅ブロック
-              else if(type==3)return "#ffc900";
+        Authorization: "JWT " + this.$store.getters.getToken,
+      };
+      this.$axios
+        .get("/calendar/", {
+          headers: headers,
+          data: {},
+        })
+        .then(
+          (response) => {
+            for (var d of response.data) {
+              var colorAllocater = function (type) {
+                if (type == 4) return "#778899";
+                else if (type == 1) return "#fef4ce";
+                //空きブロック
+                else if (type == 2) return "#cccccc";
+                //在宅ブロック
+                else if (type == 3) return "#ffc900";
+              };
+              this.events.push({
+                //idとdiscriptionとlocationは使われていない
+                id: d.google_id ?? "", //左辺がnullなら右辺を返す
+                name: d.summary ?? "",
+                discription: d.discription ?? "",
+                location: d.location ?? "",
+                start: moment(d.bk.start, "YYYY-MM-DDTHH:mm:ssZ").toDate(),
+                end: moment(d.bk.end, "YYYY-MM-DDTHH:mm:ssZ").toDate(),
+                color: colorAllocater(d.bk.blockType),
+                timed: true,
+              });
             }
-            this.events.push({//idとdiscriptionとlocationは使われていない
-              id: d.google_id ?? "",//左辺がnullなら右辺を返す
-              name: d.summary ?? "",
-              discription: d.discription ?? "",
-              location: d.location ?? "",
-              start: moment(d.bk.start, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
-              end: moment(d.bk.end, 'YYYY-MM-DDTHH:mm:ssZ').toDate(),
-              color: colorAllocater(d.bk.blockType),
-              timed: true,
-            });
+          },
+          (error) => {
+            if (error.response.status == 401) this.$store.commit("logout");
           }
-        },
-        (error)=>{
-          if(error.response.status == 401)this.$store.commit("logout");
-        }
-      )
+        );
     },
     scrollToTime() {
       const time = this.getCurrentTime();
@@ -144,14 +155,14 @@ export default {
     updateTime() {
       setInterval(() => this.cal.updateTimes(), 60 * 1000);
     },
-    setWeekdays(){
-      var dateNum = moment().format('d');
-      var week = [0, 1, 2, 3, 4, 5, 6]
-      this.weekdays = week.slice(dateNum).concat(week.slice(0,dateNum))
+    setWeekdays() {
+      var dateNum = moment().format("d");
+      var week = [0, 1, 2, 3, 4, 5, 6];
+      this.weekdays = week.slice(dateNum).concat(week.slice(0, dateNum));
     },
-    show_yorimitiDialog({ nativeEvent, event }){
+    show_yorimitiDialog({ nativeEvent, event }) {
       this.$refs.yorimichiDialog.showWindow({ nativeEvent, event });
-    }
+    },
   },
   props: ["calendar_height"],
 };
