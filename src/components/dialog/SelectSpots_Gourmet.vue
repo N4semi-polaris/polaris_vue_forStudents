@@ -89,9 +89,9 @@ export default {
     postData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = this.selectSpot_Gourmet.selected;
-      console.log("postData内のdataの中身: " + data); //出力結果[サンドイッチ、パン屋,洋食屋,ハンバーガーショップ,定食屋,しゃぶしゃぶ]
-      this.$axios
-        .post("/accounts/setting/gourmetgenre/", data, {
+      console.log("postData内のdataの中身: " + data); 
+      this.$axio
+        .post("/accounts/setting/gourmetgenre", data, {
           headers: headers,
         })
         .then((error) => {
@@ -101,28 +101,9 @@ export default {
     },
 
     getData() {
-      const headers = { "Authorization": "JWT" + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
-        .get("/accounts/setting/gourmetgenre/", {
-          data: {},
-          headers: headers,
-        })
-        .then((response) => {
-          this.items_Spot_Gourmet.selected =
-            response.data[0][this.items_Spot_Gourmet.name];
-        })
-        .catch((error) => {
-          if (error.response.status == 401) this.$store.commit("logout");
-        });
-    },
-
-    upDateData() {
-      console.log(
-        "selectSpot_Gourmet.selectedの中身: " + this.selectSpot_Gourmet.selected
-      );
-      const headers = { "Authorization": "JWT" + this.$store.getters.getToken };
-      this.$axios
-        .patch("/accounts/setting/gourmetgenre/", {
+        .get("/accounts/setting/gourmetgenre", {
           data: {},
           headers: headers,
         })
