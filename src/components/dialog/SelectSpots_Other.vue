@@ -119,16 +119,28 @@ export default {
       { text: "75", value: "寺院、神社、教会" },
     ],
   }),
+  /*watch: {
+    selectSpot_Other: {
+    handler: function (newValue, oldValue) {
+      console.log("selectSpot_Otherが: [" + oldValue.selected + "] から [" + newValue.selected + "]に変更されたよ");
+       
+    },
+    deep:true
+    },
+  },*/
+  mounted() {
+   this.getData();
+  },
   methods: {
     OdialogOpen() {
       this.dialog_Other_Open = true;
     },
     postData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const data = this.selectSpot_Other.selected;
+      const data = { "genres" : this.selectSpot_Other.selected};
       console.log("postData内のdataの中身: " + data);
       this.$axios
-        .post("/accounts/setting/genre", data, {
+        .post("/accounts/setting/genre/create_fromlist", data, {
           headers: headers,
         })
         .then((error) => {
@@ -136,7 +148,7 @@ export default {
           if (error.response.status == 401) this.$store.commit("logout");
         });
     },
-    getData() {
+     getData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
         .get("/accounts/setting/genre", {
@@ -144,8 +156,10 @@ export default {
           headers: headers,
         })
         .then((response) => {
-          this.items_Spot_Other.selected =
-            response.data[0][this.items_Spot_Other.name];
+          console.dir(response.data);
+          const result = response.data.map(dict => dict.genre);
+          this.selectSpot_Other.selected =result;
+          console.log("get後のthis.selectSpot_Other.selected"+this.selectSpot_Other.selected);
         })
         .catch((error) => {
           if (error.response.status == 401) this.$store.commit("logout");

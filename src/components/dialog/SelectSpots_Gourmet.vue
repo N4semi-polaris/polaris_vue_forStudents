@@ -81,20 +81,31 @@ export default {
       { text: "34", value: "和菓子" },
     ],
   }),
-  mounted() {},
+  /*watch: {
+    selectSpot_Gourmet: {
+    handler: function (newValue, oldValue) {
+      console.log("selectSpot_Gourmetが: [" + oldValue.selected + "] から [" + newValue.selected + "]に変更されたよ");
+       
+    },
+    deep:true
+    },
+  },*/
+  mounted() {
+   this.getData();
+  },
   methods: {
     GdialogOpen() {
       this.dialog_Gourmet_Open = true;
     },
     postData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const data = this.selectSpot_Gourmet.selected;
-      console.log("postData内のdataの中身: " + data); 
-      this.$axio
-        .post("/accounts/setting/gourmetgenre", data, {
+      const data = { "genres" : this.selectSpot_Gourmet.selected};
+      console.log("postDataしたthis.selectSpot_Gourmet.selectedの中身: " + this.selectSpot_Gourmet.selected);
+      this.$axios
+        .post("/accounts/setting/gourmetgenre/create_fromlist", data, {
           headers: headers,
         })
-        .then((error) => {
+        .catch((error) => {
           console.log("エラーになっちゃった..: ");
           if (error.response.status == 401) this.$store.commit("logout");
         });
@@ -108,8 +119,11 @@ export default {
           headers: headers,
         })
         .then((response) => {
-          this.items_Spot_Gourmet.selected =
-            response.data[0][this.items_Spot_Gourmet.name];
+          console.dir(response.data);
+          const result = response.data.map(dict => dict.genre);
+          //console.log(result);
+          this.selectSpot_Gourmet.selected =result;
+          console.log("get後のthis.selectSpot_Gourmet.selected"+this.selectSpot_Gourmet.selected);
         })
         .catch((error) => {
           if (error.response.status == 401) this.$store.commit("logout");
