@@ -10,7 +10,7 @@ import './assets/sass/style.scss'
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(GAuth,{
-  clientId: '*****',
+  clientId: '72932482906-k3puh7jplg07nq3o5ekliff0n0epenkb.apps.googleusercontent.com',
   scope: 'email openid https://www.googleapis.com/auth/calendar',
   accessType: 'offline',
   prompt: 'consent',
