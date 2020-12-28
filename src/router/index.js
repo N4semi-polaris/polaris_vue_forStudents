@@ -29,6 +29,12 @@ const routes = [{
     meta: { requiresAuth: true }
   },
   {
+    path: '/taskedit/:uuid',
+    name: 'TaskEdit_edit',
+    component: () => import('../views/TaskEdit.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/tasklog',
     name: 'TaskLog',
     component: () => import('../views/TaskLog.vue'),

@@ -35,20 +35,6 @@ export default {
     //tokenが生きているかどうか試して、ダメならrefreshする
   },
   methods: {
-    call_Calendar: function () {
-      var params = {
-        token: "",
-      };
-      var url = "/accounts/google/calendar/";
-      this.$axios.post(url, params).then(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-    },
   },
 };
 </script>
