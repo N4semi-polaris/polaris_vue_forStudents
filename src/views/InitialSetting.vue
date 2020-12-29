@@ -240,7 +240,9 @@ export default {
     
     
     getAddressData() {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { 
+        "Content-Type": "application/json",
+        "Authorization": "JWT " + this.$store.getters.getToken, };
       this.$axios
         .get("/accounts/setting/address", {
           //要編集
@@ -250,15 +252,14 @@ export default {
         .then((response) => {
           console.log("response.dataの型@GET: "+ typeof response.data);
           console.log("getしたresponse.dataの中身: ");
-          console.dir(response.data);
+          console.log(response.data);
           console.log("response.data.addressの型@GET: "+ typeof response.data.address + ", 中身:" + response.data.address);
-          const result = String(response.data.address);
+          const result = String(response.data["address"]);
           this.address = result;
         })
         .catch((error) => {
-          console.log("エラーになっちゃった..:＠getAddressData");
-          if (error.response.status == 401) //this.$store.commit("logout")
-          ;
+          console.log(error,"エラーになっちゃった..:＠getAddressData");
+          //if (error.response.status == 401) //this.$store.commit("logout")
         });
     },
     postAddressData() {
