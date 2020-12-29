@@ -44,7 +44,7 @@
         <!-- タスクブロック -->
         <Task_Block
           v-for="task in tasks"
-          :key="'taskpalette'+task.id"
+          :key="'taskpalette'+task.uuid"
           :task_name="task.task_name"
           :place_name="task.place_name"
           :task_type="task.task_type"
@@ -57,29 +57,38 @@
 </template>
 <script>
 import Task_Block from "../components/Task_Block.vue";
+import moment from 'moment';
 
 export default {
   name: "Task_Palette",
+  mounted(){
+    this.setHeight_ofScrollArea();
+
+    const headers = {
+      "Content-Type": "application/json",
+      "Authorization": "JWT " + this.$store.getters.getToken,
+    };
+    this.$axios.get("/calendar/blocks/tasks/uncompleted",{
+      data: {},
+      headers: headers,
+    }).then((response) => {
+      for(let i of response.data){
+        this.tasks.push({
+          uuid: i.bk.uuid,
+          task_name: i["name"],
+          place_name: i["location"],
+          task_type: this.task_type[i.tasktype-1],
+          deadline: i["deadline"]!=null? moment(i["deadline"]).format('yyyy-MM-DD HH:mm'):null
+        })
+      }
+    })
+  },
   data: () => ({
     hight_ofPalette: 30, //vh
     hight_ofScrollArea: 0, //px ただの初期値、すぐ上書きするので意味はない
     isSwiped: false,
-    tasks: [
-      {
-        id: 1,
-        task_name: "本屋うろうろ",
-        place_name: "有隣堂",
-        task_type: "レジャー・エンタメ施設",
-        deadline: "2020-11-30 13:00",
-      },
-      {
-        id: 2,
-        task_name: "新幹線の切符買う",
-        place_name: "みどりの窓口",
-        task_type: "その他",
-        deadline: "2020-12-2 15:00",
-      },
-    ],
+    task_type: [ '飲食店', '買い物', 'レジャー・エンタメ施設', 'その他' ],
+    tasks: [],
   }),
   components: {
     Task_Block,
@@ -113,9 +122,6 @@ export default {
         .clientHeight;
       this.hight_ofScrollArea = h_ofPalette - h_ofPaletteHeader;
     },
-  },
-  mounted: function () {
-    this.setHeight_ofScrollArea();
   },
 };
 </script>

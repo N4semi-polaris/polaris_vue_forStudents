@@ -84,7 +84,7 @@ export default {
     methods :{
         compareDeadLine: function (){ //今日の日付と〆切日の差を計算する
             var diff_days = null;
-            if (this.deadline.length != 0) {
+            if (this.deadline!=null && this.deadline.length != 0) {
                 diff_days = moment(this.deadline).diff(moment(this.today), 'days');
             }
             return diff_days;
@@ -95,7 +95,7 @@ export default {
                 if (this.task_type === this.task_type_list[i]) key = i;
             }
             if (this.compareDeadLine() >= 0 && this.compareDeadLine() <= 3) {
-                if (this.deadline.length != 0) {
+                if (this.deadline!=null && this.deadline.length != 0) {
                     key = 4;
                 }
             } else if (this.compareDeadLine() < 0) {
