@@ -80,6 +80,7 @@
 import App_var from "../components/App_bar";
 import selectSpotGourmet from "../components/dialog/SelectSpots_Gourmet.vue";
 import selectSpotOther from "../components/dialog/SelectSpots_Other.vue";
+import _ from 'lodash';
 
 export default {
   name: "InitialSetting",
@@ -104,7 +105,6 @@ export default {
       { id: "3", speed: "少しゆっくり" },
       { id: "4", speed: "ゆっくり" },
       ], 
-      //name: "typeOfWalkSpeed",
     address: "",
   }),
   computed: {
@@ -127,6 +127,7 @@ export default {
       return selections;
     },
   },
+
   watch: {
     selectWalkSpeed: {
       handler: function (newValue, oldValue) {
@@ -139,16 +140,21 @@ export default {
       console.log("selectTimeが: [" + oldValue + "] から [" + newValue + "]に変更されたよ");
       this.postTimeData();
     },
-    address: function (newValue, oldValue) {
-      console.log("addressが: [" + oldValue + "] から [" + newValue + "]に変更されたよ");
+    address: {
+      handler: _.debounce(function() {
+      //console.log("addressが: [" + oldValue + "] から [" + newValue + "]に変更されたよ");
       this.postAddressData();
-    },   
+      }, 2000), //データの更新が終わった2秒後にpostAddressDataが実行される
+      deep: true
+    },
   },
+
   mounted() {
     this.getWalkSpeedData();
     this.getTimeData(); 
     this.getAddressData();
   },
+
   methods: {
     openGdialog() {
       this.$refs.GourmetDialog.GdialogOpen();
@@ -156,7 +162,9 @@ export default {
     openOdialog() {
       this.$refs.OtherDialog.OdialogOpen();
     },
-    
+
+
+    ////////////////以下、歩行速度のPOSTとGET/////////////////////
     getWalkSpeedData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
@@ -197,7 +205,7 @@ export default {
     },
 
 
-
+  ////////////////以下、到着時間のPOSTとGET/////////////////////
     getTimeData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
@@ -238,12 +246,11 @@ export default {
     },
     
     
-    
+    ////////////////以下、住所のPOSTとGET/////////////////////
     getAddressData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
         .get("/accounts/setting/address", {
-          //要編集
           data: {},
           headers: headers,
         })

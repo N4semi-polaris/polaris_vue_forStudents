@@ -120,7 +120,7 @@ export default {
         });
     },
     getHomeTimeData() {
-      const headers = { "Authorization": "JWT" + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
         .get("/accounts/setting/transportation/", {
           data: {},
