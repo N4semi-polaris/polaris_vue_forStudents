@@ -31,7 +31,7 @@
                     :value="item"
                     color="#0461cd"
                     active-class=""
-                    v-on:click="switch_itemVal(item)"
+                    v-on:click="postTransportation(item)"
                   >
                     <template v-slot:default="{ active }">
                       <v-list-item-content>
@@ -134,7 +134,7 @@ export default {
     disabled2: false,
   }),
   mounted() {
-     console.log("mountedが実行されたよ");
+    console.log("MyPageのmountedが実行されたよ");
     const headers = {
       "Content-Type": "application/json",
       "Authorization": "JWT " + this.$store.getters.getToken,
@@ -163,7 +163,7 @@ export default {
     toSettingHomeTime: function () {
       this.$router.push({ name: "SettingHomeTime" });
     },
-    switch_itemVal: function (item) {
+    postTransportation: function (item) {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       var data = { [item["name"].toString()]: item["check"] };
       this.$axios

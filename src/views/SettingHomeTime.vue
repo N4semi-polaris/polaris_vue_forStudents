@@ -104,5 +104,36 @@ export default {
             modal2: false,
         }
     },
+    methods: {
+        /*
+        postHomeTimeData() {
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const data = { genres: this.time1 + this.time2 }; //要編集
+      console.log("postHomeTimeDataした中身: 開始時刻→" + this.time1+", 終了時刻→"+this.time2);
+      this.$axios
+        .post("/accounts/setting/transportation/", data, {
+          headers: headers,
+        })
+        .catch((error) => {
+          console.log("エラーになっちゃった..: ");
+          if (error.response.status == 401) this.$store.commit("logout");
+        });
+    },
+    getHomeTimeData() {
+      const headers = { "Authorization": "JWT" + this.$store.getters.getToken };
+      this.$axios
+        .get("/accounts/setting/transportation/", {
+          data: {},
+          headers: headers,
+        })
+        .then((response) => {
+          this.time1 = response.data[0][this.items_WalkSpeed.name]; 
+          this.time2 = response.data[0][this.items_WalkSpeed.name];
+        .catch((error) => {
+          if (error.response.status == 401) this.$store.commit("logout");
+        });
+    },
+    */
+    },
 }
 </script>
