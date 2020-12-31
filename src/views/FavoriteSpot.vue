@@ -8,6 +8,7 @@
           :key="spot.uuid"
           :name="spot.name"
           :address="spot.address"
+          :uuid="spot.uuid"
         />
       </template>
       <v-btn dark fab bottom left color="#ffc900" @click="toCreateFavSpot">

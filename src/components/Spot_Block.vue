@@ -16,6 +16,8 @@
               <v-col cols="4" class="align-self-center pa-1">
                 <p style="color: white">{{ address }}</p>
               </v-col>
+              <!--<p style="color: white">{{ uuid }}</p>-->
+              <v-col></v-col>
             </v-row>
           </div>
           <div v-show="isSwipe == false" class="text-right">
@@ -45,7 +47,7 @@ export default {
   components: {
     deleteFavSpot,
   },
-  props: ["name", "address"],
+  props: ["name", "address", "uuid"],
   data: () => ({
     color: "#210e67",
     isSwipe: false,
@@ -61,7 +63,8 @@ export default {
       this.isSwipe = true;
     },
     openDeleteDialog() {
-      this.$refs.showDialog.openDialog();
+      this.$refs.showDialog.openDialog(this.uuid);
+      console.log("uuidの中身："+this.uuid);
     },
   },
 };

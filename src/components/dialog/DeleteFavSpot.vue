@@ -23,26 +23,34 @@
 export default {
   data: () => ({
     dialog_Open: false,
+    uuid: "",
   }),
 
   mounted() {},
   methods: {
-    openDialog() {
+    openDialog(gotUuid) {
       this.dialog_Open = true;
+      this.uuid = gotUuid;
+      console.log("this.uuid : " + this.uuid);
     },
-    deleteFavSpot(){
+    deleteFavSpot() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const data = { "typeOfWalkSpeed": this.selectWalkSpeed };
+      const data = { "uuid": this.uuid };
       console.log(
-        "postWalkSpeedDataしたthis.selectWalkSpeedの型: " + typeof this.selectWalkSpeed + ", 中身: " + this.selectWalkSpeed);
+        "deleteFavSpotしたthis.uuidの型: " +
+          typeof this.uuid +
+          ", 中身: " +
+          this.uuid
+      );
       this.$axios
-        .post("/accounts/setting/favspot", data, {
+        .delete("/accounts/setting/favspot", data, {
           headers: headers,
         })
         .catch((error) => {
-          console.log("エラーになっちゃった..@deleteFavSpot()a");
-          if (error.response.status == 401) //this.$store.commit("logout")
-          ;
+          console.log("エラーになっちゃった..@deleteFavSpot()");
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
         });
     },
   },
