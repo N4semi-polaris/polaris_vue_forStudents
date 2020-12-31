@@ -70,6 +70,19 @@ const routes = [{
     component: () => import('../views/SettingHomeTime'),
     meta: { requiresAuth: true }
   },
+  {
+    path: '/createfavoritespot',
+    name: 'CreateFavoriteSpot',
+    component: () => import('../views/CreateFavoriteSpot.vue'),
+    meta: { requiresAuth: true }
+  },
+   {
+    path: '/checkfavspot:selectedFavSpot',
+    name: 'CheckFavSpot',
+    component: () => import('../views/CheckFavSpot.vue'),
+     props: routes => ({selectedFavSpot: Object(routes.params.selectedFavSpot)}),
+    meta: { requiresAuth: true }
+  },
 
 ]
 const router = new VueRouter({
