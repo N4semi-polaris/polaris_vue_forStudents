@@ -4,7 +4,7 @@
     <div id="spotlist">
       <v-row>
         <v-col align="center">
-          <v-btn dark right color="#ffc900" @click="getFavSpots">
+          <v-btn dark right color="#ffc900" @click="update">
             <v-icon>mdi-cached</v-icon>更新する
           </v-btn>
         </v-col>
