@@ -53,6 +53,7 @@ export default {
           );
         });
          this.dialog_Open = false;
+         this.$router.go({ path: this.$router.currentRoute.path, force: true });//あまりよくないかも(親コンポーネントのページを強制リロード)
     }, 
   },
 };
