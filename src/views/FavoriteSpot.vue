@@ -12,13 +12,13 @@
       <template v-if="frag">
         <Spot_Block
           v-for="spot in spots"
-          :key="spot.index"
+          :key="spot.uuid"
           :name="spot.name"
           :address="spot.address"
           :uuid="spot.uuid"
         />
       </template>
-      <v-btn dark fab bottom left color="#ffc900" @click="update">
+      <v-btn dark fab bottom left color="#ffc900" @click="toCreateFavSpot">
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </div>
@@ -38,8 +38,12 @@ export default {
     spotnameRules: [(v) => !!v || "必ず入力してください！"],
     frag: false,
   }),
-  mounted() {
+  created(){
+    //console.log("createdが動いたよ〜()");
     this.getFavSpots();
+  },
+  mounted() {
+    //this.getFavSpots();
   },
   methods: {
     toCreateFavSpot() {
@@ -55,12 +59,12 @@ export default {
           headers: headers,
         })
         .then((response) => {
-          console.log("response.dataの型@GET: " + typeof response.data);
+          /*console.log("response.dataの型@GET: " + typeof response.data);
           console.log("getしたresponse.dataの中身: ");
-          console.dir(response.data);
+          console.dir(response.data);*/
           for (let i in response.data) {
             this.spots[i] = response.data[i];
-            console.dir(this.spots[i]);
+            //console.dir(this.spots[i]);
           }
           this.frag = true;
         })
@@ -73,7 +77,6 @@ export default {
     },
     update() {
       this.$router.go({ path: this.$router.currentRoute.path, force: true });
-
       /*
       this.frag = true;
       this.$nextTick(function () {
