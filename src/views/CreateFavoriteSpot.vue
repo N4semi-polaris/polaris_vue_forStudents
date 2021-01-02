@@ -5,8 +5,6 @@
       <v-container class="pa-2">
         <v-row align="center">
           <v-col align="center">
-            <h2>未完成のCreateFavoriteSpotだよ！</h2>
-
             <v-text-field
               v-model="search"
               prepend-icon="mdi-magnify"
@@ -84,8 +82,8 @@ export default {
   },
   methods: {
     postFreeWord() {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const data = { "freeword": this.search };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const data = { freeword: this.search };
       console.log(
         "postFreeWordしたthis.searchの型: " +
           typeof this.search +
@@ -101,7 +99,7 @@ export default {
             console.log("getしたresponse.dataの中身: ");
             console.dir(response.data);
             console.dir(response.data[0]);*/
-               this.items=[];
+          this.items = [];
           for (let i in response.data) {
             this.items[i] = response.data[i];
             //console.dir(this.items[i]);

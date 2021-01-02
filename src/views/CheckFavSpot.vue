@@ -5,8 +5,6 @@
       <v-container class="pa-2">
         <v-row align="center">
           <v-col align="center">
-            <h2>未完成のCheckFavSpotページだよ！</h2>
-
             <v-card>
               <v-card-text>
                 <v-container class="pa-2">
@@ -78,31 +76,30 @@ export default {
     console.log(" selectedFavSpot: " + this.selectedFavSpot);
     console.dir(this.selectedFavSpot);
   },
-  data: () => ({
-   
-  }),
+  data: () => ({}),
   methods: {
     postSelectedSpot() {
-        const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       const data = {
-          "name":this.selectedFavSpot.name,
-          "address":this.selectedFavSpot.address,
-          "lat":parseFloat(this.selectedFavSpot.lat),
-          "lon":parseFloat(this.selectedFavSpot.lon),
-          };
+        name: this.selectedFavSpot.name,
+        address: this.selectedFavSpot.address,
+        lat: parseFloat(this.selectedFavSpot.lat),
+        lon: parseFloat(this.selectedFavSpot.lon),
+      };
       this.$axios
         .post("/accounts/setting/favspot", data, {
           headers: headers,
         })
         .then(() => {
-             this.$router.push({ name:'FavoriteSpot' });
+          this.$router.push({ name: "FavoriteSpot" });
         })
         .catch((error) => {
           console.log("エラーになっちゃった..@postSelectedSpot");
-          if (error.response.status == 401) //this.$store.commit("logout")
-          ;
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
         });
-    }, 
+    },
   },
 };
 </script>

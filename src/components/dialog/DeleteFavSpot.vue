@@ -35,7 +35,7 @@ export default {
     },
     deleteFavSpot() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const data = { "uuid": this.uuid };
+      const URL ="/accounts/setting/favspot/"+this.uuid;
       console.log(
         "deleteFavSpotしたthis.uuidの型: " +
           typeof this.uuid +
@@ -43,7 +43,7 @@ export default {
           this.uuid
       );
       this.$axios
-        .delete("/accounts/setting/favspot", data, {
+        .delete(URL, {
           headers: headers,
         })
         .catch((error) => {
@@ -52,7 +52,8 @@ export default {
             error.response.status == 401 //this.$store.commit("logout")
           );
         });
-    },
+         this.dialog_Open = false;
+    }, 
   },
 };
 </script>
