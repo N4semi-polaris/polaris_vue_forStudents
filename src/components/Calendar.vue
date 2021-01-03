@@ -16,6 +16,7 @@
             :weekdays="weekdays"
             :value="value"
             :events="events"
+            event-overlap-mode="column"
             :event-color="getEventColor"
             color="primary"
             type="week"
@@ -30,7 +31,9 @@
             </template>
           </v-calendar>
           <!-- 寄り道提案ポップアップ -->
-          <yorimichi ref="yorimichiDialog" />
+          <yorimichi 
+            ref="yorimichiDialog" 
+            @setEvent="setSelectedEvent" @delEvent="delSelectedEvent" @pushEvent="pushSelectedEvent"/>
         </v-sheet>
       </v-col>
     </v-row>
@@ -52,6 +55,7 @@ export default {
     weekdays: [0, 1, 2, 3, 4, 5, 6],
     ready: false,
     events: [],
+
   }),
   mounted() {
     //this.$refs.calendar.scrollToTime('18:00');
@@ -132,8 +136,10 @@ export default {
                 //idとdiscriptionとlocationは使われていない
                 id: d.google_id ?? "", //左辺がnullなら右辺を返す
                 name: d.summary ?? "",
-                discription: d.discription ?? "",
+                description: d.description ?? "",
                 location: d.location ?? "",
+                bk_type: d.bk.blockType,
+                bk_id: d.bk.uuid,
                 start: moment(d.bk.start, "YYYY-MM-DDTHH:mm:ssZ").toDate(),
                 end: moment(d.bk.end, "YYYY-MM-DDTHH:mm:ssZ").toDate(),
                 color: colorAllocater(d.bk.blockType),
@@ -163,6 +169,17 @@ export default {
     show_yorimitiDialog({ nativeEvent, event }) {
       this.$refs.yorimichiDialog.showWindow({ nativeEvent, event });
     },
+    setSelectedEvent(data){
+      var index = this.events.findIndex(({bk_id}) => bk_id === data.bk_id);
+      this.events.splice(index,1,data)
+    },
+    delSelectedEvent(data){
+      var index = this.events.findIndex(({bk_id}) => bk_id === data.bk_id);
+      this.events.splice(index,1)
+    },
+    pushSelectedEvent(event){
+      this.events.push(event)
+    }
   },
   props: ["calendar_height"],
 };
