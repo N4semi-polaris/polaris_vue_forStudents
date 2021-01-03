@@ -187,58 +187,53 @@ export default {
                 return;
             }
             const headers = {"Authorization": "JWT " + this.$store.getters.getToken}
-            if(this.radioGroup_selected===1){//前後の予定まで拡張
-                //drfの方がかけ次第追加
-                console.log("drfの方がかけ次第追加します、少々お待ちを。,zaitaku.vue,l192")
-                /* this.$axios.get("/calendar/blocks/private/**",{},
-                    {headars:headers}) */
-            }else {
-                var url="/calendar/blocks/private/"+this.selectedEvent.bk_id
-                var start_date = moment(this.selectedEvent.start).format("yyyy-MM-DD")
-                var formattedtime = moment(start_date+" "+this.time, "yyyy-MM-DD HH:mm").toISOString()
-                var data = {}
-                if(this.radioGroup_selected===2){
-                    url+="/cutup"
-                    data={"border":formattedtime}
-                    this.$axios.post(
-                        url, data, {headers:headers}).then((response)=>{
-                            this.change_ScheduleDialog(0)
-                            this.$emit('delEvent')
-                            for(var d of response.data){
-                                this.$emit('pushEvent',{
-                                "start": moment(d.start).toDate(),
-                                "end": moment(d.end).toDate(),
-                                "color": (d.blockType===1)? "#fef4ce":"#cccccc",
-                                "bk_type": d.blockType,
-                                "bk_id": d.uuid,
-                                "timed":true,
-                                "id":"",
-                                "name":"",
-                                "description":"",
-                                "location":"",
-                                })
-                            }
-                        }).catch((error)=>{
-                            console.log(error)
-                        })
-                }else{
-                    if(this.radioGroup_selected===3){
-                        url+="/stagger_starttime"
-                        data={"start":formattedtime}
-                    }
-                    else if(this.radioGroup_selected===4){
-                        url+="/stagger_endtime"
-                        data={"end":formattedtime}
-                    }
-                    else return
-                    this.$axios.post(
-                        url, data, {headers:headers}).then((response)=>{
-                            this.change_ScheduleDialog(0)
-                            this.$emit('setEvent',{
-                                "start":moment(response.data.start).toDate(),
-                                "end":moment(response.data.end).toDate()})
-                        })
+            var url="/calendar/blocks/private/"+this.selectedEvent.bk_id
+            var start_date = moment(this.selectedEvent.start).format("yyyy-MM-DD")
+            var formattedtime = moment(start_date+" "+this.time, "yyyy-MM-DD HH:mm").toISOString()
+            var data = {}
+            if(this.radioGroup_selected===2){
+                url+="/cutup"
+                data={"border":formattedtime}
+                this.$axios.post(
+                    url, data, {headers:headers}).then((response)=>{
+                        this.change_ScheduleDialog(0)
+                        this.$emit('delEvent')
+                        for(var d of response.data){
+                            this.$emit('pushEvent',{
+                            "start": moment(d.start).toDate(),
+                            "end": moment(d.end).toDate(),
+                            "color": (d.blockType===1)? "#fef4ce":"#cccccc",
+                            "bk_type": d.blockType,
+                            "bk_id": d.uuid,
+                            "timed":true,
+                            "id":"",
+                            "name":"",
+                            "description":"",
+                            "location":"",
+                            })
+                        }
+                    }).catch((error)=>{
+                        console.log(error)
+                    })
+            }else{
+                if(this.radioGroup_selected===1){
+                    url+="/stretch"
+                }else if(this.radioGroup_selected===3){
+                    url+="/stagger_starttime"
+                    data={"start":formattedtime}
                 }
+                else if(this.radioGroup_selected===4){
+                    url+="/stagger_endtime"
+                    data={"end":formattedtime}
+                }
+                else return
+                this.$axios.post(
+                    url, data, {headers:headers}).then((response)=>{
+                        this.change_ScheduleDialog(0)
+                        this.$emit('setEvent',{
+                            "start":moment(response.data.start).toDate(),
+                            "end":moment(response.data.end).toDate()})
+                    })
             }
         },
     },
