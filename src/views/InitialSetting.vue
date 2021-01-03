@@ -96,7 +96,7 @@ export default {
       { id: "2", time: "10分前" },
       { id: "3", time: "15分前" },
       { id: "4", time: "30分前" },
-      { id: "4", time: "1時間前" },
+      { id: "5", time: "1時間前" },
       ],
     selectWalkSpeed: [],
     items_WalkSpeed: [ 
