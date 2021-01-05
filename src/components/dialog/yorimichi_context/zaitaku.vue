@@ -3,7 +3,7 @@
         <div v-show="dialogP>=0">
             <v-card-title>
                 <v-row justify="space-between" no-gutters>
-                    <v-col cols="8"><h4>在宅中</h4></v-col>
+                    <v-col cols="8"><h4>在宅</h4></v-col>
                     <v-col cols="4">
                         <v-btn color="#0461cd" icon @click="change_ScheduleDialog(1)">
                             <v-icon medium>mdi-swap-horizontal</v-icon>
