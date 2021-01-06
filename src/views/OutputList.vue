@@ -68,6 +68,10 @@ export default {
         App_bar,
     },
     data: () => ({
+        type_dict: [
+            {id:1, name:"寄り道予定から探す", url:""},
+            {id:2, name:"時間内に行ける飲食店以外の施設を探す", url:""},
+            {id:3, name:"時間内に行ける飲食店を探す", url:""}],
         results: [
             {
                 id: 1,
@@ -96,6 +100,19 @@ export default {
         ],
         isShowDetails: false,
     }),
+    mounted() {
+        console.log(this.$route.query.bk)
+        console.log(this.$route.query.type)
+        if (this.type_dict[this.$route.query.type-1].url!=""){
+            var url = "/recommendation/"+this.type_dict[this.$route.query.type-1].url+"/this.$route.query.bk"
+            this.$axios.get(url,{
+                data:{},
+                headers:{"Authorization": "JWT " + this.$store.getters.getToken}
+            }).then((response)=>{
+                console.dir(response.data)
+            })
+        }
+    },
     computed: {
         getListLength: function() {
             var count = 0;
