@@ -3,8 +3,8 @@
         <div v-show="dialogP>=0">
             <v-card-title>
                 <v-row justify="space-between" no-gutters>
-                    <v-col cols="8"><h4>あき時間</h4></v-col>
-                    <v-col cols="4">
+                    <v-col cols="7"><h4>あき時間</h4></v-col>
+                    <v-col cols="5">
                         <v-btn color="#0461cd" icon @click="change_ScheduleDialog(1)">
                             <v-icon medium>mdi-swap-horizontal</v-icon>
                         </v-btn>
@@ -134,47 +134,20 @@
                     <v-container>
                         <v-row>
                             <h4>1.タイプを選択</h4>
-                            <v-radio-group v-model="selected_recommendtype" column>
-                                <v-radio label="寄り道予定から探す" value=1 color="#0461cd" />
-                                <v-radio label="時間内に行ける飲食店以外の施設を探す" value=2 color="#0461cd" />
-                                <v-radio label="時間内に行ける飲食店を探す" value=3 color="#0461cd" />
+                            <v-radio-group v-model="selected_recommendtype">
+                                <v-radio label="寄り道予定から探す" :value=1 color="#0461cd" />
+                                <v-radio label="時間内に行ける飲食店以外の施設を探す" :value=2 color="#0461cd" />
+                                <v-radio label="時間内に行ける飲食店を探す" :value=3 color="#0461cd" />
                             </v-radio-group>
                         </v-row>
-                        <div><!-- 次の予定の場所のlatlonが保存されていなければでv-showする -->
-                            <v-divider />
-                            <v-row>
-                                <h4>2.直後の予定の住所を入力</h4>
-                                <v-col>
-                                    <v-container>
-                                        <v-row align="center">
-                                            <v-col align="center">
-                                                <v-text-field
-                                                v-model="search"
-                                                prepend-icon="mdi-magnify"
-                                                label="  Search"
-                                                required
-                                                single-line
-                                                :rules="[(v) => !!v || '必ず入力してください！']"
-                                                ></v-text-field>
-                                                <v-spacer></v-spacer>
-                                                <v-btn
-                                                rounded
-                                                class="text-center"
-                                                color="#0461cd"
-                                                dark
-                                                @click="postFreeWord"
-                                                >上記の名前で探す</v-btn
-                                                >
-                                            </v-col>
-                                        </v-row>
-                                    </v-container>
-                                </v-col>
-                            </v-row>
-                        </div>
                         <v-row justify="space-around">
                             <v-btn color="#032b8d" dark v-on:click="submit_recommendation">探す</v-btn>
                             <v-btn color="#0575e6" dark v-on:click="change_ScheduleDialog(0)">戻る</v-btn>
                         </v-row>
+                        <v-alert dense border="left" type="warning" v-model="usersetting_alert" dismissible
+                            style="position:fixed;bottom:30px;">
+                            ユーザ設定に未入力な値があります。
+                        </v-alert>
                     </v-container>
                 </div>
                 <!-- 推薦終わり -->
@@ -196,6 +169,7 @@ export default {
     data:() => ({
         radioGroup_selected: 1,
         selected_recommendtype: 1,
+        usersetting_alert:false,
         radioGroup: [
             {id:1, label:"前後の予定まで広げる"},
             {id:2, label:"分割する"},
@@ -245,7 +219,17 @@ export default {
         },
         submit_recommendation(){
             //ユーザが必要なデータ(住所等)を既に入力しているか確認する
-            //直後の予定の住所(というかlatlon)が登録されていない場合、ユーザに選択してもらう必要がある。
+            this.$axios.get('/accounts/setting/iscompleted',{
+                data: {},
+                headers: {"Authorization": "JWT " + this.$store.getters.getToken},
+            }).then((response)=>{
+                if(response.data.status){
+                    console.log(this.selected_recommendtype);
+                    this.$router.push({name :"OutputList", query: { type: this.selected_recommendtype, bk:this.selectedEvent.bk_id }});
+                }else{
+                    this.usersetting_alert = true
+                }
+            })
 
         },
         submit_edit(){

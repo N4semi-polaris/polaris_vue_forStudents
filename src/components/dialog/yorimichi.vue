@@ -9,7 +9,7 @@
         >
         <v-card color="white" flat width="400px">
             <aki 
-                :selected-event=selectedEvent :dialog-p=scheduleDialog_p 
+                :selected-event=selectedEvent :dialog-p=scheduleDialog_p
                 @changeP="setDialogP" @setEvent="callParents_setEvent" @pushEvent="callParents_pushEvent"
                 @delEvent="callParents_delEvent" @closeDialog="selectedOpen = false"
                 v-if="selectedEvent.bk_type==1"/>

@@ -261,15 +261,18 @@ export default {
           console.log("getしたresponse.dataの中身: ");
           console.log(response.data);
           console.log("response.data.addressの型@GET: "+ typeof response.data.address + ", 中身:" + response.data.address);
-          const result = String(response.data["address"]);
+          var result = String(response.data["address"]) ?? "";
           this.address = result;
+          console.dir(this.result)
         })
         .catch((error) => {
+          this.address = "あああ";
           console.log(error,"エラーになっちゃった..:＠getAddressData");
           //if (error.response.status == 401) //this.$store.commit("logout")
         });
     },
     postAddressData() {
+      if(!this.address)return;
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = {"address": this.address };
       console.log("postAddressDataしたthis.addressの型: " + typeof this.address + ", 中身: "+ this.address);
