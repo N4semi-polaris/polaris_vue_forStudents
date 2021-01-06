@@ -58,7 +58,7 @@
           <v-col cols="10">
             <v-row><v-col>
           <v-datetime-picker
-            label="開始時間"
+            label="開始日時"
             v-model="startline"
           ></v-datetime-picker>
             </v-col></v-row>

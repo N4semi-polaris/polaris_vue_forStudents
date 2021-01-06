@@ -26,7 +26,7 @@
                 <div v-show="dialogP==0">
                     <v-container>
                         <v-row>
-                            <v-btn @click="change_ScheduleDialog(4)">予定候補を確認する</v-btn>
+                            <v-btn @click="change_ScheduleDialog(4)" dark color='#0461cd'>予定候補を確認する</v-btn>
                         </v-row>
                     </v-container>
                 </div>
@@ -172,8 +172,8 @@
                             </v-row>
                         </div>
                         <v-row justify="space-around">
-                            <v-btn color="#032b8d" v-on:click="submit_recommendation">探す</v-btn>
-                            <v-btn color="#0575e6" v-on:click="change_ScheduleDialog(0)">戻る</v-btn>
+                            <v-btn color="#032b8d" dark v-on:click="submit_recommendation">探す</v-btn>
+                            <v-btn color="#0575e6" dark v-on:click="change_ScheduleDialog(0)">戻る</v-btn>
                         </v-row>
                     </v-container>
                 </div>

@@ -30,9 +30,6 @@
                             <span class="ml-1">{{ getTransTime(result.start_time, result.end_time) }}</span>
                             </v-list-item-subtitle> <!-- 移動時間 -->
                         </v-col>
-                        <v-col>
-                            <v-list-item-subtitle class="marginLR">{{ result.trans_costs }}円</v-list-item-subtitle> <!-- 交通費 -->
-                        </v-col>
                         <v-col class="ml-2">
                             <div v-show="taskOption(result.task_option)">
                                 <v-icon color="#ffc900" dense>mdi-tag</v-icon>
@@ -91,7 +88,7 @@ export default {
                 start_time: '2020-10-11 20:32 pm',
                 end_time: '2020-10-11 20:54 pm',
                 trans_costs: '230',
-                task_option: 1,
+                task_option: 0,
             },
         ],
         isShowDetails: false,
