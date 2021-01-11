@@ -85,6 +85,7 @@ export default {
         address: this.selectedFavSpot.address,
         lat: parseFloat(this.selectedFavSpot.lat),
         lon: parseFloat(this.selectedFavSpot.lon),
+        code: this.selectedFavSpot.code,
       };
       this.$axios
         .post("/accounts/setting/favspot", data, {
