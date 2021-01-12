@@ -11,7 +11,11 @@ module.exports = {
       "/calendar/":{
         target: "http://localhost:8000",
         changeOrigen: true,
-      }
+      },
+      "/recommend/":{
+        target: "http://localhost:8000",
+        changeOrigen: true,
+      },
     }
   }
 }

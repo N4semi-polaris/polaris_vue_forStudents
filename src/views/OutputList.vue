@@ -4,7 +4,7 @@
 
         <v-toolbar flat>
             <v-toolbar-title class="marginBarLR">
-                検索結果<span class="ml-3">全{{ getListLength }}件</span>
+                検索結果<span class="ml-3">全{{ hit_num }}件</span>
             </v-toolbar-title>
         </v-toolbar>
 
@@ -21,7 +21,7 @@
                             </span>
                         </v-col>
                         <v-col cols="8" class="ml-4">
-                            <v-list-item-title v-text="result.place_name"></v-list-item-title>
+                            <v-list-item-title v-text="result.name"></v-list-item-title>
                             <v-list-item-subtitle
                                 class="text--primary"
                             >{{ makeStartTime(result.start_time) }} <!-- 出発時間 -->
@@ -66,10 +66,12 @@ export default {
     },
     data: () => ({
         type_dict: [
-            {id:1, name:"寄り道予定から探す", url:""},
+            {id:1, name:"寄り道予定から探す", url:"tasks"},
             {id:2, name:"時間内に行ける飲食店以外の施設を探す", url:""},
             {id:3, name:"時間内に行ける飲食店を探す", url:""}],
+        hit_num: 0,
         results: [
+            /*
             {
                 id: 1,
                 place_name: '津田塾大学',
@@ -93,20 +95,23 @@ export default {
                 end_time: '2020-10-11 20:54 pm',
                 trans_costs: '230',
                 task_option: 0,
-            },
+            },*/
         ],
         isShowDetails: false,
     }),
     mounted() {
-        console.log(this.$route.query.bk)
-        console.log(this.$route.query.type)
         if (this.type_dict[this.$route.query.type-1].url!=""){
-            var url = "/recommendation/"+this.type_dict[this.$route.query.type-1].url+"/this.$route.query.bk"
+            var url = "/recommend/"+this.type_dict[this.$route.query.type-1].url+"/"+this.$route.query.bk
             this.$axios.get(url,{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then((response)=>{
-                console.dir(response.data)
+                this.hit_num = response.data['hit_num']
+                this.results = this.results.concat(response.data['now'])
+                this.results = this.results.concat(response.data['des'])
+                console.log(this.results)
+                var i = 1
+                this.results.map(result => result['id']=i++)
             })
         }
     },
