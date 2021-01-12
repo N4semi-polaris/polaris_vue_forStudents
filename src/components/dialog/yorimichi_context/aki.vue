@@ -135,7 +135,7 @@
                         <v-row>
                             <h4>1.タイプを選択</h4>
                             <v-radio-group v-model="selected_recommendtype">
-                                <v-radio label="寄り道予定から探す" :value=1 color="#0461cd" />
+                                <v-radio label="タスクから探す" :value=1 color="#0461cd" />
                                 <v-radio label="時間内に行ける飲食店以外の施設を探す" :value=2 color="#0461cd" />
                                 <v-radio label="時間内に行ける飲食店を探す" :value=3 color="#0461cd" />
                             </v-radio-group>

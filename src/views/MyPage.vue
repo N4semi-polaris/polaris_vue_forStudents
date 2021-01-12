@@ -64,7 +64,7 @@
               class="mx-auto text-center"
               color="#0461cd"
               dark
-              >よく行く場所を編集する</v-btn
+              >お気に入りスポットを編集する</v-btn
             >
           </v-col>
         </v-row>
