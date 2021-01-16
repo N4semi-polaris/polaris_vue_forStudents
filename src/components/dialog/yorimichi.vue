@@ -20,7 +20,7 @@
                 v-else-if="selectedEvent.bk_type==2"/>
             <schedule 
                 :selected-event=selectedEvent 
-                v-else-if="selectedEvent.bk_type==4"/>
+                v-else-if="selectedEvent.bk_type==4 || selectedEvent.bk_type==3 || selectedEvent.bk_type==5"/>
             <v-card-actions>
                 <v-btn
                 text
