@@ -59,9 +59,10 @@ const routes = [{
     meta: { requiresAuth: true }
   },
   {
-    path: '/listdetails',
+    path: '/listdetails:selectedSpot',
     name: 'ListDetails',
     component: () => import('../views/ListDetails'),
+    props: routes => ({selectedSpot: Object(routes.params.selectedSpot)}),
     meta: { requiresAuth: true }
   },
   {
@@ -93,7 +94,7 @@ const router = new VueRouter({
 
 //以下ページ遷移毎の処理
 router.beforeEach((to, from, next) => {
-  console.log("router.beforeEachが実行されたよ！");
+  //console.log("router.beforeEachが実行されたよ！");
   Store.dispatch("checkTokenExpiration");//tokenの期限切れを確認するアクションを実行
   if (to.matched.some(record => record.meta.requiresAuth) && !Store.state.isLogin) {
     if (to.path !== '/login') {

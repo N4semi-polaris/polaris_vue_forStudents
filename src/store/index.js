@@ -9,7 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState({
     key: 'YorimichiApp',
-    paths: ['userEmail',"userAuthCode","authToken","isLogin"],
+    paths: ['userEmail',"userAuthCode","authToken","isLogin","result"],
     storage: window.sessionStorage
   })],
   state: {
@@ -17,6 +17,7 @@ export default new Vuex.Store({
     userAuthCode: "",
     authToken: "",
     isLogin: false,
+    result:[],
   },
   mutations: {
     setUserData(state, payload) {
@@ -35,7 +36,10 @@ export default new Vuex.Store({
       state.userAuthCode = "";
       state.authToken = "";
       state.isLogin = false;
-    }
+    },
+     setResult(state,result) {//検索ページ作成時のみ利用：あとで削除！！
+      state.result = result;
+    },
   },
   getters: {
     getUserEmail(state) {
@@ -52,6 +56,9 @@ export default new Vuex.Store({
     },
     getIsLogin(state) {
       return state.isLogin;
+    },
+    getIsResult(state) {
+      return state.result;
     },
   },
     actions: {

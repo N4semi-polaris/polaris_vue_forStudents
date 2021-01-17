@@ -137,12 +137,12 @@ export default {
     postData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = { "genres" : this.selectSpot_Other.selected};
-      console.log("postData内のdataの中身: " + data);
+      console.log("postData内のthis.selectSpot_Other.selectedの中身: " + this.selectSpot_Other.selected);
       this.$axios
         .post("/accounts/setting/genre/create_fromlist", data, {
           headers: headers,
         })
-        .then((error) => {
+        .catch((error) => {
           console.log("エラーになっちゃった..: ");
           if (error.response.status == 401) this.$store.commit("logout");
         });
