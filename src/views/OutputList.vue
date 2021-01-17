@@ -12,21 +12,27 @@
 
     <v-list shaped>
       <template v-for="(result, index) in results">
-        <v-list-item
-          :key="result.index"
-          @click="toListDetails(result)"
-        >
+        <v-list-item :key="result.index" @click="toListDetails(result)">
           <v-list-item-content>
             <v-row no-gutters align="center">
               <v-col cols="1">
                 <span class="marginIdLR">
                   <!-- リスト番号 -->
-                  <v-list-item-title>{{ index+1 }}</v-list-item-title>
+                  <v-list-item-title>{{ index + 1 }}</v-list-item-title>
                 </span>
               </v-col>
               <v-col cols="8" class="ml-4">
                 <v-list-item-title v-text="result.name"></v-list-item-title>
-               <!--  <v-list-item-subtitle class="text--primary"
+                <div v-if="(frag = 1)">
+                  <v-list-item-subtitle v-text="result.genre">
+                  </v-list-item-subtitle>
+                </div>
+                <div v-if="(frag = 2)">
+                  >
+                  <v-list-item-subtitle v-text="result.category">
+                  </v-list-item-subtitle>
+                </div>
+                <!--  <v-list-item-subtitle class="text--primary"
                   >{{ makeStartTime(result.start_time) }}
                   <v-icon color="#0575e6" dense>mdi-arrow-right-bold</v-icon>
                   {{ makeEndTime(result.end_time) }}
@@ -36,11 +42,11 @@
                 </v-list-item-subtitle>          
                 -->
               </v-col>
-              <v-col class="ml-2">
+              <!--<v-col class="ml-2">
                 <div v-show="taskOption(result.task_option)">
                   <v-icon color="#ffc900" dense>mdi-tag</v-icon>
                 </div>
-              </v-col>
+              </v-col>-->
             </v-row>
           </v-list-item-content>
         </v-list-item>
@@ -48,50 +54,27 @@
             <v-divider
                 v-if="index < results.length"
                 :key="index"
-            ></v-divider>-->
+            ></v-divider>
         <v-sheet
           v-if="index < results.length"
           :key="index"
           color="#f5f5f5"
           height="10px"
-        ></v-sheet>
+        ></v-sheet>-->
       </template>
     </v-list>
-    <!-- お気に入りページで使ったコードです！-->
-    <!--<template  v-if="frag">
-      <v-container class="pa-2">
-        <v-row >
-          <v-col>
-            <v-list three-line>
-              <v-list-item-group v-model="model">
-                <v-list-item v-for="(item, i) in results" :key="i">
-                  <v-list-item-content>
-                    <v-list-item-title v-text="i+1"></v-list-item-title>
-                    <v-list-item-subtitle
-                      v-text="'施設名 ：'+item.name"
-                    ></v-list-item-subtitle>
-                    <v-list-item-subtitle
-                      v-text="'ジャンル ：'+item.genre"
-                    ></v-list-item-subtitle>
-                    <v-divider></v-divider>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-          </v-col>
-        </v-row>
-        <v-spacer></v-spacer>
-      </v-container>      
-    </template>-->
     <v-btn color="#0461cd" dark @click.stop="inStore">
-                 (仮)結果をローカルストレージに保存
-              </v-btn>
+      (仮)結果をローカルストレージに保存
+    </v-btn>
+    <v-btn color="#0461cd" dark @click.stop="offStore">
+      (仮)結果をローカルストレージから削除
+    </v-btn>
   </div>
 </template>
 
 <script>
 import App_bar from "../components/App_bar";
-import moment from "moment";
+//import moment from "moment";
 
 export default {
   name: "OutputList",
@@ -107,10 +90,10 @@ export default {
     hit_num: 0,
     results: [],
     model: -1,
-    isShowDetails: false,
-    frag: false,
+    //isShowDetails: false,
+    frag: 0,
+    URL: "/recommend/",
   }),
-
   mounted() {
     /*
     if (this.type_dict[this.$route.query.type - 1].url != "") {
@@ -133,23 +116,36 @@ export default {
           this.results.map((result) => (result["id"] = i++));
         });    
     }*/
-     //console.log("this.$route.query.type: "+this.$route.query.type);
-     this.results = this.$store.getters.getIsResult;
-     console.log("this.results: ");
-     console.dir(this.results);
-          for (let i in this.results) {
-            console.dir(this.results[i]);
-            console.log("this.results"+i+".sections: ");
-            console.dir(this.results[i].sections);
-          }
-          this.frag = true;
-   /* if (this.results.length==0){
-        if(this.$route.query.type == 2) {
-      this.getData();
-        }else{
+    //console.log("this.$route.query.type: "+this.$route.query.type);
 
-        }
-    }*/
+    this.results = this.$store.getters.getIsResult;
+    console.dir(this.results);
+    console.log("this.results.length: " + this.results.length);
+    if (this.results.length == 0) {
+      if (this.$route.query.type == 1) {
+        this.URL = this.URL + "tasks/" + this.$route.query.bk;
+        this.frag = 0;
+        console.log("URL: " + this.URL);
+      } else if (this.$route.query.type == 2) {
+        this.URL = this.URL + "spots/" + this.$route.query.bk;
+        this.frag = 0;
+        console.log("URL: " + this.URL);
+      } else if (this.$route.query.type == 3) {
+        this.URL = this.URL + "restaurants/" + this.$route.query.bk;
+        this.frag = 1;
+        console.log("URL: " + this.URL);
+      }
+      //this.getData(this.URL);
+    } else {
+      console.log("this.results: ");
+      console.dir(this.results);
+      for (let i in this.results) {
+        console.dir(this.results[i]);
+        console.log("this.results" + i + ".sections: ");
+        console.dir(this.results[i].sections);
+      }
+      //this.frag = 0;
+    }
   },
   computed: {
     getListLength: function () {
@@ -162,24 +158,29 @@ export default {
     },
   },
   watch: {
-      model: function (newValue, oldValue) {
+    model: function (newValue, oldValue) {
       console.log(
-        "選択されたリストが: [" + oldValue + "] から [" + newValue + "]に変更されたよ"
+        "選択されたリストが: [" +
+          oldValue +
+          "] から [" +
+          newValue +
+          "]に変更されたよ"
       );
       this.toListDetails();
     },
   },
   methods: {
+    /*
     makeStartTime: function (start_time) {
-      /* 出発時間を返す */
+      //出発時間を返す 
       return this.adjustAMPM(moment(start_time, "YYYY-MM-DD hh:mm a"));
     },
     makeEndTime: function (end_time) {
-      /* 到着時間を返す */
+      //到着時間を返す 
       return this.adjustAMPM(moment(end_time, "YYYY-MM-DD hh:mm a"));
     },
     adjustAMPM: function (time) {
-      /* 出発・到着時間のAM/PMを調整する */
+      //出発・到着時間のAM/PMを調整する
       var hour;
       if (time.format("a") == "am") {
         if (time.format("h") == "12") hour = 0;
@@ -191,7 +192,7 @@ export default {
       return hour + ":" + time.format("mm");
     },
     getTransTime: function (start_time, end_time) {
-      /* 移動時間を計算する */
+      //移動時間を計算する
       var start = moment(start_time, "YYYY-MM-DD hh:mm a");
       var end = moment(end_time, "YYYY-MM-DD hh:mm a");
       var minute = end.diff(start, "minutes");
@@ -202,10 +203,10 @@ export default {
       return transtime;
     },
     taskOption: function (option) {
-      /* タスクラベルをつけるかどうか */
+      //タスクラベルをつけるかどうか
       return option ? true : false;
     },
-    /*toListDetails: function (result) {
+    toListDetails: function (result) {
       this.$router.push({
         name: "ListDetails",
         query: {
@@ -219,14 +220,15 @@ export default {
       this.isShowDetails = true;
     },*/
     /////////////////////////以下メソッド平山記述////////////////
-    getData() {
+    getData(url) {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const URL = "/recommend/spots/" + this.$route.query.bk;
-      console.log("this.$route.query.bkの型@GET: " + typeof this.$route.query.bk);
-      console.log("URL: "+URL);
-      console.log("URLの型: " + typeof URL);
+      console.log(
+        "this.$route.query.bkの型@GET: " + typeof this.$route.query.bk
+      );
+      console.log("URL: " + url);
+      console.log("URLの型: " + typeof url);
       this.$axios
-        .get(URL, {
+        .get(url, {
           data: {},
           headers: headers,
         })
@@ -238,23 +240,16 @@ export default {
             this.results[i] = response.data[i];
             console.dir(this.results[i]);
           }
-          this.frag = true;
+          this.$store.commit("setResult", this.results);
+          this.frag = +1;
         })
-        .catch((error) => {     
+        .catch((error) => {
           console.log("エラーになっちゃった..:＠getData");
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );
         });
     },
-    /*toListDetails: function () {
-      this.$router
-        .push({
-          name: "ListDetails",
-          params: { selectedSpot: this.results[this.model] },
-        })
-        .catch(() => {});
-    },*/
     toListDetails: function (result) {
       this.$router
         .push({
@@ -263,9 +258,13 @@ export default {
         })
         .catch(() => {});
     },
-    inStore(){
-        this.$store.commit("setUserData", this.results);
-    }
+    inStore() {
+      this.$store.commit("setResult", this.results);
+    },
+    offStore() {
+      const empty = [];
+      this.$store.commit("setResult", empty);
+    },
   },
 };
 </script>

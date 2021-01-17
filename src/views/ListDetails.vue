@@ -28,7 +28,7 @@
           </div>
 
           <v-spacer></v-spacer>
-
+          <!--
           <v-btn
             v-if="rainAvoid == false"
             color="#ffffff"
@@ -38,9 +38,9 @@
           >
           <v-btn v-else dark fab color="#0461cd" v-on:click="displayRainAvoid()"
             ><v-icon large>mdi-umbrella</v-icon></v-btn
-          >
+          >-->
         </v-card-title>
-
+        <!--
         <v-card-subtitle class="ml-10">
           {{ makeStartTime(start_time) }}
           <v-icon color="#0575e6" dense>mdi-arrow-right-bold</v-icon>
@@ -49,7 +49,7 @@
           ><br />
           {{ trans_costs }}円
           <span class="ml-3">{{ nearest_station }}／{{ nearest_route }}</span>
-        </v-card-subtitle>
+        </v-card-subtitle>-->
         <v-row>
           <v-col>
             <v-list three-line>
@@ -127,7 +127,7 @@
 
 <script>
 import App_bar from "../components/App_bar";
-import moment from "moment";
+//import moment from "moment";
 
 export default {
   name: "ListDetails",
@@ -165,22 +165,21 @@ export default {
     */
 
     this.selectedResult = this.selectedSpot;
-
     console.log(" selectedSpotの型: " + typeof this.selectedResult);
     console.log(" selectedSpot.sections: ");
     console.dir(this.selectedResult.sections);
   },
   methods: {
-    makeStartTime: function (start_time) {
-      /* 出発時間を返す */
+    /* makeStartTime: function (start_time) {
+      //出発時間を返す
       return this.adjustAMPM(moment(start_time, "YYYY-MM-DD hh:mm a"));
     },
     makeEndTime: function (end_time) {
-      /* 到着時間を返す */
+      //到着時間を返す
       return this.adjustAMPM(moment(end_time, "YYYY-MM-DD hh:mm a"));
     },
     adjustAMPM: function (time) {
-      /* 出発・到着時間のAM/PMを調整する */
+      //出発・到着時間のAM/PMを調整する
       var hour;
       if (time.format("a") == "am") {
         if (time.format("h") == "12") hour = 0;
@@ -192,7 +191,7 @@ export default {
       return hour + ":" + time.format("mm");
     },
     getTransTime: function (start_time, end_time) {
-      /* 移動時間を計算する */
+      //移動時間を計算する
       var start = moment(start_time, "YYYY-MM-DD hh:mm a");
       var end = moment(end_time, "YYYY-MM-DD hh:mm a");
       var minute = end.diff(start, "minutes");
@@ -201,14 +200,13 @@ export default {
       if (hour == 0) transtime = "（" + minute + "分）";
       else transtime = "（" + hour + "時間" + (minute - 60 * hour) + "分）";
       return transtime;
-    },
+    },*/
     displayRainAvoid() {
       this.rainAvoid = !this.rainAvoid;
     },
     ////////////平山記述メソッド//////////
     postSelectedSpot() {
-      //選択した寄り道ルートをdrfに返せるメソッド
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = {
         /*以下を例にdrfに送信したい情報を投げてくださいませ
         name: this.selectedSpot.name,
