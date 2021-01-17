@@ -126,16 +126,14 @@ export default {
             for (var d of response.data) {
               var colorAllocater = function (type) {
                 if (type == 4) return "#778899";
-                else if (type == 1) return "#fef4ce";
-                //空きブロック
-                else if (type == 2) return "#cccccc";
-                //在宅ブロック
-                else if (type == 3) return "#ffc900";
+                else if (type == 1) return "#fef4ce";//空きブロック
+                else if (type == 2) return "#cccccc";//在宅ブロック
+                else if (type == 3 || type == 5) return "#ffc900";
               };
               this.events.push({
                 //idとdiscriptionとlocationは使われていない
                 id: d.google_id ?? "", //左辺がnullなら右辺を返す
-                name: d.summary ?? "",
+                name: d.summary ?? d.name ?? d.location ?? "",
                 description: d.description ?? "",
                 location: d.location ?? "",
                 bk_type: d.bk.blockType,
