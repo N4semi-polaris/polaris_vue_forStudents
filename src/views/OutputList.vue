@@ -58,12 +58,12 @@
         </template>
       </v-list>
     </template>
-    <v-btn color="#0461cd" dark @click.stop="inStore">
+    <!--<v-btn color="#0461cd" dark @click.stop="inStore">
       (仮)結果をローカルストレージに保存
     </v-btn>
     <v-btn color="#0461cd" dark @click.stop="offStore">
       (仮)結果をローカルストレージから削除
-    </v-btn>
+    </v-btn>-->s
   </div>
 </template>
 
@@ -211,7 +211,7 @@ export default {
       console.log("URL: " + url);
       console.log("URLの型: " + typeof url);
       console.log("headers:" + headers);
-      /*this.$axios
+      this.$axios
         .get(url, {
           data: {},
           headers: headers,
@@ -230,7 +230,7 @@ export default {
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );
-        });*/
+        });
     },
     toListDetails: function (result) {
       this.$store.commit("setSelectedResult", result, this.$route.query.type);

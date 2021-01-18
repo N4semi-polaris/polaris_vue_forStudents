@@ -18,7 +18,8 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <div v-show="useBus == true">
+          <v-card-subtitle class="ml-10">{{ selectedResult.genre }}</v-card-subtitle>
+          <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
           </div>
           <div v-show="useTrain == true">
@@ -26,7 +27,7 @@
           </div>
           <div v-show="useFoot == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-walk</v-icon>
-          </div>
+          </div>-->
 
           <v-spacer></v-spacer>
           <!--
@@ -56,7 +57,7 @@
             <v-list three-line>
               <v-list-item-group>
                 <v-list-item
-                  v-for="(item, i) in selectedResult.sections"
+                  v-for="(item, i) in selectedResult.route[0]"
                   :key="i"
                 >
                   <v-list-item-content>
@@ -241,7 +242,6 @@ export default {
       const data = {
         "start": this.startTime,
         "end": this.endTime,
-        "address": "",//address確認！
         "location": this.selectedResult.name,
         "lat": this.selectedResult.lat,
         "lon": this.selectedResult.lon,
@@ -252,8 +252,9 @@ export default {
           headers: headers,
         })
         .then(() => {
-          //this.$router.push({ name: "HOME" });
-          //this.$store.commit("setListResult", {});
+          this.$store.commit("setListResult", {});
+          this.$store.commit("setSelectedResult", [], 0)
+          this.$router.push({ name: "HOME" });
         })
         .catch((error) => {
           console.log("エラーになっちゃった..@ListDetails3_PostSelectedSpot");

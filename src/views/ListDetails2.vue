@@ -18,7 +18,8 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <div v-show="useBus == true">
+          <v-card-subtitle class="ml-10">{{ selectedResult.genre }}</v-card-subtitle>
+          <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
           </div>
           <div v-show="useTrain == true">
@@ -26,7 +27,7 @@
           </div>
           <div v-show="useFoot == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-walk</v-icon>
-          </div>
+          </div>-->
 
           <v-spacer></v-spacer>
           <!--
@@ -186,13 +187,6 @@ export default {
         this.endTime = this.selectedResult.sections[i]["end"]["time"];
       }
     }
-    var adindex = this.selectedResult.name.indexOf("、");
-    this.address = this.selectedResult.name.slice(adindex + 1);
-    console.log(" address: " + this.address);
-
-    var nmindex = this.selectedResult.name.indexOf("、");
-    this.name = this.selectedResult.name.slice(0,nmindex);
-    console.log(" name: " + this.name);
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -235,7 +229,6 @@ export default {
       const data = {
         "start": this.startTime,
         "end": this.endTime,
-        "address": this.address,
         "location": this.selectedResult.name,
         "lat": this.selectedResult.lat,
         "lon": this.selectedResult.lon,
@@ -246,8 +239,9 @@ export default {
           headers: headers,
         })
         .then(() => {
-          //this.$router.push({ name: "HOME" });
-          //this.$store.commit("setListResult", {});
+          this.$store.commit("setListResult", {});
+          this.$store.commit("setSelectedResult", [], 0)
+          this.$router.push({ name: "HOME" });
         })
         .catch((error) => {
           console.log("エラーになっちゃった..@ListDetails3_PostSelectedSpot");
