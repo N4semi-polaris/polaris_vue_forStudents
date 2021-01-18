@@ -43,8 +43,8 @@ export default {
   mounted:function() {
     window.addEventListener('resize', this.setCalendarHeight)
     this.setCalendarHeight()    
+    this.$store.commit("setListResult", []);
     this.$store.commit("setSelectedResult", [], 0);
-    this.$store.commit("setListResult", {});
   },
   deforeDestroy:function(){
     window.removeEventListener('resize',this.setCalendarHeight)

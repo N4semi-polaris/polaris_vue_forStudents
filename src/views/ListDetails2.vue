@@ -240,7 +240,7 @@ export default {
           headers: headers,
         })
         .then(() => {
-          this.$store.commit("setListResult", {});
+          this.$store.commit("setListResult", []);
           this.$store.commit("setSelectedResult", [], 0)
           this.$router.push({ name: "HOME" });
         })
