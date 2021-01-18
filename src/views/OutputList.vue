@@ -63,7 +63,7 @@
     </v-btn>
     <v-btn color="#0461cd" dark @click.stop="offStore">
       (仮)結果をローカルストレージから削除
-    </v-btn>-->s
+    </v-btn>-->
   </div>
 </template>
 

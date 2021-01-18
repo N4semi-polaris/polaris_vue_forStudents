@@ -38,10 +38,13 @@ export default {
       var appbarHeight = 48; //固定
       this.calendarHeight = windowHeight - (YMareaHeigth + paletteHeight + appbarHeight);
     },
+  
   },
   mounted:function() {
     window.addEventListener('resize', this.setCalendarHeight)
-    this.setCalendarHeight()
+    this.setCalendarHeight()    
+    this.$store.commit("setSelectedResult", [], 0);
+    this.$store.commit("setListResult", {});
   },
   deforeDestroy:function(){
     window.removeEventListener('resize',this.setCalendarHeight)

@@ -2,7 +2,6 @@
   <div class="ListDetails1">
     <!--タスク推薦-->
     <App_bar />
-
     <div class="detail_card">
       <v-container>
         <v-btn
@@ -52,6 +51,7 @@
           {{ trans_costs }}円
           <span class="ml-3">{{ nearest_station }}／{{ nearest_route }}</span>
         </v-card-subtitle>-->
+        <!--
         <v-row>
           <v-col>
             <v-list three-line>
@@ -81,6 +81,7 @@
             </v-list>
           </v-col>
         </v-row>
+        -->
         <v-card-actions>
           <v-container fluid>
             <v-row justify="center">

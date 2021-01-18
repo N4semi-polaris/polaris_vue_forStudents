@@ -1,6 +1,6 @@
 <template>
   <div class="ListDetails3">
-    <!--タスク推薦-->
+     <!--飲食店推薦-->
     <App_bar />
 
     <div class="detail_card">
@@ -52,6 +52,7 @@
           {{ trans_costs }}円
           <span class="ml-3">{{ nearest_station }}／{{ nearest_route }}</span>
         </v-card-subtitle>-->
+        <!--
         <v-row>
           <v-col>
             <v-list three-line>
@@ -84,6 +85,7 @@
             </v-list>
           </v-col>
         </v-row>
+        -->
         <v-card-actions>
           <v-container fluid>
             <v-row justify="center">
@@ -216,10 +218,10 @@ export default {
       if (hour == 0) transtime = "（" + minute + "分）";
       else transtime = "（" + hour + "時間" + (minute - 60 * hour) + "分）";
       return transtime;
-    },*/
+    },
     displayRainAvoid() {
       this.rainAvoid = !this.rainAvoid;
-    },
+    },*/
     ////////////平山記述メソッド//////////
     calcPostTime() {
       this.eatTime = this.selectedResult.eatTime;

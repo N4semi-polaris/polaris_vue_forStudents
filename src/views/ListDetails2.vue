@@ -52,6 +52,7 @@
           {{ trans_costs }}円
           <span class="ml-3">{{ nearest_station }}／{{ nearest_route }}</span>
         </v-card-subtitle>-->
+        <!--
         <v-row>
           <v-col>
             <v-list three-line>
@@ -83,7 +84,7 @@
               </v-list-item-group>
             </v-list>
           </v-col>
-        </v-row>
+        </v-row>-->
         <v-card-actions>
           <v-container fluid>
             <v-row justify="center">
