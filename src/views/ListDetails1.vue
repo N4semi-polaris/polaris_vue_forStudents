@@ -211,7 +211,7 @@ export default {
       this.rainAvoid = !this.rainAvoid;
     },
     ////////////平山記述メソッド//////////
-    calcPostTime() {
+    /*calcPostTime() {
       const num = "0";
       if (this.selectedResult.side == "now") {
         num = "1";
@@ -220,12 +220,12 @@ export default {
         num = "3";
         this.startTime = this.selectedResult.route[0].num.clock;
       }
-    },
+    },*/
 
     postSelectedSpot() {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       const task_uuid = this.selectedResult.taskid;
-      calcPostTime();
+      //calcPostTime();
       const data = { start: this.startTime };
       this.$axios
         .post(

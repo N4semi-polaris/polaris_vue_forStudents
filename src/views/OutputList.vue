@@ -128,6 +128,8 @@ export default {
       } else if (this.$route.query.type == 3) {
         this.URL = this.URL + "restaurants/" + this.$route.query.bk;
       }
+      console.log("this.URL: " + this.URL);
+      this.isShow = true;
       //this.getData(this.URL);
     } else {
       this.results = this.$store.getters.getlistResult;
