@@ -1,5 +1,6 @@
 <template>
-  <div class="ListDetails">
+  <div class="ListDetails3">
+    <!--タスク推薦-->
     <App_bar />
 
     <div class="detail_card">
@@ -86,13 +87,19 @@
           <v-container fluid>
             <v-row justify="center">
               <v-col align="center">
-                <v-btn class="mx-auto" rounded color="#0575e6" dark block
+                <v-btn
+                  class="mx-auto"
+                  rounded
+                  color="#0575e6"
+                  dark
+                  block
+                  @click="postSelectedSpot"
                   >ココにする
                   <v-icon right size="30">mdi-gesture-tap</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
-            <v-row>
+            <!-- <v-row>
               <v-col cols="6">
                 <v-btn
                   rounded
@@ -117,7 +124,7 @@
                   >1つ早める</v-btn
                 >
               </v-col>
-            </v-row>
+            </v-row>-->
           </v-container>
         </v-card-actions>
       </v-card>
@@ -130,18 +137,15 @@ import App_bar from "../components/App_bar";
 //import moment from "moment";
 
 export default {
-  name: "ListDetails",
+  name: "ListDetails3",
   components: {
     App_bar,
   },
-  props: {
-    selectedSpot: {},
-  },
   data: () => ({
-    /*
     useFoot: true,
     useBus: false,
     useTrain: true,
+    /*
     place_name: "",
     start_time: "",
     end_time: "",
@@ -152,8 +156,10 @@ export default {
     isRainy: true,
     rainAvoid: true,
     */
-    model: -1,
+    //model: -1,
     selectedResult: [],
+    type: 0,
+    startTime: "",
   }),
   mounted() {
     /*
@@ -164,10 +170,13 @@ export default {
     this.trans_costs = this.$route.query.trans_costs;
     */
 
-    this.selectedResult = this.selectedSpot;
-    console.log(" selectedSpotの型: " + typeof this.selectedResult);
-    console.log(" selectedSpot.sections: ");
-    console.dir(this.selectedResult.sections);
+    this.selectedResult = this.$store.getters.getSelectedResult.spot;
+    this.type = this.$store.getters.getSelectedResult.type;
+    console.log(" selectedResultの型: " + typeof this.selectedResult);
+    console.log(" selectedResult: ");
+    console.dir(this.selectedResult);
+    console.log("typeの型: " + typeof this.type);
+    console.log(" type: " + this.type);
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -205,26 +214,36 @@ export default {
       this.rainAvoid = !this.rainAvoid;
     },
     ////////////平山記述メソッド//////////
+    calcPostTime() {
+      const num = "0";
+      if (this.selectedResult.side == "now") {
+        num = "1";
+        this.startTime = this.selectedResult.route[0].num.clock;
+      } else {
+        num = "3";
+        this.startTime = this.selectedResult.route[0].num.clock;
+      }
+    },
+
     postSelectedSpot() {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const data = {
-        /*以下を例にdrfに送信したい情報を投げてくださいませ
-        name: this.selectedSpot.name,
-        address: this.selectedSpot.address,
-        lat: parseFloat(this.selectedSpot.lat),
-        lon: parseFloat(this.selectedSpot.lon),
-        code: this.selectedSpot.code,*/
-      };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const task_uuid = this.selectedResult.taskid;
+      calcPostTime();
+      const data = { start: this.startTime };
       this.$axios
-        .post("/accounts/setting/favspot", data, {
-          //URLは変えてくださいませ
-          headers: headers,
-        })
+        .post(
+          "/calendar/blocks/tasks/" + task_uuid + "/set_scheduledtime",
+          data,
+          {
+            headers: headers,
+          }
+        )
         .then(() => {
           this.$router.push({ name: "HOME" });
+          this.$store.commit("setListResult", {});
         })
         .catch((error) => {
-          console.log("エラーになっちゃった..@ListDetails_PostSelectedSpot");
+          console.log("エラーになっちゃった..@ListDetails1_PostSelectedSpot");
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );

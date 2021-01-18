@@ -9,7 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState({
     key: 'YorimichiApp',
-    paths: ['userEmail',"userAuthCode","authToken","isLogin","result"],
+    paths: ['userEmail',"userAuthCode","authToken","isLogin","listResult","selectedResult"],
     storage: window.sessionStorage
   })],
   state: {
@@ -17,7 +17,11 @@ export default new Vuex.Store({
     userAuthCode: "",
     authToken: "",
     isLogin: false,
-    result:[],
+    listResult:[],
+    selectedResult:{
+      spot:[],
+      type:0,
+    },
   },
   mutations: {
     setUserData(state, payload) {
@@ -37,8 +41,14 @@ export default new Vuex.Store({
       state.authToken = "";
       state.isLogin = false;
     },
-     setResult(state,result) {//検索ページ作成時のみ利用：あとで削除！！
-      state.result = result;
+     setListResult(state,resultList) {
+      console.log("setResultが実行されたよ! ");
+      state.listResult = resultList;
+    },
+    setSelectedResult(state,selectedResult,type) {
+      console.log("setSelectedResultが実行されたよ! ");
+      state.selectedResult.spot = selectedResult;
+      state.selectedResult.type =type;
     },
   },
   getters: {
@@ -57,8 +67,11 @@ export default new Vuex.Store({
     getIsLogin(state) {
       return state.isLogin;
     },
-    getIsResult(state) {
-      return state.result;
+    getlistResult(state) {
+      return state.listResult;
+    },
+    getSelectedResult(state) {
+      return state.selectedResult;
     },
   },
     actions: {

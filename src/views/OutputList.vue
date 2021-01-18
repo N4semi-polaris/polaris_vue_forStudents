@@ -9,30 +9,24 @@
     </v-toolbar>
 
     <v-sheet color="#f5f5f5" height="15px"></v-sheet>
-
-    <v-list shaped>
-      <template v-for="(result, index) in results">
-        <v-list-item :key="result.index" @click="toListDetails(result)">
-          <v-list-item-content>
-            <v-row no-gutters align="center">
-              <v-col cols="1">
-                <span class="marginIdLR">
-                  <!-- リスト番号 -->
-                  <v-list-item-title>{{ index + 1 }}</v-list-item-title>
-                </span>
-              </v-col>
-              <v-col cols="8" class="ml-4">
-                <v-list-item-title v-text="result.name"></v-list-item-title>
-                <div v-if="(frag = 1)">
+    <template v-if="isShow">
+      <v-list shaped>
+        <template v-for="(result, index) in results">
+          <v-list-item :key="result.index" @click="toListDetails(result)">
+            <v-list-item-content>
+              <v-row no-gutters align="center">
+                <v-col cols="1">
+                  <span class="marginIdLR">
+                    <!-- リスト番号 -->
+                    <v-list-item-title>{{ index + 1 }}</v-list-item-title>
+                  </span>
+                </v-col>
+                <v-col cols="8" class="ml-4">
+                  <v-list-item-title v-text="result.name"></v-list-item-title>
                   <v-list-item-subtitle v-text="result.genre">
                   </v-list-item-subtitle>
-                </div>
-                <div v-if="(frag = 2)">
-                  >
-                  <v-list-item-subtitle v-text="result.category">
-                  </v-list-item-subtitle>
-                </div>
-                <!--  <v-list-item-subtitle class="text--primary"
+
+                  <!--  <v-list-item-subtitle class="text--primary"
                   >{{ makeStartTime(result.start_time) }}
                   <v-icon color="#0575e6" dense>mdi-arrow-right-bold</v-icon>
                   {{ makeEndTime(result.end_time) }}
@@ -41,16 +35,16 @@
                   }}</span>
                 </v-list-item-subtitle>          
                 -->
-              </v-col>
-              <!--<v-col class="ml-2">
+                </v-col>
+                <!--<v-col class="ml-2">
                 <div v-show="taskOption(result.task_option)">
                   <v-icon color="#ffc900" dense>mdi-tag</v-icon>
                 </div>
               </v-col>-->
-            </v-row>
-          </v-list-item-content>
-        </v-list-item>
-        <!--
+              </v-row>
+            </v-list-item-content>
+          </v-list-item>
+          <!--
             <v-divider
                 v-if="index < results.length"
                 :key="index"
@@ -61,8 +55,9 @@
           color="#f5f5f5"
           height="10px"
         ></v-sheet>-->
-      </template>
-    </v-list>
+        </template>
+      </v-list>
+    </template>
     <v-btn color="#0461cd" dark @click.stop="inStore">
       (仮)結果をローカルストレージに保存
     </v-btn>
@@ -91,7 +86,7 @@ export default {
     results: [],
     model: -1,
     //isShowDetails: false,
-    frag: 0,
+    isShow: false,
     URL: "/recommend/",
   }),
   mounted() {
@@ -117,26 +112,25 @@ export default {
         });    
     }*/
     //console.log("this.$route.query.type: "+this.$route.query.type);
-
-    this.results = this.$store.getters.getIsResult;
-    console.dir(this.results);
-    console.log("this.results.length: " + this.results.length);
-    if (this.results.length == 0) {
+    console.log(
+      "this.$store.getters.getlistResult: " + this.$store.getters.getlistResult
+    );
+    console.dir(this.$store.getters.getIsResult);
+    console.log(
+      "this.$store.getters.getlistResult.length: " +
+        this.$store.getters.getlistResult.length
+    );
+    if (this.$store.getters.getlistResult.length == 0) {
       if (this.$route.query.type == 1) {
         this.URL = this.URL + "tasks/" + this.$route.query.bk;
-        this.frag = 0;
-        console.log("URL: " + this.URL);
       } else if (this.$route.query.type == 2) {
         this.URL = this.URL + "spots/" + this.$route.query.bk;
-        this.frag = 0;
-        console.log("URL: " + this.URL);
       } else if (this.$route.query.type == 3) {
         this.URL = this.URL + "restaurants/" + this.$route.query.bk;
-        this.frag = 1;
-        console.log("URL: " + this.URL);
       }
       //this.getData(this.URL);
     } else {
+      this.results = this.$store.getters.getlistResult;
       console.log("this.results: ");
       console.dir(this.results);
       for (let i in this.results) {
@@ -144,10 +138,10 @@ export default {
         console.log("this.results" + i + ".sections: ");
         console.dir(this.results[i].sections);
       }
-      //this.frag = 0;
+      this.isShow = true;
     }
   },
-  computed: {
+  /*computed: {
     getListLength: function () {
       var count = 0;
       var list = this.results;
@@ -156,19 +150,7 @@ export default {
       }
       return count;
     },
-  },
-  watch: {
-    model: function (newValue, oldValue) {
-      console.log(
-        "選択されたリストが: [" +
-          oldValue +
-          "] から [" +
-          newValue +
-          "]に変更されたよ"
-      );
-      this.toListDetails();
-    },
-  },
+  },*/
   methods: {
     /*
     makeStartTime: function (start_time) {
@@ -221,7 +203,7 @@ export default {
     },*/
     /////////////////////////以下メソッド平山記述////////////////
     getData(url) {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       console.log(
         "this.$route.query.bkの型@GET: " + typeof this.$route.query.bk
       );
@@ -233,15 +215,15 @@ export default {
           headers: headers,
         })
         .then((response) => {
-          console.log("response.dataの型@GET: " + typeof response.data);
+          /*console.log("response.dataの型@GET: " + typeof response.data);
           console.log("getしたresponse.dataの中身: ");
-          console.dir(response.data);
+          console.dir(response.data);*/
+          this.$store.commit("setListResult", response.data);
           for (let i in response.data) {
             this.results[i] = response.data[i];
             console.dir(this.results[i]);
           }
-          this.$store.commit("setResult", this.results);
-          this.frag = +1;
+          this.isShow = true;
         })
         .catch((error) => {
           console.log("エラーになっちゃった..:＠getData");
@@ -251,19 +233,22 @@ export default {
         });
     },
     toListDetails: function (result) {
-      this.$router
-        .push({
-          name: "ListDetails",
-          params: { selectedSpot: result },
-        })
-        .catch(() => {});
+      this.$store.commit("setSelectedResult", result, this.$route.query.type);
+      if (this.$route.query.type == 1) {
+        this.$router.push({ name: "ListDetails1" });
+      } else if (this.$route.query.type == 2) {
+        this.$router.push({ name: "ListDetails2" });
+      } else if (this.$route.query.type == 3) {
+        this.$router.push({ name: "ListDetails3" });
+      }
     },
     inStore() {
-      this.$store.commit("setResult", this.results);
+      this.$store.commit("setListResult", this.results);
+      console.log("isStore後");
     },
     offStore() {
       const empty = [];
-      this.$store.commit("setResult", empty);
+      this.$store.commit("setListResult", empty);
     },
   },
 };

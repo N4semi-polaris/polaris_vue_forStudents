@@ -59,10 +59,21 @@ const routes = [{
     meta: { requiresAuth: true }
   },
   {
-    path: '/listdetails:selectedSpot',
-    name: 'ListDetails',
-    component: () => import('../views/ListDetails'),
-    props: routes => ({selectedSpot: Object(routes.params.selectedSpot)}),
+    path: '/listdetails1',
+    name: 'ListDetails1',
+    component: () => import('../views/ListDetails1.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/listdetails2',
+    name: 'ListDetails2',
+    component: () => import('../views/ListDetails2.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/listdetails3',
+    name: 'ListDetails3',
+    component: () => import('../views/ListDetails3.vue'),
     meta: { requiresAuth: true }
   },
   {
