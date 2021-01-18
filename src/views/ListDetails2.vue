@@ -1,5 +1,6 @@
 <template>
-  <div class="ListDetails2"><!--飲食店以外推薦-->
+  <div class="ListDetails2">
+    <!--飲食店以外推薦-->
     <App_bar />
 
     <div class="detail_card">
@@ -86,13 +87,19 @@
           <v-container fluid>
             <v-row justify="center">
               <v-col align="center">
-                <v-btn class="mx-auto" rounded color="#0575e6" dark block @click="postSelectedSpot"
+                <v-btn
+                  class="mx-auto"
+                  rounded
+                  color="#0575e6"
+                  dark
+                  block
+                  @click="postSelectedSpot"
                   >ココにする
                   <v-icon right size="30">mdi-gesture-tap</v-icon>
                 </v-btn>
               </v-col>
             </v-row>
-           <!-- <v-row>
+            <!-- <v-row>
               <v-col cols="6">
                 <v-btn
                   rounded
@@ -138,7 +145,7 @@ export default {
     useFoot: true,
     useBus: false,
     useTrain: true,
-     /*
+    /*
     place_name: "",
     start_time: "",
     end_time: "",
@@ -151,7 +158,11 @@ export default {
     */
     //model: -1,
     selectedResult: [],
-    type:0,
+    type: 0,
+    startTime: "",
+    endTime: "",
+    address: "",
+    name: "",
   }),
   mounted() {
     /*
@@ -165,10 +176,23 @@ export default {
     this.selectedResult = this.$store.getters.getSelectedResult.spot;
     this.type = this.$store.getters.getSelectedResult.type;
     console.log(" selectedResultの型: " + typeof this.selectedResult);
-    console.log(" selectedResult: ");
-    console.dir(this.selectedResult);
-     console.log("typeの型: " + typeof this.type);
-    console.log(" type: "+this.type);
+    console.log(" selectedResult.sections: ");
+    console.dir(this.selectedResult.sections);
+    console.log("typeの型: " + typeof this.type);
+    console.log(" type: " + this.type);
+    for (let i in this.selectedResult.sections) {
+      if (this.selectedResult.sections[i]["type"] == "yorimichi") {
+        this.startTime = this.selectedResult.sections[i]["start"]["time"];
+        this.endTime = this.selectedResult.sections[i]["end"]["time"];
+      }
+    }
+    var adindex = this.selectedResult.name.indexOf("、");
+    this.address = this.selectedResult.name.slice(adindex + 1);
+    console.log(" address: " + this.address);
+
+    var nmindex = this.selectedResult.name.indexOf("、");
+    this.name = this.selectedResult.name.slice(0,nmindex);
+    console.log(" name: " + this.name);
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -209,22 +233,24 @@ export default {
     postSelectedSpot() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = {
-        /*name: this.selectedSpot.name,
-        address: this.selectedSpot.address,
-        lat: parseFloat(this.selectedSpot.lat),
-        lon: parseFloat(this.selectedSpot.lon),
-        code: this.selectedSpot.code,*/
+        "start": this.startTime,
+        "end": this.endTime,
+        "address": this.address,
+        "location": this.selectedResult.name,
+        "lat": this.selectedResult.lat,
+        "lon": this.selectedResult.lon,
+        "genre": this.selectedResult.genre,
       };
       this.$axios
-        .post("/accounts/setting/favspot", data, {
-          //URLは変えてくださいませ
+        .post("/calendar/blocks/yorimichi", data, {
           headers: headers,
         })
         .then(() => {
-          this.$router.push({ name: "HOME" });
+          //this.$router.push({ name: "HOME" });
+          //this.$store.commit("setListResult", {});
         })
         .catch((error) => {
-          console.log("エラーになっちゃった..@ListDetails_PostSelectedSpot");
+          console.log("エラーになっちゃった..@ListDetails3_PostSelectedSpot");
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );

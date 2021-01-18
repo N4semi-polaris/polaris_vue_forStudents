@@ -129,8 +129,7 @@ export default {
         this.URL = this.URL + "restaurants/" + this.$route.query.bk;
       }
       console.log("this.URL: " + this.URL);
-      this.isShow = true;
-      //this.getData(this.URL);
+      this.getData(this.URL);
     } else {
       this.results = this.$store.getters.getlistResult;
       console.log("this.results: ");
@@ -211,15 +210,14 @@ export default {
       );
       console.log("URL: " + url);
       console.log("URLの型: " + typeof url);
-      this.$axios
+      console.log("headers:" + headers);
+      /*this.$axios
         .get(url, {
           data: {},
           headers: headers,
         })
         .then((response) => {
-          /*console.log("response.dataの型@GET: " + typeof response.data);
-          console.log("getしたresponse.dataの中身: ");
-          console.dir(response.data);*/
+
           this.$store.commit("setListResult", response.data);
           for (let i in response.data) {
             this.results[i] = response.data[i];
@@ -232,7 +230,7 @@ export default {
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );
-        });
+        });*/
     },
     toListDetails: function (result) {
       this.$store.commit("setSelectedResult", result, this.$route.query.type);

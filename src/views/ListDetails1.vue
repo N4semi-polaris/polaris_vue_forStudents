@@ -211,33 +211,34 @@ export default {
       this.rainAvoid = !this.rainAvoid;
     },
     ////////////平山記述メソッド//////////
-    /*calcPostTime() {
-      const num = "0";
+    calcPostTime() {
       if (this.selectedResult.side == "now") {
-        num = "1";
-        this.startTime = this.selectedResult.route[0].num.clock;
+        this.startTime = this.selectedResult.route[0]["1"].clock;
       } else {
-        num = "3";
-        this.startTime = this.selectedResult.route[0].num.clock;
+        this.startTime = this.selectedResult.route[0]["3"].clock;
       }
-    },*/
+    },
 
     postSelectedSpot() {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
-      const task_uuid = this.selectedResult.taskid;
-      //calcPostTime();
-      const data = { start: this.startTime };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const url =
+        "/calendar/blocks/tasks/" +
+        this.selectedResult.taskid +
+        "/set_scheduledtime";
+      this.calcPostTime();
+      const data = {
+        "start": this.startTim,
+        "lat": this.selectedResult.lat,
+        "lon": this.selectedResult.lon,
+        "address": this.selectedResult.address,
+      };
       this.$axios
-        .post(
-          "/calendar/blocks/tasks/" + task_uuid + "/set_scheduledtime",
-          data,
-          {
-            headers: headers,
-          }
-        )
+        .post(url, data, {
+          headers: headers,
+        })
         .then(() => {
-          this.$router.push({ name: "HOME" });
-          this.$store.commit("setListResult", {});
+          //this.$router.push({ name: "HOME" });
+          //this.$store.commit("setListResult", {});
         })
         .catch((error) => {
           console.log("エラーになっちゃった..@ListDetails1_PostSelectedSpot");

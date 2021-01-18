@@ -134,7 +134,7 @@
 
 <script>
 import App_bar from "../components/App_bar";
-//import moment from "moment";
+import moment from "moment";
 
 export default {
   name: "ListDetails3",
@@ -160,6 +160,8 @@ export default {
     selectedResult: [],
     type: 0,
     startTime: "",
+    eatTime: "",
+    endTime: "",
   }),
   mounted() {
     /*
@@ -172,11 +174,15 @@ export default {
 
     this.selectedResult = this.$store.getters.getSelectedResult.spot;
     this.type = this.$store.getters.getSelectedResult.type;
-    console.log(" selectedResultの型: " + typeof this.selectedResult);
+    //console.log(" selectedResultの型: " + typeof this.selectedResult);
     console.log(" selectedResult: ");
     console.dir(this.selectedResult);
-    console.log("typeの型: " + typeof this.type);
-    console.log(" type: " + this.type);
+    //console.log("typeの型: " + typeof this.type);
+    //console.log(" type: " + this.type);
+    console.log(" selectedResult.route[0]: ");
+    console.dir(this.selectedResult.route[0]);
+    console.log(" selectedResult.route[0]['1']: ");
+    console.dir(this.selectedResult.route[0]["1"]);
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -214,36 +220,43 @@ export default {
       this.rainAvoid = !this.rainAvoid;
     },
     ////////////平山記述メソッド//////////
-    /*calcPostTime() {
-      const num = "0";
+    calcPostTime() {
+      this.eatTime = this.selectedResult.eatTime;
       if (this.selectedResult.side == "now") {
-        num = "1";
-        this.startTime = this.selectedResult.route[0].num.clock;
+        this.startTime = this.selectedResult.route[0]["1"].clock;
+        var start_TimeNow = moment(this.startTime, "YYYY-MM-DD hh:mm a");
+        var eat_TimeNow = moment(this.eatTime, "YYYY-MM-DD hh:mm a");
+        this.endTime = start_TimeNow.add("minutes", eat_TimeNow);
       } else {
-        num = "3";
-        this.startTime = this.selectedResult.route[0].num.clock;
+        this.startTime = this.selectedResult.route[0]["3"].clock;
+        var start_TimeDes = moment(this.startTime, "YYYY-MM-DD hh:mm a");
+        var eat_TimeDes = moment(this.eatTime, "YYYY-MM-DD hh:mm a");
+        this.endTi = start_TimeDes.add("minutes", eat_TimeDes);
       }
-    },*/
+    },
 
     postSelectedSpot() {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
-      const task_uuid = this.selectedResult.taskid;
-      //calcPostTime();
-      const data = { start: this.startTime };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      this.calcPostTime();
+      const data = {
+        "start": this.startTime,
+        "end": this.endTime,
+        "address": "",//address確認！
+        "location": this.selectedResult.name,
+        "lat": this.selectedResult.lat,
+        "lon": this.selectedResult.lon,
+        "genre": this.selectedResult.genre,
+      };
       this.$axios
-        .post(
-          "/calendar/blocks/tasks/" + task_uuid + "/set_scheduledtime",
-          data,
-          {
-            headers: headers,
-          }
-        )
+        .post("/calendar/blocks/yorimichi", data, {
+          headers: headers,
+        })
         .then(() => {
-          this.$router.push({ name: "HOME" });
-          this.$store.commit("setListResult", {});
+          //this.$router.push({ name: "HOME" });
+          //this.$store.commit("setListResult", {});
         })
         .catch((error) => {
-          console.log("エラーになっちゃった..@ListDetails1_PostSelectedSpot");
+          console.log("エラーになっちゃった..@ListDetails3_PostSelectedSpot");
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );
