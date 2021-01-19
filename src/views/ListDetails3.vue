@@ -137,7 +137,7 @@
 
 <script>
 import App_bar from "../components/App_bar";
-import moment from "moment";
+//import moment from "moment";
 
 export default {
   name: "ListDetails3",
@@ -163,8 +163,6 @@ export default {
     selectedResult: [],
     type: 0,
     startTime: "",
-    eatTime: "",
-    endTime: "",
   }),
   mounted() {
     /*
@@ -178,7 +176,7 @@ export default {
     this.selectedResult = this.$store.getters.getSelectedResult.spot;
     this.type = this.$store.getters.getSelectedResult.type;
     //console.log(" selectedResultの型: " + typeof this.selectedResult);
-    console.log(" selectedResult: ");
+    console.log(" 選択されたスポット(selectedResult): ");
     console.dir(this.selectedResult);
     //console.log("typeの型: " + typeof this.type);
     //console.log(" type: " + this.type);
@@ -224,17 +222,10 @@ export default {
     },*/
     ////////////平山記述メソッド//////////
     calcPostTime() {
-      this.eatTime = this.selectedResult.eatTime;
       if (this.selectedResult.side == "now") {
         this.startTime = this.selectedResult.route[0]["1"].clock;
-        var start_TimeNow = moment(this.startTime, "YYYY-MM-DD hh:mm a");
-        var eat_TimeNow = moment(this.eatTime, "YYYY-MM-DD hh:mm a");
-        this.endTime = start_TimeNow.add("minutes", eat_TimeNow);
       } else {
         this.startTime = this.selectedResult.route[0]["3"].clock;
-        var start_TimeDes = moment(this.startTime, "YYYY-MM-DD hh:mm a");
-        var eat_TimeDes = moment(this.eatTime, "YYYY-MM-DD hh:mm a");
-        this.endTi = start_TimeDes.add("minutes", eat_TimeDes);
       }
     },
 
@@ -243,7 +234,7 @@ export default {
       this.calcPostTime();
       const data = {
         "start": this.startTime,
-        "end": this.endTime,
+        "eat_time": this.selectedResult.eat_time,
         "location": this.selectedResult.name,
         "lat": this.selectedResult.lat,
         "lon": this.selectedResult.lon,

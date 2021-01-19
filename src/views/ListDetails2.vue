@@ -18,7 +18,9 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <v-card-subtitle class="ml-10">{{ selectedResult.genre }}</v-card-subtitle>
+          <v-card-subtitle class="ml-10">{{
+            selectedResult.genre
+          }}</v-card-subtitle>
           <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
           </div>
@@ -163,8 +165,6 @@ export default {
     type: 0,
     startTime: "",
     endTime: "",
-    address: "",
-    name: "",
   }),
   mounted() {
     /*
@@ -180,14 +180,6 @@ export default {
     console.log(" selectedResultの型: " + typeof this.selectedResult);
     console.log(" selectedResult.sections: ");
     console.dir(this.selectedResult.sections);
-    console.log("typeの型: " + typeof this.type);
-    console.log(" type: " + this.type);
-    for (let i in this.selectedResult.sections) {
-      if (this.selectedResult.sections[i]["type"] == "yorimichi") {
-        this.startTime = this.selectedResult.sections[i]["start"]["time"];
-        this.endTime = this.selectedResult.sections[i]["end"]["time"];
-      }
-    }
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -220,20 +212,31 @@ export default {
       if (hour == 0) transtime = "（" + minute + "分）";
       else transtime = "（" + hour + "時間" + (minute - 60 * hour) + "分）";
       return transtime;
-    },*/
+    },
     displayRainAvoid() {
       this.rainAvoid = !this.rainAvoid;
-    },
+    },*/
     ////////////平山記述メソッド//////////
+    calcPostTime() {
+      for (let i in this.selectedResult.sections) {
+        if (this.selectedResult.sections[i]["type"] == "yorimichi") {
+          this.startTime = this.selectedResult.sections[i]["start"]["time"];
+          this.endTime = this.selectedResult.sections[i]["end"]["time"];
+          console.log("startTime@ListDetails2.vue: " + this.startTime);
+          console.log("endTime@ListDetails2.vue: " + this.endTime);
+        }
+      }
+    },
     postSelectedSpot() {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      this.calcPostTime();
       const data = {
-        "start": this.startTime,
-        "end": this.endTime,
-        "location": this.selectedResult.name,
-        "lat": this.selectedResult.lat,
-        "lon": this.selectedResult.lon,
-        "genre": this.selectedResult.genre,
+        start: this.startTime,
+        end: this.endTime,
+        location: this.selectedResult.name,
+        lat: this.selectedResult.lat,
+        lon: this.selectedResult.lon,
+        genre: this.selectedResult.genre,
       };
       this.$axios
         .post("/calendar/blocks/yorimichi", data, {
@@ -241,7 +244,7 @@ export default {
         })
         .then(() => {
           this.$store.commit("setListResult", []);
-          this.$store.commit("setSelectedResult", [], 0)
+          this.$store.commit("setSelectedResult", [], 0);
           this.$router.push({ name: "HOME" });
         })
         .catch((error) => {
