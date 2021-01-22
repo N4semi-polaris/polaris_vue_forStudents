@@ -26,7 +26,7 @@
           <v-btn v-on:click="toTaskEdit" text absolute left>
             <!-- タスクブロック追加ページへ -->
             <v-icon color="#ffc900" left>mdi-plus-circle</v-icon
-            >新規寄り道予定作成
+            >新規タスク作成
           </v-btn>
           <v-btn icon v-on:click="toTaskLog" text absolute right>
             <!-- タスクログページへ -->
