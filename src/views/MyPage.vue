@@ -1,125 +1,177 @@
 <template>
-  <div class="MyPage">
-    <App_var />
-    <v-form>
+  <v-app>
+    <div class="MyPage">
+      <App_var />
+      <h1></h1>
       <v-container>
-        <v-row align="center">
-          <v-col align="center">
-            <v-btn
-              v-on:click="toInitialSettingPage"
-              rounded
-              class="text-center"
-              color="#0461cd"
-              dark
-              >基本設定を編集する</v-btn
-            >
-          </v-col>
-        </v-row>
+        <v-form>
+          <v-divider></v-divider>
+          <v-row>
+            <v-col align="center">
+              <v-subheader>好きな施設・飲食店のジャンル</v-subheader>
+              <v-spacer></v-spacer>
+              <v-btn color="#0461cd" dark @click.stop="openGdialog">
+                飲食店を選ぶ
+              </v-btn>
+              <selectSpotGourmet ref="GourmetDialog" />
+              <v-spacer></v-spacer>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-spacer></v-spacer>
+              <v-btn color="#0461cd" dark @click.stop="openOdialog">
+                飲食店以外を選ぶ
+              </v-btn>
+              <selectSpotOther ref="OtherDialog" />
+              <v-spacer></v-spacer>
+            </v-col>
+          </v-row>
+          <v-spacer></v-spacer>
+          <v-divider></v-divider>
+          <v-row align="center">
+            <v-col align="center">
+              <v-btn
+                v-on:click="toFavoriteSpotPage"
+                rounded
+                class="mx-auto text-center"
+                color="#0461cd"
+                dark
+                >お気に入りスポットを編集する</v-btn
+              >
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+          <v-row>
+            <v-col>
+              <v-list shaped class="mx-auto">
+                <v-list-item-group v-model="model" multiple>
+                  <template v-for="(item, i) in items">
+                    <v-divider v-if="!item" :key="`divider-${i}`"></v-divider>
 
-        <v-divider></v-divider>
+                    <v-list-item
+                      v-else
+                      :key="`item-${i}`"
+                      :value="item"
+                      color="#0461cd"
+                      active-class=""
+                      v-on:click="postTransportation(item)"
+                    >
+                      <template v-slot:default="{ active }">
+                        <v-list-item-content>
+                          <v-list-item-title
+                            v-text="item.displyname"
+                          ></v-list-item-title>
+                        </v-list-item-content>
+                        <v-list-item-action>
+                          <v-checkbox
+                            v-model="item.check"
+                            :input-value="active"
+                            color="#044eb7"
+                          ></v-checkbox>
+                        </v-list-item-action>
+                      </template>
+                    </v-list-item>
+                  </template>
+                </v-list-item-group>
+              </v-list>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-select
+                v-model="selectTime"
+                :items="items_Time"
+                item-text="time"
+                item-value="id"
+                :rules="[(v) => !!v || 'Item is required']"
+                label="何分前に到着したいか"
+              ></v-select>
+            </v-col>
+          </v-row>
 
-        <v-row>
-          <v-col>
-            <v-list shaped class="mx-auto">
-              <v-list-item-group v-model="model" multiple>
-                <template v-for="(item, i) in items">
-                  <v-divider v-if="!item" :key="`divider-${i}`"></v-divider>
+          <v-divider></v-divider>
+          <v-row align="center">
+            <v-col align="center">
+              <v-select
+                v-model="selectWalkSpeed"
+                :items="items_WalkSpeed"
+                item-text="speed"
+                item-value="id"
+                :rules="[(v) => !!v || 'Item is required']"
+                label="歩く速度"
+              ></v-select>
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+          <v-row align="center">
+            <v-col align="center">
+              <v-text-field
+                v-model="address"
+                label="住所"
+                hint="例：東京都小平市津田町2-1-1"
+              ></v-text-field>
+            </v-col>
+          </v-row>
 
-                  <v-list-item
-                    v-else
-                    :key="`item-${i}`"
-                    :value="item"
-                    color="#0461cd"
-                    active-class=""
-                    v-on:click="postTransportation(item)"
-                  >
-                    <template v-slot:default="{ active }">
-                      <v-list-item-content>
-                        <v-list-item-title
-                          v-text="item.displyname"
-                        ></v-list-item-title>
-                      </v-list-item-content>
-                      <v-list-item-action>
-                        <v-checkbox
-                          v-model="item.check"
-                          :input-value="active"
-                          color="#044eb7"
-                        ></v-checkbox>
-                      </v-list-item-action>
-                    </template>
-                  </v-list-item>
-                </template>
-              </v-list-item-group>
-            </v-list>
-          </v-col>
-        </v-row>
+          <v-divider></v-divider>
 
-        <v-divider></v-divider>
+          <v-row align="center">
+            <v-col align="center">
+              <v-btn
+                v-on:click="toSettingHomeTime"
+                rounded
+                class="mx-auto text-center"
+                color="#0461cd"
+                dark
+                >在宅時間を設定する</v-btn
+              >
+            </v-col>
+          </v-row>
+          <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <v-row align="center">
-          <v-col align="center">
-            <v-btn
-              v-on:click="toFavoriteSpotPage"
-              rounded
-              class="mx-auto text-center"
-              color="#0461cd"
-              dark
-              >お気に入りスポットを編集する</v-btn
-            >
-          </v-col>
-        </v-row>
+          <v-row align="center">
+            <v-col align="center">
+              <v-switch
+                v-model="disabled1"
+                class="ma-2"
+                label="通知を許可"
+                color="#0461cd"
+              ></v-switch>
+            </v-col>
+          </v-row>
 
-        <v-divider></v-divider>
+          <v-divider></v-divider>
 
-        <v-row align="center">
-          <v-col align="center">
-            <v-btn
-              v-on:click="toSettingHomeTime"
-              rounded
-              class="mx-auto text-center"
-              color="#0461cd"
-              dark
-              >在宅時間を設定する</v-btn
-            >
-          </v-col>
-        </v-row>
-
-        <v-divider></v-divider>
-
-        <v-row align="center">
-          <v-col align="center">
-            <v-switch
-              v-model="disabled1"
-              class="ma-2"
-              label="通知を許可"
-              color="#0461cd"
-            ></v-switch>
-          </v-col>
-        </v-row>
-
-        <v-divider></v-divider>
-
-        <v-row align="center">
-          <v-col align="center">
-            <v-switch
-              v-model="disabled2"
-              class="ma-2"
-              label="位置情報共有を許可"
-              color="#0461cd"
-            ></v-switch>
-          </v-col>
-        </v-row>
+          <v-row align="center">
+            <v-col align="center">
+              <v-switch
+                v-model="disabled2"
+                class="ma-2"
+                label="位置情報共有を許可"
+                color="#0461cd"
+              ></v-switch>
+            </v-col>
+          </v-row>
+        </v-form>
       </v-container>
-    </v-form>
-  </div>
+    </div>
+  </v-app>
 </template>
+
 <script>
 import App_var from "../components/App_bar";
+import selectSpotGourmet from "../components/dialog/SelectSpots_Gourmet.vue";
+import selectSpotOther from "../components/dialog/SelectSpots_Other.vue";
+import _ from "lodash";
 
 export default {
   name: "MyPage",
   components: {
     App_var,
+    selectSpotGourmet,
+    selectSpotOther,
   },
   data: () => ({
     items: [
@@ -132,12 +184,77 @@ export default {
     model: [],
     disabled1: false,
     disabled2: false,
+    selectTime: [],
+    items_Time: [
+      { id: "1", time: "5分前" },
+      { id: "2", time: "10分前" },
+      { id: "3", time: "15分前" },
+      { id: "4", time: "30分前" },
+      { id: "5", time: "1時間前" },
+    ],
+    selectWalkSpeed: [],
+    items_WalkSpeed: [
+      { id: "1", speed: "急いで" },
+      { id: "2", speed: "少し急いで" },
+      { id: "3", speed: "少しゆっくり" },
+      { id: "4", speed: "ゆっくり" },
+    ],
+    address: "",
   }),
+  computed: {
+    allSelected() {
+      return this.selected.length === this.items.length;
+    },
+    categories() {
+      const search = this.search.toLowerCase();
+      if (!search) return this.items;
+      return this.items.filter((item) => {
+        const text = item.text.toLowerCase();
+        return text.indexOf(search) > -1;
+      });
+    },
+    selections() {
+      const selections = [];
+      for (const selection of this.selected) {
+        selections.push(selection);
+      }
+      return selections;
+    },
+  },
+
+  watch: {
+    selectWalkSpeed: {
+      handler: function (newValue, oldValue) {
+        console.log(
+          "selectWalkSpeedが: [" +
+            oldValue +
+            "] から [" +
+            newValue +
+            "]に変更されたよ"
+        );
+        this.postWalkSpeedData();
+      },
+      deep: true,
+    },
+    selectTime: function (newValue, oldValue) {
+      console.log(
+        "selectTimeが: [" + oldValue + "] から [" + newValue + "]に変更されたよ"
+      );
+      this.postTimeData();
+    },
+    address: {
+      handler: _.debounce(function () {
+        this.postAddressData();
+      }, 2000), //データの更新が終わった2秒後にpostAddressDataが実行される
+      deep: true,
+    },
+  },
+
   mounted() {
-    console.log("MyPageのmountedが実行されたよ");
+    //console.log("MyPageのmountedが実行されたよ");
     const headers = {
       "Content-Type": "application/json",
-      "Authorization": "JWT " + this.$store.getters.getToken,
+      Authorization: "JWT " + this.$store.getters.getToken,
     };
     this.$axios
       .get("/accounts/setting/transportation", {
@@ -152,8 +269,125 @@ export default {
           if (error.response.status == 401) this.$store.commit("logout");
         }
       );
+    this.getWalkSpeedData();
+    this.getTimeData();
+    this.getAddressData();
   },
+
   methods: {
+    openGdialog() {
+      this.$refs.GourmetDialog.GdialogOpen();
+    },
+    openOdialog() {
+      this.$refs.OtherDialog.OdialogOpen();
+    },
+
+    ////////////////以下、歩行速度のPOSTとGET/////////////////////
+    getWalkSpeedData() {
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      this.$axios
+        .get("/accounts/setting/transportation", {
+          data: {},
+          headers: headers,
+        })
+        .then((response) => {
+          const result = response.data.map((dict) => dict.typeOfWalkSpeed);
+          this.selectWalkSpeed = String(result);
+        })
+        .catch((error) => {
+          console.log("歩行速度のgetでエラーになっちゃった..: ");
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
+        });
+    },
+    postWalkSpeedData() {
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const data = { typeOfWalkSpeed: this.selectWalkSpeed };
+      this.$axios
+        .post("/accounts/setting/transportation", data, {
+          headers: headers,
+        })
+        .catch((error) => {
+          console.log("エラーになっちゃった..@postWalkSpeedData");
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
+        });
+    },
+
+    ////////////////以下、到着時間のPOSTとGET/////////////////////
+    getTimeData() {
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      this.$axios
+        .get("/accounts/setting/arrivaltime", {
+          data: {},
+          headers: headers,
+        })
+        .then((response) => {
+          const result = String(response.data.arrivaltimeSetting);
+          this.selectTime = result;
+        })
+        .catch((error) => {
+          console.log("エラーになっちゃった..:＠getTimeData ");
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
+        });
+    },
+    postTimeData() {
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const postData = Number(this.selectTime);
+      const data = { choice: postData };
+      this.$axios
+        .post("/accounts/setting/arrivaltime", data, {
+          headers: headers,
+        })
+        .catch((error) => {
+          console.log("エラーになっちゃった..:＠postTimeData");
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
+        });
+    },
+
+    ////////////////以下、住所のPOSTとGET/////////////////////
+    getAddressData() {
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: "JWT " + this.$store.getters.getToken,
+      };
+      this.$axios
+        .get("/accounts/setting/address", {
+          data: {},
+          headers: headers,
+        })
+        .then((response) => {
+          var result = String(response.data["address"]) ?? "";
+          this.address = result;
+          console.dir(this.result);
+        })
+        .catch((error) => {
+          this.address = "あああ";
+          console.log(error, "エラーになっちゃった..:＠getAddressData");
+          //if (error.response.status == 401) //this.$store.commit("logout")
+        });
+    },
+    postAddressData() {
+      if (!this.address) return;
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const data = { address: this.address };
+      this.$axios
+        .post("/accounts/setting/address", data, {
+          headers: headers,
+        })
+        .catch((error) => {
+          console.log("エラーになっちゃった..@postAddressData");
+          if (
+            error.response.status == 401 //this.$store.commit("logout")
+          );
+        });
+    },
     toFavoriteSpotPage: function () {
       this.$router.push({ name: "FavoriteSpot" });
     },
@@ -164,7 +398,7 @@ export default {
       this.$router.push({ name: "SettingHomeTime" });
     },
     postTransportation: function (item) {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       var data = { [item["name"].toString()]: item["check"] };
       this.$axios
         .post("/accounts/setting/transportation", data, {

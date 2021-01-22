@@ -23,6 +23,12 @@ const routes = [{
     meta: { requiresAuth: true }
   },
   {
+    path: '/bfmypage',
+    name: 'BfMyPage',
+    component: () => import('../views/BfMyPage.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/taskedit',
     name: 'TaskEdit',
     component: () => import('../views/TaskEdit.vue'),
@@ -46,12 +52,7 @@ const routes = [{
     component: () => import('../views/FavoriteSpot.vue'),
     meta: { requiresAuth: true }
   },
-  {
-    path: '/initialsetting',
-    name: 'InitialSetting',
-    component: () => import('../views/InitialSetting.vue'),
-    meta: { requiresAuth: true }
-  },
+  
   {
     path: '/outputlist',
     name: 'OutputList',
