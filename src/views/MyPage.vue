@@ -2,45 +2,24 @@
   <v-app>
     <div class="MyPage">
       <App_var />
-      <h1></h1>
       <v-container>
         <v-form>
           <v-divider></v-divider>
-          <v-row>
-            <v-col align="center">
-              <v-subheader>好きな施設・飲食店のジャンル</v-subheader>
-              <v-spacer></v-spacer>
-              <v-btn color="#0461cd" dark @click.stop="openGdialog">
-                飲食店を選ぶ
+            <v-row>
+              <v-subheader>好きな施設のジャンル</v-subheader>
+            </v-row>
+            <v-row align-content="center" justify="center">
+              <v-col align="center">
+              <v-btn color="#0461cd" dark @click.stop="openGdialog" rounded class="mr-1">
+                飲食店
               </v-btn>
               <selectSpotGourmet ref="GourmetDialog" />
-              <v-spacer></v-spacer>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col align="center">
-              <v-spacer></v-spacer>
-              <v-btn color="#0461cd" dark @click.stop="openOdialog">
-                飲食店以外を選ぶ
+              <v-btn color="#0575e6" dark @click.stop="openOdialog" rounded class="ms-1">
+              飲食店以外
               </v-btn>
               <selectSpotOther ref="OtherDialog" />
-              <v-spacer></v-spacer>
-            </v-col>
-          </v-row>
-          <v-spacer></v-spacer>
-          <v-divider></v-divider>
-          <v-row align="center">
-            <v-col align="center">
-              <v-btn
-                v-on:click="toFavoriteSpotPage"
-                rounded
-                class="mx-auto text-center"
-                color="#0461cd"
-                dark
-                >お気に入りスポットを編集する</v-btn
-              >
-            </v-col>
-          </v-row>
+              </v-col>
+            </v-row>
           <v-divider></v-divider>
           <v-row>
             <v-col>
@@ -53,7 +32,7 @@
                       v-else
                       :key="`item-${i}`"
                       :value="item"
-                      color="#0461cd"
+                      color="#032b8d"
                       active-class=""
                       v-on:click="postTransportation(item)"
                     >
@@ -77,6 +56,9 @@
               </v-list>
             </v-col>
           </v-row>
+
+          <v-divider></v-divider>
+          
           <v-row>
             <v-col align="center">
               <v-select
@@ -116,19 +98,35 @@
 
           <v-divider></v-divider>
 
-          <v-row align="center">
+          <v-row>
+              <v-subheader>その他の設定</v-subheader>
+          </v-row>
+          <v-row align-content="center" justify="center">
             <v-col align="center">
+              <v-btn
+                v-on:click="toFavoriteSpotPage"
+                rounded
+                class="mx-auto text-center mr-1"
+                color="#0461cd"
+                dark
+                ><v-icon left>
+                  mdi-map-marker
+                </v-icon>
+                お気に入りスポット</v-btn
+              >
               <v-btn
                 v-on:click="toSettingHomeTime"
                 rounded
-                class="mx-auto text-center"
-                color="#0461cd"
+                class="mx-auto text-center ms-1"
+                color="#0575e6"
                 dark
-                >在宅時間を設定する</v-btn
+                ><v-icon left>
+                  mdi-alarm
+                </v-icon>
+                在宅時間</v-btn
               >
             </v-col>
           </v-row>
-          <v-divider></v-divider>
           <v-divider></v-divider>
 
           <v-row align="center">
@@ -137,20 +135,13 @@
                 v-model="disabled1"
                 class="ma-2"
                 label="通知を許可"
-                color="#0461cd"
+                color="#032b8d"
               ></v-switch>
-            </v-col>
-          </v-row>
-
-          <v-divider></v-divider>
-
-          <v-row align="center">
-            <v-col align="center">
               <v-switch
                 v-model="disabled2"
                 class="ma-2"
                 label="位置情報共有を許可"
-                color="#0461cd"
+                color="#032b8d"
               ></v-switch>
             </v-col>
           </v-row>
