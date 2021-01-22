@@ -241,7 +241,7 @@ export default {
         .then(() => {
           this.$store.commit("setListResult", []);
           this.$store.commit("setSelectedResult", [], 0)
-          this.$router.push({ name: "HOME" });
+          this.$router.push({ name: "Home" });
           
         })
         .catch((error) => {
