@@ -30,7 +30,7 @@
           </v-btn>
           <v-btn icon v-on:click="toTaskLog" text absolute right>
             <!-- タスクログページへ -->
-            <v-icon>mdi-notebook</v-icon>
+            <v-icon>mdi-format-list-bulleted</v-icon>
           </v-btn>
         </v-col>
       </v-row>
