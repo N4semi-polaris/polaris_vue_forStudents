@@ -236,7 +236,7 @@ export default {
       const url =
         "/calendar/blocks/tasks/" +
         this.selectedResult.taskid +
-        "/set_scheduledtime";
+        "/schedule";//set_scheduledtimeからscheduleにdrfを変更しました
       this.calcPostTime();
       const data = {
         start: this.startTime,

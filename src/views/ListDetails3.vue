@@ -52,7 +52,7 @@
             v-model="eatTime"
             suffix="分"
             hint="60分以下で入力してください。"
-            rules:[required,limit_time]
+            :rules=[required,limit_time]
             outlined
           ></v-text-field>
         </v-col>

@@ -42,7 +42,7 @@
               <v-text-field
                 v-model="stayingTimeMins"
                 suffix="分"
-                rules:[required,limit_time]
+                :rules=[required,limit_time]
                 outlined
               ></v-text-field>
             </v-col>
