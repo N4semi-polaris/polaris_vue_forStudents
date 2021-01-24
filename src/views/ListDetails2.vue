@@ -18,9 +18,35 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <v-card-subtitle class="ml-10">{{
-            selectedResult.genre
-          }}</v-card-subtitle>
+          <v-card-subtitle class="ml-10"
+            >ジャンル：{{ selectedResult.genre }}</v-card-subtitle
+          >
+          <v-card-subtitle class="ml-10"
+            >最寄駅：{{ selectedResult.station }}</v-card-subtitle
+          >
+          <v-card-subtitle class="ml-10"
+            >最大滞在可能時間：{{ this.selectedResult.mins }}分({{
+              maxStayingTimeHours
+            }}時間{{ maxStayingTimeMins }}分)</v-card-subtitle
+          >
+          <v-row>
+            <!--
+            <v-col cols="6" align="center">
+              <v-text-field
+                v-model="stayingTimeHours"
+                suffix="時間"
+                outlined
+              ></v-text-field>
+            </v-col>-->
+            <v-col align="center">
+              <v-text-field
+                v-model="stayingTimeMins"
+                suffix="分"
+                rules:[required,limit_time]
+                outlined
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
           </div>
@@ -30,8 +56,6 @@
           <div v-show="useFoot == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-walk</v-icon>
           </div>-->
-
-          <v-spacer></v-spacer>
           <!--
           <v-btn
             v-if="rainAvoid == false"
@@ -164,7 +188,15 @@ export default {
     selectedResult: [],
     type: 0,
     startTime: "",
-    endTime: "",
+    maxStayingTimeHours: 0,
+    maxStayingTimeMins: 0,
+    stayingTimeHours: 0,
+    stayingTimeMins: 0,
+    stayingTime: 0,
+    required: (value) => !!value || "必ず入力してください",
+    limit_time: (value) =>
+      value <= this.selectedResult.mins ||
+      this.selectedResult.mins + "分以内にしてください",
   }),
   mounted() {
     /*
@@ -174,12 +206,13 @@ export default {
     this.end_time = this.$route.query.end_time;
     this.trans_costs = this.$route.query.trans_costs;
     */
-
     this.selectedResult = this.$store.getters.getSelectedResult.spot;
     this.type = this.$store.getters.getSelectedResult.type;
     console.log(" selectedResultの型: " + typeof this.selectedResult);
     console.log(" selectedResult.sections: ");
     console.dir(this.selectedResult.sections);
+    this.stayingTime = this.selectedResult.mins;
+    this.calcMaxStayingTime();
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -217,13 +250,18 @@ export default {
       this.rainAvoid = !this.rainAvoid;
     },*/
     ////////////平山記述メソッド//////////
+    calcMaxStayingTime() {
+      this.maxStayingTimeHours = Math.floor(this.selectedResult.mins / 60);
+      this.maxStayingTimeMins = this.selectedResult.mins;
+      this.selectedResult.mins - this.maxStayingTimeHours * 60;
+      //this.stayingTimeHours = this.maxStayingTimeHours;
+      this.stayingTimeMins = this.maxStayingTimeMins;
+    },
     calcPostTime() {
       for (let i in this.selectedResult.sections) {
         if (this.selectedResult.sections[i]["type"] == "yorimichi") {
           this.startTime = this.selectedResult.sections[i]["start"]["time"];
-          this.endTime = this.selectedResult.sections[i]["end"]["time"];
           console.log("startTime@ListDetails2.vue: " + this.startTime);
-          console.log("endTime@ListDetails2.vue: " + this.endTime);
         }
       }
     },
@@ -232,7 +270,7 @@ export default {
       this.calcPostTime();
       const data = {
         start: this.startTime,
-        end: this.endTime,
+        mins: this.stayingTimeMins,
         location: this.selectedResult.name,
         lat: this.selectedResult.lat,
         lon: this.selectedResult.lon,

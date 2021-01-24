@@ -9,6 +9,7 @@
     </v-toolbar>
 
     <v-sheet color="#f5f5f5" height="15px"></v-sheet>
+    <template v-if="noResults"><h3>該当なし</h3></template>
     <template v-if="isShow">
       <v-list shaped>
         <template v-for="(result, index) in results">
@@ -23,8 +24,13 @@
                 </v-col>
                 <v-col cols="8" class="ml-4">
                   <v-list-item-title v-text="result.name"></v-list-item-title>
-                  <v-list-item-subtitle v-text="result.genre">
-                  </v-list-item-subtitle>
+                   <v-list-item-title v-text="result.taskname"></v-list-item-title>
+                  <v-list-item-subtitle
+                    v-text="result.genre"
+                  ></v-list-item-subtitle>
+                  <v-list-item-subtitle
+                    v-text="result.station"
+                  ></v-list-item-subtitle>
 
                   <!--  <v-list-item-subtitle class="text--primary"
                   >{{ makeStartTime(result.start_time) }}
@@ -58,12 +64,6 @@
         </template>
       </v-list>
     </template>
-    <!--<v-btn color="#0461cd" dark @click.stop="inStore">
-      (仮)結果をローカルストレージに保存
-    </v-btn>
-    <v-btn color="#0461cd" dark @click.stop="offStore">
-      (仮)結果をローカルストレージから削除
-    </v-btn>-->
   </div>
 </template>
 
@@ -77,41 +77,15 @@ export default {
     App_bar,
   },
   data: () => ({
-    /*type_dict: [
-      { id: 1, name: "寄り道予定から探す", url: "tasks" },
-      { id: 2, name: "時間内に行ける飲食店以外の施設を探す", url: "" },
-      { id: 3, name: "時間内に行ける飲食店を探す", url: "" },
-    ],*/
     hit_num: 0,
     results: [],
     model: -1,
     //isShowDetails: false,
     isShow: false,
+    noResults: false,
     URL: "/recommend/",
   }),
   mounted() {
-    /*
-    if (this.type_dict[this.$route.query.type - 1].url != "") {
-      var url =
-        "/recommend/" +
-        this.type_dict[this.$route.query.type - 1].url +
-        "/" +
-        this.$route.query.bk;
-      this.$axios
-        .get(url, {
-          data: {},
-          headers: { Authorization: "JWT " + this.$store.getters.getToken },
-        })
-        .then((response) => {
-          this.hit_num = response.data["hit_num"];
-          this.results = this.results.concat(response.data["now"]);
-          this.results = this.results.concat(response.data["des"]);
-          console.log(this.results);
-          var i = 1;
-          this.results.map((result) => (result["id"] = i++));
-        });    
-    }*/
-    //console.log("this.$route.query.type: "+this.$route.query.type);
     console.log(
       "this.$store.getters.getlistResult: " + this.$store.getters.getlistResult
     );
@@ -217,11 +191,13 @@ export default {
           headers: headers,
         })
         .then((response) => {
-
           this.$store.commit("setListResult", response.data);
           for (let i in response.data) {
             this.results[i] = response.data[i];
             console.dir(this.results[i]);
+          }
+          if (response.data.length == 0) {
+            this.noResults = true;
           }
           this.isShow = true;
         })
@@ -241,14 +217,6 @@ export default {
       } else if (this.$route.query.type == 3) {
         this.$router.push({ name: "ListDetails3" });
       }
-    },
-    inStore() {
-      this.$store.commit("setListResult", this.results);
-      console.log("isStore後");
-    },
-    offStore() {
-      const empty = [];
-      this.$store.commit("setListResult", empty);
     },
   },
 };

@@ -17,7 +17,17 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <v-card-subtitle class="ml-10">{{ selectedResult.genre }}</v-card-subtitle>
+          <v-spacer></v-spacer>
+          <span class="placeName">{{ selectedResult.taskname }}</span>
+          <v-card-subtitle class="ml-10">{{
+            selectedResult.genre
+          }}</v-card-subtitle>
+          <v-card-subtitle class="ml-10"
+            >最寄駅：{{ selectedResult.station }}</v-card-subtitle
+          >
+          <v-card-subtitle
+            >所要時間：{{ selectedResult.tasktime }}分</v-card-subtitle
+          >
           <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
           </div>
@@ -208,10 +218,10 @@ export default {
       if (hour == 0) transtime = "（" + minute + "分）";
       else transtime = "（" + hour + "時間" + (minute - 60 * hour) + "分）";
       return transtime;
-    },*/
+    },
     displayRainAvoid() {
       this.rainAvoid = !this.rainAvoid;
-    },
+    },*/
     ////////////平山記述メソッド//////////
     calcPostTime() {
       if (this.selectedResult.side == "now") {
@@ -222,17 +232,17 @@ export default {
     },
 
     postSelectedSpot() {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       const url =
         "/calendar/blocks/tasks/" +
         this.selectedResult.taskid +
         "/set_scheduledtime";
       this.calcPostTime();
       const data = {
-        "start": this.startTime,
-        "lat": this.selectedResult.lat,
-        "lon": this.selectedResult.lon,
-        "location": this.selectedResult.name,
+        start: this.startTime,
+        lat: this.selectedResult.lat,
+        lon: this.selectedResult.lon,
+        location: this.selectedResult.name,
       };
       this.$axios
         .post(url, data, {
@@ -240,9 +250,8 @@ export default {
         })
         .then(() => {
           this.$store.commit("setListResult", []);
-          this.$store.commit("setSelectedResult", [], 0)
+          this.$store.commit("setSelectedResult", [], 0);
           this.$router.push({ name: "Home" });
-          
         })
         .catch((error) => {
           console.log("エラーになっちゃった..@ListDetails1_PostSelectedSpot");

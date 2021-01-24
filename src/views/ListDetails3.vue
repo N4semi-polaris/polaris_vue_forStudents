@@ -1,6 +1,6 @@
 <template>
   <div class="ListDetails3">
-     <!--飲食店推薦-->
+    <!--飲食店推薦-->
     <App_bar />
 
     <div class="detail_card">
@@ -18,7 +18,12 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <v-card-subtitle class="ml-10">{{ selectedResult.genre }}</v-card-subtitle>
+          <v-card-subtitle class="ml-10">{{
+            selectedResult.genre
+          }}</v-card-subtitle>
+          <v-card-subtitle class="ml-10"
+            >最寄駅：{{ selectedResult.station }}</v-card-subtitle
+          >
           <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
           </div>
@@ -42,6 +47,15 @@
             ><v-icon large>mdi-umbrella</v-icon></v-btn
           >-->
         </v-card-title>
+        <v-col align="center">
+          <v-text-field
+            v-model="eatTime"
+            suffix="分"
+            hint="60分以下で入力してください。"
+            rules:[required,limit_time]
+            outlined
+          ></v-text-field>
+        </v-col>
         <!--
         <v-card-subtitle class="ml-10">
           {{ makeStartTime(start_time) }}
@@ -163,6 +177,11 @@ export default {
     selectedResult: [],
     type: 0,
     startTime: "",
+    eatTime: "",
+    required: (value) => !!value || "必ず入力してください",
+    limit_time: (value) =>
+      value <= this.selectedResult.eat_time ||
+      this.selectedResult.eat_time + "分以内にしてください",
   }),
   mounted() {
     /*
@@ -184,6 +203,7 @@ export default {
     console.dir(this.selectedResult.route[0]);
     console.log(" selectedResult.route[0]['1']: ");
     console.dir(this.selectedResult.route[0]["1"]);
+    this.calcEatTime();
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -221,6 +241,9 @@ export default {
       this.rainAvoid = !this.rainAvoid;
     },*/
     ////////////平山記述メソッド//////////
+    calcEatTime() {
+      this.eatTime = this.selectedResult.eat_time;
+    },
     calcPostTime() {
       if (this.selectedResult.side == "now") {
         this.startTime = this.selectedResult.route[0]["1"].clock;
@@ -230,15 +253,15 @@ export default {
     },
 
     postSelectedSpot() {
-      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
+      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       this.calcPostTime();
       const data = {
-        "start": this.startTime,
-        "eat_time": this.selectedResult.eat_time,
-        "location": this.selectedResult.name,
-        "lat": this.selectedResult.lat,
-        "lon": this.selectedResult.lon,
-        "genre": this.selectedResult.genre,
+        start: this.startTime,
+        mins: this.eatTime,
+        location: this.selectedResult.name,
+        lat: this.selectedResult.lat,
+        lon: this.selectedResult.lon,
+        genre: this.selectedResult.genre,
       };
       this.$axios
         .post("/calendar/blocks/yorimichi", data, {
@@ -246,7 +269,7 @@ export default {
         })
         .then(() => {
           this.$store.commit("setListResult", []);
-          this.$store.commit("setSelectedResult", [], 0)
+          this.$store.commit("setSelectedResult", [], 0);
           this.$router.push({ name: "Home" });
         })
         .catch((error) => {
