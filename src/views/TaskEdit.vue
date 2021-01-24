@@ -119,6 +119,7 @@
             class="ma-2 white--text"
             fab
             v-on:click="submit"
+            v-show="isvisible_savebutton"
           ><v-icon large>mdi-download-multiple</v-icon><!-- 保存ボタン -->
           </v-btn>
           <v-btn
@@ -156,6 +157,7 @@ export default {
         data: {},
         headers: headers,
       }).then((response) => {
+        console.log(response.data["bk"])
         this.taskname = response.data["name"]
         this.tasktype = this.task_type[response.data["tasktype"]-1]
         this.location = "location" in response.data? response.data["location"]:""
@@ -165,6 +167,7 @@ export default {
         const reqtimes_list = response.data["requiredTimes"].split(":")
         this.timerequired = parseInt(reqtimes_list[0])*60 + parseInt(reqtimes_list[1])
         this.noBusinessDates = response.data["excludedDates"].split('').map(i => i=="1"? true:false)
+        if(response.data["bk"]["start"]??null != null)this.isvisible_savebutton = false
       }).catch((error) => {
         if (error.response.status == 401) this.$store.commit("logout");
       });
@@ -182,6 +185,7 @@ export default {
     noBusinessDates: [false, false, false, false, false, false, false],//日月火水木金土
 
     isvisible_dustbutton:false,
+    isvisible_savebutton:true,
     tasknameRules: [
       v => !!v || '必ず入力してください！',
       v => v.length <= 15 || '15文字以内で入力してください',
