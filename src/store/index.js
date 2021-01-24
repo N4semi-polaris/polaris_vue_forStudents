@@ -17,11 +17,8 @@ export default new Vuex.Store({
     userAuthCode: "",
     authToken: "",
     isLogin: false,
-    listResult:[],
-    selectedResult:{
-      spot:[],
-      type:0,
-    },
+    listResult:{},
+    selectedResult:{},
   },
   mutations: {
     setUserData(state, payload) {
@@ -42,26 +39,22 @@ export default new Vuex.Store({
       state.isLogin = false;
     },
      setListResult(state,resultList) {
-      console.log("setResultが実行されたよ! ");
+      //console.log("setResultが実行されたよ! ");
       state.listResult = resultList;
     },
-    setSelectedResult(state,selectedResult,type) {
-      console.log("setSelectedResultが実行されたよ! ");
-      state.selectedResult.spot = selectedResult;
-      state.selectedResult.type =type;
+    setSelectedResult(state,selectedResult) {
+      //console.log("setSelectedResultが実行されたよ! ");
+      state.selectedResult = selectedResult;
     },
   },
   getters: {
     getUserEmail(state) {
-      //console.log("getUserEmailが実行されたよ！");
       return state.userEmail;
     },
     getUserAuthCode(state) {
-      //console.log("getUserAuthCodeが実行されたよ！");
       return state.userAuthCode;
     },
     getToken(state) {
-      //console.log("getTokenが実行されたよ！");
       return state.authToken;
     },
     getIsLogin(state) {
