@@ -18,9 +18,18 @@
                 @changeP="setDialogP" @setEvent="callParents_setEvent" @pushEvent="callParents_pushEvent"
                 @delEvent="callParents_delEvent" @closeDialog="selectedOpen = false"
                 v-else-if="selectedEvent.bk_type==2"/>
+            <yorimichi
+                :selected-event=selectedEvent :dialog-p=scheduleDialog_p
+                @changeP="setDialogP" @delEvent="callParents_delEvent" @closeDialog="selectedOpen = false"
+                v-else-if="selectedEvent.bk_type==3"/>
             <schedule 
                 :selected-event=selectedEvent 
-                v-else-if="selectedEvent.bk_type==4 || selectedEvent.bk_type==3 || selectedEvent.bk_type==5"/>
+                v-else-if="selectedEvent.bk_type==4"/>
+            <task
+                :selected-event=selectedEvent :dialog-p=scheduleDialog_p
+                @changeP="setDialogP" @delEvent="callParents_delEvent" @closeDialog="selectedOpen = false"
+                v-else-if="selectedEvent.bk_type==5"/>
+            
             <v-card-actions>
                 <v-btn
                 text
@@ -36,8 +45,10 @@
 import aki from '@/components/dialog/yorimichi_context/aki'
 import zaitaku from '@/components/dialog/yorimichi_context/zaitaku'
 import schedule from '@/components/dialog/yorimichi_context/schedule'
+import yorimichi from '@/components/dialog/yorimichi_context/yorimichi'
+import task from '@/components/dialog/yorimichi_context/task'
 export default {
-  components: { aki, zaitaku, schedule },
+  components: { aki, zaitaku, schedule, yorimichi, task },
     data:() => ({
         selectedOpen: false,
         scheduleDialog_p: 0,
