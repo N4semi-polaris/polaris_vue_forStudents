@@ -151,10 +151,10 @@ export default {
     App_bar,
   },
   data: () => ({
+     /*
     useFoot: true,
     useBus: false,
     useTrain: true,
-    /*
     place_name: "",
     start_time: "",
     end_time: "",
@@ -178,14 +178,10 @@ export default {
     this.end_time = this.$route.query.end_time;
     this.trans_costs = this.$route.query.trans_costs;
     */
-
-    this.selectedResult = this.$store.getters.getSelectedResult.spot;
-    this.type = this.$store.getters.getSelectedResult.type;
+    this.selectedResult = this.$store.getters.getSelectedResult;
     console.log(" selectedResultの型: " + typeof this.selectedResult);
     console.log(" selectedResult: ");
     console.dir(this.selectedResult);
-    //console.log("typeの型: " + typeof this.type);
-    //console.log(" type: " + this.type);
   },
   methods: {
     /* makeStartTime: function (start_time) {

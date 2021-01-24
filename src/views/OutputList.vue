@@ -9,7 +9,7 @@
     </v-toolbar>
 
     <v-sheet color="#f5f5f5" height="15px"></v-sheet>
-    <template v-if="noResults"><h3>該当なし</h3></template>
+    <template v-if="noResults"><v-col align="center">該当なし</v-col></template>
     <template v-if="isShow">
       <v-list shaped>
         <template v-for="(result, index) in results">
@@ -80,7 +80,6 @@ export default {
     hit_num: 0,
     results: [],
     model: -1,
-    //isShowDetails: false,
     isShow: false,
     noResults: false,
     URL: "/recommend/",
@@ -94,7 +93,7 @@ export default {
       "this.$store.getters.getlistResult.length: " +
         this.$store.getters.getlistResult.length
     );
-    if (this.$store.getters.getlistResult.length == 0) {
+    if (this.$store.getters.getlistResult.length == 0 ) {
       if (this.$route.query.type == 1) {
         this.URL = this.URL + "tasks/" + this.$route.query.bk;
       } else if (this.$route.query.type == 2) {
@@ -104,7 +103,9 @@ export default {
       }
       console.log("this.URL: " + this.URL);
       this.getData(this.URL);
-    } else {
+    } else if(this.$store.getters.getlistResult.status=="該当なし"){
+      this.noResults = true;
+    }else{
       this.results = this.$store.getters.getlistResult;
       console.log("this.results: ");
       console.dir(this.results);
@@ -196,10 +197,9 @@ export default {
             this.results[i] = response.data[i];
             console.dir(this.results[i]);
           }
-          if (response.data.length == 0) {
+          if (response.data.length == 0 ||response.data.status=="該当なし") {
             this.noResults = true;
-          }
-          this.isShow = true;
+          }else{this.isShow = true;} 
         })
         .catch((error) => {
           console.log("エラーになっちゃった..:＠getData");
