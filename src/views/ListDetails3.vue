@@ -52,7 +52,7 @@
             v-model="eatTime"
             suffix="分"
             hint="60分以下で入力してください。"
-            rules:[required,limit_time]
+            :rules="[rules.required,rules.limit_time]"
             outlined
           ></v-text-field>
         </v-col>
@@ -178,10 +178,7 @@ export default {
     type: 0,
     startTime: "",
     eatTime: "",
-    required: (value) => !!value || "必ず入力してください",
-    limit_time: (value) =>
-      value <= this.selectedResult.eat_time ||
-      this.selectedResult.eat_time + "分以内にしてください",
+    rules: {},
   }),
   mounted() {
     /*
@@ -204,6 +201,10 @@ export default {
     console.log(" selectedResult.route[0]['1']: ");
     console.dir(this.selectedResult.route[0]["1"]);
     this.calcEatTime();
+    this.rules= {
+      required: value => !!value || "必ず入力してください",
+      limit_time: value => value <=  this.selectedResult.eat_time || this.selectedResult.eat_time + "分以内にしてください",
+      }
   },
   methods: {
     /* makeStartTime: function (start_time) {

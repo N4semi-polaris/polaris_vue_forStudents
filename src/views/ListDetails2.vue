@@ -42,7 +42,7 @@
               <v-text-field
                 v-model="stayingTimeMins"
                 suffix="分"
-                rules:[required,limit_time]
+                :rules="[rules.required,rules.limit_time]"
                 outlined
               ></v-text-field>
             </v-col>
@@ -184,7 +184,6 @@ export default {
     isRainy: true,
     rainAvoid: true,
     */
-    //model: -1,
     selectedResult: [],
     type: 0,
     startTime: "",
@@ -193,10 +192,7 @@ export default {
     stayingTimeHours: 0,
     stayingTimeMins: 0,
     stayingTime: 0,
-    required: (value) => !!value || "必ず入力してください",
-    limit_time: (value) =>
-      value <= this.selectedResult.mins ||
-      this.selectedResult.mins + "分以内にしてください",
+    rules: {},
   }),
   mounted() {
     /*
@@ -213,6 +209,10 @@ export default {
     console.dir(this.selectedResult.sections);
     this.stayingTime = this.selectedResult.mins;
     this.calcMaxStayingTime();
+    this.rules= {
+      required: value => !!value || "必ず入力してください",
+      limit_time: value => value <=  this.selectedResult.mins || this.selectedResult.mins + "分以内にしてください",
+      }
   },
   methods: {
     /* makeStartTime: function (start_time) {
@@ -252,10 +252,10 @@ export default {
     ////////////平山記述メソッド//////////
     calcMaxStayingTime() {
       this.maxStayingTimeHours = Math.floor(this.selectedResult.mins / 60);
-      this.maxStayingTimeMins = this.selectedResult.mins;
-      this.selectedResult.mins - this.maxStayingTimeHours * 60;
+      this.maxStayingTimeMins =
+        this.selectedResult.mins - this.maxStayingTimeHours * 60;
       //this.stayingTimeHours = this.maxStayingTimeHours;
-      this.stayingTimeMins = this.maxStayingTimeMins;
+      this.stayingTimeMins = this.selectedResult.mins;
     },
     calcPostTime() {
       for (let i in this.selectedResult.sections) {
@@ -286,7 +286,7 @@ export default {
           this.$router.push({ name: "Home" });
         })
         .catch((error) => {
-          console.log("エラーになっちゃった..@ListDetails3_PostSelectedSpot");
+          console.log("エラーになっちゃった..@ListDetails2_PostSelectedSpot");
           if (
             error.response.status == 401 //this.$store.commit("logout")
           );
