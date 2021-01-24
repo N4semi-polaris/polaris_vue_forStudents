@@ -136,6 +136,7 @@ export default {
                 name: d.summary ?? d.name ?? d.location ?? "",
                 description: d.description ?? "",
                 location: d.location ?? "",
+                address: d.address ?? "",
                 bk_type: d.bk.blockType,
                 bk_id: d.bk.uuid,
                 start: moment(d.bk.start, "YYYY-MM-DDTHH:mm:ssZ").toDate(),
