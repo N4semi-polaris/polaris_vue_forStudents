@@ -18,15 +18,15 @@
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
           <v-spacer></v-spacer>
-          <span class="placeName">{{ selectedResult.taskname }}</span>
-          <v-card-subtitle class="ml-10">{{
-            selectedResult.genre
-          }}</v-card-subtitle>
-          <v-card-subtitle class="ml-10"
+          <v-card-subtitle class="ml-10">{{ selectedResult.genre }}</v-card-subtitle>
+          <v-card-subtitle class="ml-7"
             >最寄駅：{{ selectedResult.station }}</v-card-subtitle
           >
           <v-card-subtitle
             >所要時間：{{ selectedResult.tasktime }}分</v-card-subtitle
+          >
+          <v-chip class="ml-7 font-weight-bold" label text-color="white" color="#778899">
+            <v-icon left>mdi-checkbox-marked-outline</v-icon>{{ selectedResult.taskname }}</v-chip
           >
           <!--<div v-show="useBus == true">
             <v-icon color="#033ba0" dense class="ml-1">mdi-bus</v-icon>
@@ -93,11 +93,8 @@
         </v-row>
         -->
         <v-card-actions>
-          <v-container fluid>
-            <v-row justify="center">
-              <v-col align="center">
                 <v-btn
-                  class="mx-auto"
+                  class="mb-3"
                   rounded
                   color="#0575e6"
                   dark
@@ -106,8 +103,7 @@
                   >ココにする
                   <v-icon right size="30">mdi-gesture-tap</v-icon>
                 </v-btn>
-              </v-col>
-            </v-row>
+
             <!-- <v-row>
               <v-col cols="6">
                 <v-btn
@@ -134,7 +130,7 @@
                 >
               </v-col>
             </v-row>-->
-          </v-container>
+
         </v-card-actions>
       </v-card>
     </div>
@@ -265,7 +261,7 @@ export default {
 .placeName {
   font-weight: bold;
 }
-.ListDetails {
+.ListDetails1 {
   font-family: "M PLUS Rounded 1c";
 }
 </style>
