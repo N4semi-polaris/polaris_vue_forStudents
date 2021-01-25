@@ -18,13 +18,14 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <v-card-subtitle class="ml-10"
-            >ジャンル：{{ selectedResult.genre }}</v-card-subtitle
+          <v-spacer></v-spacer>
+          <v-card-subtitle class="ml-7"
+            >{{ selectedResult.genre }}</v-card-subtitle
           >
-          <v-card-subtitle class="ml-10"
+          <v-card-subtitle class="ml-7"
             >最寄駅：{{ selectedResult.station }}</v-card-subtitle
           >
-          <v-card-subtitle class="ml-10"
+          <v-card-subtitle class="ml-7"
             >最大滞在可能時間：{{ this.selectedResult.mins }}分({{
               maxStayingTimeHours
             }}時間{{ maxStayingTimeMins }}分)</v-card-subtitle
@@ -40,6 +41,7 @@
             </v-col>-->
             <v-col align="center">
               <v-text-field
+                label="滞在希望時間"
                 v-model="stayingTimeMins"
                 suffix="分"
                 :rules="[rules.required,rules.limit_time]"
@@ -112,11 +114,8 @@
           </v-col>
         </v-row>-->
         <v-card-actions>
-          <v-container fluid>
-            <v-row justify="center">
-              <v-col align="center">
                 <v-btn
-                  class="mx-auto"
+                  class="mb-3"
                   rounded
                   color="#0575e6"
                   dark
@@ -125,8 +124,6 @@
                   >ココにする
                   <v-icon right size="30">mdi-gesture-tap</v-icon>
                 </v-btn>
-              </v-col>
-            </v-row>
             <!-- <v-row>
               <v-col cols="6">
                 <v-btn
@@ -153,7 +150,7 @@
                 >
               </v-col>
             </v-row>-->
-          </v-container>
+
         </v-card-actions>
       </v-card>
     </div>
@@ -300,7 +297,7 @@ export default {
 .placeName {
   font-weight: bold;
 }
-.ListDetails {
+.ListDetails2 {
   font-family: "M PLUS Rounded 1c";
 }
 </style>
