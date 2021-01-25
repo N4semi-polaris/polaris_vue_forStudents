@@ -18,10 +18,10 @@
         <v-card-title>
           <v-icon left large color="#033ba0">mdi-map-marker</v-icon>
           <span class="placeName">{{ selectedResult.name }}</span>
-          <v-card-subtitle class="ml-10">{{
+          <v-card-subtitle class="ml-7">{{
             selectedResult.genre
           }}</v-card-subtitle>
-          <v-card-subtitle class="ml-10"
+          <v-card-subtitle class="ml-7"
             >最寄駅：{{ selectedResult.station }}</v-card-subtitle
           >
           <!--<div v-show="useBus == true">
@@ -101,11 +101,8 @@
         </v-row>
         -->
         <v-card-actions>
-          <v-container fluid>
-            <v-row justify="center">
-              <v-col align="center">
                 <v-btn
-                  class="mx-auto"
+                  class="mb-3"
                   rounded
                   color="#0575e6"
                   dark
@@ -114,8 +111,6 @@
                   >ココにする
                   <v-icon right size="30">mdi-gesture-tap</v-icon>
                 </v-btn>
-              </v-col>
-            </v-row>
             <!-- <v-row>
               <v-col cols="6">
                 <v-btn
@@ -142,7 +137,7 @@
                 >
               </v-col>
             </v-row>-->
-          </v-container>
+
         </v-card-actions>
       </v-card>
     </div>
