@@ -10,7 +10,7 @@
           color="#0461cd"
           dark
           @click="$router.go(-1)"
-          >戻る</v-btn
+          ><v-icon left size="30">mdi-keyboard-return</v-icon>戻る</v-btn
         >
       </v-container>
       <v-card class="mx-2 mt-2" color="#ffffff">

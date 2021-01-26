@@ -20,7 +20,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn icon color="#ffc900">
+        <v-btn icon color="#ffc900" v-on:click="reload">
             <v-icon>mdi-calendar-sync</v-icon> <!-- Googleカレンダーと同期 -->
         </v-btn>
 
@@ -51,6 +51,9 @@ export default {
         logout:function(){
             this.$store.commit("logout");
             this.$router.push({name :"Login", params: { redirect: this.$router.path }});
+        },
+        reload(){
+            this.$router.go({ path: this.$router.currentRoute.path, force: true });
         }
     }
 }

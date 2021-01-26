@@ -68,8 +68,9 @@ export default {
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{
-                this.$emit("delEvent")
-                this.$emit("closeDialog")
+                this.$emit("delEvent");
+                this.$emit("closeDialog");
+                this.$router.go({ path: this.$router.currentRoute.path, force: true });
             }).catch((error)=>{
                 console.log(error)
             })
