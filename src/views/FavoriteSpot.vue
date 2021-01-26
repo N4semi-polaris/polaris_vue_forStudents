@@ -3,20 +3,18 @@
     <App_var />
     <div id="spotlist">
       <v-row>
-         <v-col  cols="3" align="center">
-        <v-btn
-          rounded
-          class="text-center"
-          color="#0461cd"
-          dark
-          @click="$router.go(-1)"
-          ><v-icon left size="30">mdi-keyboard-return</v-icon>戻る</v-btn
-        >
+        <v-col  cols="3" align="left">
+          <v-btn
+            rounded
+            class="text-center"
+            color="#0461cd"
+            dark
+            @click="$router.go(-1)"
+            ><v-icon left size="30">mdi-keyboard-return</v-icon>戻る</v-btn>
         </v-col>
-         <v-col  cols="9" align="center">
-          <v-btn dark right color="#ffc900" @click="update">
-            <v-icon>mdi-cached</v-icon>更新する
-          </v-btn>
+        <v-col  cols="9" align="right">
+          <v-btn dark color="#ffc900" @click="update" class="font-weight-bold">
+            <v-icon>mdi-cached</v-icon>更新する</v-btn>
         </v-col>
       </v-row>
       <template v-if="frag">
