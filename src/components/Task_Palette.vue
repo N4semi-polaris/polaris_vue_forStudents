@@ -45,6 +45,7 @@
         <Task_Block
           v-for="task in tasks"
           :key="'taskpalette'+task.uuid"
+          :task_uuid="task.uuid"
           :task_name="task.task_name"
           :place_name="task.place_name"
           :task_type="task.task_type"
