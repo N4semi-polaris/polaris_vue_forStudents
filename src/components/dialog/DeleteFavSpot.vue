@@ -1,21 +1,20 @@
 
 <template>
   <v-dialog v-model="dialog_Open" persistent width="600px">
+    <div class="deleteFavSpot_dialog">
     <v-card>
-      <v-card-title>
-        <span class="headline">本当に削除してもよろしいですか？</span>
-      </v-card-title>
-      <v-card-text> </v-card-text>
+          <p class="text-center pa-5"><font size="4">本当に削除してもよろしいですか？</font></p>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click="dialog_Open = false"
-          >キャンセル</v-btn
-        >
         <v-btn color="blue darken-1" text @click="deleteFavSpot"
-          >削除する</v-btn
+          >はい</v-btn
+        >
+        <v-btn color="blue darken-1" text @click="dialog_Open = false"
+          >いいえ</v-btn
         >
       </v-card-actions>
     </v-card>
+    </div>
   </v-dialog>
 </template>
 
@@ -60,4 +59,10 @@ export default {
 </script>
 
 <style>
+.deleteFavSpot_dialog {
+  font-family: 'M PLUS Rounded 1c';
+}
+.title {
+  
+}
 </style>

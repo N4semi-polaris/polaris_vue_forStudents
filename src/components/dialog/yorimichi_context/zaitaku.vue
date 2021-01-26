@@ -1,10 +1,13 @@
 <template>
+<div class="zaitaku_dialog">
     <v-container>
         <div v-show="dialogP>=0">
             <v-card-title>
                 <v-row justify="space-between" no-gutters>
-                    <v-col cols="7"><h4>在宅</h4></v-col>
-                    <v-col cols="5">
+                    <v-col cols="7" align="left">
+                        <h4><v-icon size="33px" left color="#cccccc">mdi-door-closed</v-icon>在宅</h4>
+                    </v-col>
+                    <v-col cols="5" align="right">
                         <v-btn color="#0461cd" icon @click="change_ScheduleDialog(1)">
                             <v-icon medium>mdi-swap-horizontal</v-icon>
                         </v-btn>
@@ -22,22 +25,17 @@
                     <p>開始時刻：  {{ selectedEvent.start|processDatetime }}</p>
                     <p>終了時刻：  {{ selectedEvent.end|processDatetime }}</p>
                 </div>
+            </v-card-text>
 
 
                 <!-- 外出中に変更 -->
                 <div v-show="dialogP==1">
                     <v-divider class="ma-3"/>
                     <v-container class="pa-1">
-                        <v-row>
-                            <v-col>外出中に変更</v-col>
-                        </v-row>
+                        <p class="text-center mb-3">外出中に変更しますか？</p>
                         <v-row justify="space-around">
-                            <v-col cols="6">
-                                <v-btn @click="submit_switch">はい</v-btn>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-btn @click="change_ScheduleDialog(0)">いいえ</v-btn>
-                            </v-col>
+                            <v-btn dark color="#032b8d" @click="submit_switch">はい</v-btn>
+                            <v-btn dark color="#0575e6" @click="change_ScheduleDialog(0)">いいえ</v-btn>
                         </v-row>
                     </v-container>
                 </div>
@@ -47,7 +45,7 @@
                 <div v-show="dialogP==2">
                     <v-form ref="zaitakubk_edit_form">
                         <v-divider class="ma-3"/>
-                        <v-container class="pa-1">
+                        <v-container>
                             <v-radio-group v-model="radioGroup_selected">
                                 <v-radio
                                     v-for="i in radioGroup"
@@ -87,10 +85,12 @@
                         <!-- 送信ボタン -->
                         <v-row justify="space-around">
                             <v-btn
+                                dark
                                 color="#032b8d"
                                 v-on:click="submit_edit"
                             >変更</v-btn>
                             <v-btn
+                                dark
                                 color="#0575e6"
                                 v-on:click="change_ScheduleDialog(0)"
                             >戻る</v-btn>
@@ -104,23 +104,18 @@
                 <div v-show="dialogP==3">
                     <v-divider/>
                     <v-container>
-                        <v-row>
-                            <v-col>削除します</v-col>
-                        </v-row>
+                        <p class="text-center mb-3">削除しますか？</p>
                         <v-row justify="space-around">
-                            <v-col cols="6">
-                                <v-btn @click="submit_delete">はい</v-btn>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-btn @click="change_ScheduleDialog(0)">いいえ</v-btn>
-                            </v-col>
+                            <v-btn dark color="#032b8d" @click="submit_delete">はい</v-btn>
+                            <v-btn dark color="#0575e6" @click="change_ScheduleDialog(0)">いいえ</v-btn>
                         </v-row>
                     </v-container>
                 </div>
                 <!-- 削除終わり -->
-            </v-card-text>
+
         </div>
     </v-container>
+</div>
 </template>
 
 <script>
@@ -241,4 +236,7 @@ export default {
 </script>
 
 <style>
+.zaitaku_dialog {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>

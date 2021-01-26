@@ -1,9 +1,12 @@
 
 <template>
   <v-dialog v-model="dialog_Other_Open" persistent width="600px">
+    <div class="selectSpots_dialog">
     <v-card>
+      <v-card-title>
+        <p class="text_center mb-3">7つ選択してください</p>
+      </v-card-title>
       <v-card-text>
-        <h2 class="title mb-2">7つ選択してください</h2>
         <v-chip-group
           v-model="selectSpot_Other.selected"
           :items="items_Spot_Other"
@@ -32,6 +35,7 @@
         <v-btn color="#0461cd" text @click="postData"> 保存 </v-btn>
       </v-card-actions>
     </v-card>
+    </div>
   </v-dialog>
 </template>
 
@@ -169,4 +173,7 @@ export default {
 </script>
 
 <style>
+.selectSpots_dialog {
+  font-family: "M PLUS Rounded 1c";
+}
 </style>

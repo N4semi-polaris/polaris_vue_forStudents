@@ -4,7 +4,7 @@
 
     <v-container>
       <v-row>
-        <v-col cols="3" left>
+        <v-col cols="3" align="left">
           <v-btn
             rounded
             class="text-center"
@@ -174,3 +174,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.SettingHomeTime {
+  font-family: "M PLUS Rounded 1c";
+}
+</style>

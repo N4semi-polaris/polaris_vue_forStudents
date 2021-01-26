@@ -1,9 +1,12 @@
 <template>
+<div class="yorimichi_dialog">
     <v-container>
         <div v-show="dialogP>=0">
             <v-card-title>
                 <v-row justify="space-between" no-gutters>
-                    <v-col cols="11"><h4>{{ selectedEvent.name }}</h4></v-col>
+                    <v-col cols="11">
+                        <h4><v-icon size="33px" left color="#ffc900">mdi-calendar-check</v-icon>{{ selectedEvent.name }}</h4>
+                    </v-col>
                     <v-col cols="1" >
                         <v-btn color="#0461cd" icon @click="change_ScheduleDialog(1)">
                             <v-icon medium>mdi-delete</v-icon>
@@ -39,6 +42,7 @@
             </v-card-text>
         </div>
     </v-container>
+</div>
 </template>
 
 <script>
@@ -80,4 +84,7 @@ export default {
 </script>
 
 <style>
+.yorimichi_dialog {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>

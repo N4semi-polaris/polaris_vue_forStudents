@@ -2,17 +2,17 @@
   <div class="CheckFavSpot">
     <App_bar />
     <template>
-      <v-container class="pa-2">
+      <v-container class="">
         <v-row align="center">
           <v-col align="center">
             <v-card>
-              <v-card-text>
                 <v-container class="pa-2">
-                  <v-row align="center">
-                    <v-col cols="12">
+                  <v-toolbar dark dense flat color="#778899">
+                  <v-row justify="center">
                       <v-card-title> 選択された候補 </v-card-title>
-                    </v-col>
                   </v-row>
+                  </v-toolbar>
+                <v-card-text>
                   <v-row align="center">
                     <v-col cols="12">
                       {{ selectedFavSpot.name }}
@@ -24,8 +24,8 @@
                       {{ selectedFavSpot.address }}
                     </v-col>
                   </v-row>
+                  </v-card-text>
                 </v-container>
-              </v-card-text>
             </v-card>
 
             <v-spacer></v-spacer>
@@ -109,7 +109,7 @@ export default {
 #spotlist {
   padding: 10px;
 }
-.FavoriteSpot {
+.CheckFavSpot {
   font-family: "M PLUS Rounded 1c";
 }
 </style>

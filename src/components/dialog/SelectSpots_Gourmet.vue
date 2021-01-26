@@ -1,10 +1,10 @@
 
 <template>
   <v-dialog v-model="dialog_Gourmet_Open" persistent width="600px">
+    <div class="selectGoutmet_dialog">
     <v-card>
       <v-card-title>
-        <v-spacer></v-spacer>
-        <h2 class="title mb-2">5つ選択してください</h2>
+        <p class="text-center mb-3">5つ選択してください</p>
       </v-card-title>
       <v-card-text>
         <v-chip-group
@@ -35,6 +35,7 @@
         <v-btn color="#0461cd" text @click="postData"> 保存 </v-btn>
       </v-card-actions>
     </v-card>
+    </div>
   </v-dialog>
 </template>
 
@@ -133,4 +134,7 @@ export default {
 </script>
 
 <style>
+.selectGoutmet_dialog {
+  font-family: "M PLUS Rounded 1c";
+}
 </style>

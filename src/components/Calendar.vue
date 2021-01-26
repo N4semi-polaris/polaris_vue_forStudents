@@ -1,12 +1,12 @@
 <template>
   <div id="calendar">
     <v-sheet tile height="50" color="#ffffff" align-center id="areaOfYM">
-      <v-container>
+        <v-toolbar flat dense>
         <v-toolbar-title
           ><span style="color: #210e67">{{ title }}</span></v-toolbar-title
-        >
-      </v-container>
+        ></v-toolbar>
     </v-sheet>
+    
     <v-row no-gutters>
       <v-col>
         <v-sheet v-bind:height="calendar_height">

@@ -1,10 +1,13 @@
 <template>
+<div class="aki_dialog">
     <v-container>
         <div v-show="dialogP>=0">
             <v-card-title>
                 <v-row justify="space-between" no-gutters>
-                    <v-col cols="7"><h4>あき時間</h4></v-col>
-                    <v-col cols="5">
+                    <v-col cols="7" align="left">
+                        <h4><v-icon size="33px" left color="#fef4ce">mdi-door-open</v-icon>あき時間</h4>
+                    </v-col>
+                    <v-col cols="5" align="right">
                         <v-btn color="#0461cd" icon @click="change_ScheduleDialog(1)">
                             <v-icon medium>mdi-swap-horizontal</v-icon>
                         </v-btn>
@@ -22,13 +25,12 @@
                     <p>開始時刻：  {{ selectedEvent.start|processDatetime }}</p>
                     <p>終了時刻：  {{ selectedEvent.end|processDatetime }}</p>
                 </div>
+            </v-card-text>
                 <!-- 推薦開始ボタン -->
                 <div v-show="dialogP==0">
-                    <v-container>
-                        <v-row>
+                    <v-row justify="space-around">
                             <v-btn @click="change_ScheduleDialog(4)" dark color='#0461cd'>予定候補を確認する</v-btn>
-                        </v-row>
-                    </v-container>
+                    </v-row>
                 </div>
                 <!-- 推薦開始ボタン終了 -->
 
@@ -37,16 +39,10 @@
                 <div v-show="dialogP==1">
                     <v-divider class="ma-3"/>
                     <v-container class="pa-1">
-                        <v-row>
-                            <v-col>在宅中に変更</v-col>
-                        </v-row>
+                        <p class="text-center mb-3">在宅中に変更</p>
                         <v-row justify="space-around">
-                            <v-col cols="6">
-                                <v-btn @click="submit_switch">はい</v-btn>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-btn @click="change_ScheduleDialog(0)">いいえ</v-btn>
-                            </v-col>
+                                <v-btn dark color="#032b8d" @click="submit_switch">はい</v-btn>
+                                <v-btn dark color="#0575e6" @click="change_ScheduleDialog(0)">いいえ</v-btn>
                         </v-row>
                     </v-container>
                 </div>
@@ -56,7 +52,7 @@
                 <div v-show="dialogP==2">
                     <v-form ref="zaitakubk_edit_form">
                         <v-divider class="ma-3"/>
-                        <v-container class="pa-1">
+                        <v-container>
                             <v-radio-group v-model="radioGroup_selected">
                                 <v-radio
                                     v-for="i in radioGroup"
@@ -96,10 +92,12 @@
                         <!-- 送信ボタン -->
                         <v-row justify="space-around">
                             <v-btn
+                                dark
                                 color="#032b8d"
                                 v-on:click="submit_edit"
                             >変更</v-btn>
                             <v-btn
+                                dark
                                 color="#0575e6"
                                 v-on:click="change_ScheduleDialog(0)"
                             >戻る</v-btn>
@@ -113,16 +111,10 @@
                 <div v-show="dialogP==3">
                     <v-divider/>
                     <v-container>
-                        <v-row>
-                            <v-col>削除します</v-col>
-                        </v-row>
+                        <p class="text-center mb-3">削除しますか？</p>
                         <v-row justify="space-around">
-                            <v-col cols="6">
-                                <v-btn @click="submit_delete">はい</v-btn>
-                            </v-col>
-                            <v-col cols="6">
-                                <v-btn @click="change_ScheduleDialog(0)">いいえ</v-btn>
-                            </v-col>
+                            <v-btn dark color="#032b8d" @click="submit_delete">はい</v-btn>
+                            <v-btn dark color="#0575e6" @click="change_ScheduleDialog(0)">いいえ</v-btn>
                         </v-row>
                     </v-container>
                 </div>
@@ -132,14 +124,12 @@
                 <div v-show="dialogP==4">
                     <v-divider />
                     <v-container>
-                        <v-row>
-                            <h4>1.タイプを選択</h4>
-                            <v-radio-group v-model="selected_recommendtype">
-                                <v-radio label="タスクから探す" :value=1 color="#0461cd" />
-                                <v-radio label="時間内に行ける飲食店以外の施設を探す" :value=2 color="#0461cd" />
-                                <v-radio label="時間内に行ける飲食店を探す" :value=3 color="#0461cd" />
-                            </v-radio-group>
-                        </v-row>
+                        <h4>1.タイプを選択</h4>
+                        <v-radio-group v-model="selected_recommendtype">
+                            <v-radio label="タスクから探す" :value=1 color="#0461cd" />
+                            <v-radio label="時間内に行ける飲食店以外の施設を探す" :value=2 color="#0461cd" />
+                            <v-radio label="時間内に行ける飲食店を探す" :value=3 color="#0461cd" />
+                        </v-radio-group>
                         <v-row justify="space-around">
                             <v-btn color="#032b8d" dark v-on:click="submit_recommendation">探す</v-btn>
                             <v-btn color="#0575e6" dark v-on:click="change_ScheduleDialog(0)">戻る</v-btn>
@@ -151,9 +141,9 @@
                     </v-container>
                 </div>
                 <!-- 推薦終わり -->
-            </v-card-text>
         </div>
     </v-container>
+</div>
 </template>
 
 <script>
@@ -291,4 +281,7 @@ export default {
 </script>
 
 <style>
+.aki_dialog {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>

@@ -1,9 +1,12 @@
 <template>
+<div class="schedule_dialog">
     <v-container>
         <div v-show="dialog_p>=0">
             <!-- 1ページ目 -->
             <div v-show="dialog_p%3 == 0">
-                <v-card-title><h4>{{ selectedEvent.name }}</h4></v-card-title>
+                <v-card-title>
+                    <h4><v-icon size="33px" left color="#778899">mdi-calendar</v-icon>{{ selectedEvent.name }}</h4>
+                </v-card-title>
                 <v-card-text>
                     <div>
                         <p>開始時刻：  {{ selectedEvent.start|processDatetime }}</p>
@@ -16,6 +19,7 @@
             <!-- 1ページ終了 -->
         </div>
     </v-container>
+</div>
 </template>
 
 <script>
@@ -38,4 +42,7 @@ export default {
 </script>
 
 <style>
+.schedule_dialog {
+    font-family: 'M PLUS Rounded 1c';
+}
 </style>
