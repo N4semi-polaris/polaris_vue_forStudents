@@ -34,15 +34,9 @@
                                 class="ma-2"
                                 color="#ffffff"
                                 outlined
-                                v-on:click="toTaskEdit"
+                                v-on:click="toTaskEdit(task_uuid)"
                             ><v-icon dark left>mdi-pencil</v-icon>
                             編集</v-btn>
-                            <v-btn
-                                class="ma-2"
-                                color="#ffffff"
-                                outlined
-                            ><v-icon>mdi-trash-can-outline</v-icon>
-                            削除</v-btn>
                         </v-col></v-row>
                     </div>
                 </v-container>
@@ -58,7 +52,7 @@ import moment from 'moment';
 
 export default {
     components: { draggable },
-    props: ['task_name', 'place_name', 'task_type', 'deadline'],
+    props: ['task_name', 'place_name', 'task_type', 'deadline','task_uuid'],
     data: () => ({
         /* 入力データと比較するためのリスト */
         task_type_list: [ '飲食店', '買い物', 'レジャー・エンタメ施設', 'その他' ],
@@ -122,8 +116,8 @@ export default {
         onSwipeBack: function(){ /* 右にスワイプしたら元に戻る */
             this.isSwipe = true;
         },
-        toTaskEdit: function () {
-            this.$router.push({ name: "TaskEdit" });
+        toTaskEdit: function (uuid) {
+            this.$router.push({name:"TaskEdit_edit", params:{uuid}});
         },
     }
 }
