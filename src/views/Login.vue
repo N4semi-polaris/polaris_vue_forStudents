@@ -53,7 +53,7 @@ export default {
         if (authCode === null) return;
         let data = new URLSearchParams();
         data.append("code", authCode);
-        this.$axios.post("/accounts/google/signup/", data).then(
+        this.$axios.post("polaris_vue_app/accounts/google/signup/", data).then(
           (response) => {
             response.data.authCode = authCode;
             //console.log(response.data);
@@ -62,7 +62,7 @@ export default {
           },
           (error) => {
             console.error("[error, axios]サインインに失敗: " + error);
-            console.error(error)
+            console.dir(error)
             return null;
           }
         );
