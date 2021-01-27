@@ -6,10 +6,7 @@ module.exports = {
   ],
   devServer: {
     proxy: {
-      "/accounts/":{
-        target: "//17930ky.pythonanywhere.com/",
-        changeOrigen: true,
-      },
+
       "/calendar/":{
         target: "//17930ky.pythonanywhere.com/",
         changeOrigen: true,

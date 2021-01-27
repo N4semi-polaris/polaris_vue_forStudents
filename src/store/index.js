@@ -76,7 +76,7 @@ export default new Vuex.Store({
         let data = new URLSearchParams();
         data.append('email', email);
         data.append('password', code);
-        await axios.post("/accounts/api-auth/obtain/", data)
+        await axios.post("//17930ky.pythonanywhere.com/accounts/api-auth/obtain/", data)
           .then(response => {
             this.commit('setAuthToken', response.data.token);
             console.log("obtainTokenでtokenの取得に成功:" + this.getters.getToken);
@@ -99,7 +99,7 @@ export default new Vuex.Store({
         let data = new URLSearchParams();
         data.append("token", this.getters.getToken);
         //let data = { "token": this.getters.getToken };
-        axios.post("/accounts/api-auth/verify/", data)
+        axios.post("//17930ky.pythonanywhere.com/accounts/api-auth/verify/", data)
           //.post("/accounts/api-auth/verify/", data,{ headers: {"content-type": "application/json"}})
           .then(response => {
             if (response.status == 200) { console.log("tokenは有効だと判断されたよ！"); }

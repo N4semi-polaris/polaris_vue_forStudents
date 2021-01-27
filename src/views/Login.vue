@@ -53,7 +53,7 @@ export default {
         if (authCode === null) return;
         let data = new URLSearchParams();
         data.append("code", authCode);
-        this.$axios.post("/accounts/google/signup/", data).then(
+        this.$axios.post("//17930ky.pythonanywhere.com/accounts/google/signup/", data).then(
           (response) => {
             response.data.authCode = authCode;
             //console.log(response.data);
