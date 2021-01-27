@@ -117,13 +117,19 @@ export default {
     this.$axios
       .get("/accounts/setting/zaitaku", {
         data: {},
-        headers: { Authorization: "JWT " + this.$store.getters.getToken },
+        headers: { "Authorization": "JWT " + this.$store.getters.getToken },
       })
       .then((response) => {
-        this.time1 =
-          moment(response.data["start"], "HH:mm:ss").format("HH:mm") ?? "19:00";
-        this.time2 =
-          moment(response.data["end"], "HH:mm:ss").format("HH:mm") ?? "09:00";
+        if (response.data["start"] == null) {
+          this.time1 = "19:00";
+        } else {
+          this.time1 = moment(response.data["start"], "HH:mm:ss").format("HH:mm");
+        }
+        if (response.data["end"] == null) {
+          this.time2 = "9:00";
+        } else {
+          this.time2 = moment(response.data["end"], "HH:mm:ss").format("HH:mm");
+        }
       });
   },
   computed: {
@@ -149,7 +155,7 @@ export default {
       const data = { start: this.time1, end: this.time2 };
       this.$axios
         .post("/accounts/setting/zaitaku", data, {
-          headers: { Authorization: "JWT " + this.$store.getters.getToken },
+          headers: { "Authorization": "JWT " + this.$store.getters.getToken },
         })
         .then((response) => {
           this.time1 = moment(response.data["start"], "HH:mm:ss").format(
@@ -162,7 +168,7 @@ export default {
       const data = { start: "00:00", end: "00:00" };
       this.$axios
         .post("/accounts/setting/zaitaku", data, {
-          headers: { Authorization: "JWT " + this.$store.getters.getToken },
+          headers: { "Authorization": "JWT " + this.$store.getters.getToken },
         })
         .then((response) => {
           this.time1 = moment(response.data["start"], "HH:mm:ss").format(
