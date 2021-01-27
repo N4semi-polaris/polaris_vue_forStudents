@@ -62,6 +62,7 @@ export default {
           },
           (error) => {
             console.error("[error, axios]サインインに失敗: " + error);
+            console.error(error)
             return null;
           }
         );
