@@ -248,7 +248,7 @@ export default {
       Authorization: "JWT " + this.$store.getters.getToken,
     };
     this.$axios
-      .get("/accounts/setting/transportation", {
+      .get("//17930ky.pythonanywhere.com/accounts/setting/transportation", {
         headers: headers,
         data: {},
       })
@@ -277,7 +277,7 @@ export default {
     getWalkSpeedData() {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       this.$axios
-        .get("/accounts/setting/transportation", {
+        .get("//17930ky.pythonanywhere.com/accounts/setting/transportation", {
           data: {},
           headers: headers,
         })
@@ -296,7 +296,7 @@ export default {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       const data = { typeOfWalkSpeed: this.selectWalkSpeed };
       this.$axios
-        .post("/accounts/setting/transportation", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/transportation", data, {
           headers: headers,
         })
         .catch((error) => {
@@ -311,7 +311,7 @@ export default {
     getTimeData() {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       this.$axios
-        .get("/accounts/setting/arrivaltime", {
+        .get("//17930ky.pythonanywhere.com/accounts/setting/arrivaltime", {
           data: {},
           headers: headers,
         })
@@ -331,7 +331,7 @@ export default {
       const postData = Number(this.selectTime);
       const data = { choice: postData };
       this.$axios
-        .post("/accounts/setting/arrivaltime", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/arrivaltime", data, {
           headers: headers,
         })
         .catch((error) => {
@@ -349,7 +349,7 @@ export default {
         Authorization: "JWT " + this.$store.getters.getToken,
       };
       this.$axios
-        .get("/accounts/setting/address", {
+        .get("//17930ky.pythonanywhere.com/accounts/setting/address", {
           data: {},
           headers: headers,
         })
@@ -369,7 +369,7 @@ export default {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       const data = { address: this.address };
       this.$axios
-        .post("/accounts/setting/address", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/address", data, {
           headers: headers,
         })
         .catch((error) => {
@@ -392,7 +392,7 @@ export default {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       var data = { [item["name"].toString()]: item["check"] };
       this.$axios
-        .post("/accounts/setting/transportation", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/transportation", data, {
           headers: headers,
         })
         .then((error) => {

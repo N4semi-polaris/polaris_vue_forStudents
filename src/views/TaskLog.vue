@@ -36,7 +36,7 @@ export default {
       "Content-Type": "application/json",
       "Authorization": "JWT " + this.$store.getters.getToken,
     };
-    this.$axios.get("/calendar/blocks/tasks",{
+    this.$axios.get("//17930ky.pythonanywhere.com/calendar/blocks/tasks",{
       data: {},
       headers: headers,
     }).then((response) => {

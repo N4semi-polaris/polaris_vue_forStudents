@@ -6,15 +6,6 @@ module.exports = {
   ],
   devServer: {
     proxy: {
-
-      "/calendar/":{
-        target: "//17930ky.pythonanywhere.com/",
-        changeOrigen: true,
-      },
-      "/recommend/":{
-        target: "//17930ky.pythonanywhere.com/",
-        changeOrigen: true,
-      },
     }
   }
 }

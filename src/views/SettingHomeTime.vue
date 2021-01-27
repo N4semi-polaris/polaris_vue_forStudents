@@ -115,7 +115,7 @@ export default {
   },
   mounted() {
     this.$axios
-      .get("/accounts/setting/zaitaku", {
+      .get("//17930ky.pythonanywhere.com/accounts/setting/zaitaku", {
         data: {},
         headers: { "Authorization": "JWT " + this.$store.getters.getToken },
       })
@@ -154,7 +154,7 @@ export default {
       }
       const data = { start: this.time1, end: this.time2 };
       this.$axios
-        .post("/accounts/setting/zaitaku", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/zaitaku", data, {
           headers: { "Authorization": "JWT " + this.$store.getters.getToken },
         })
         .then((response) => {
@@ -167,7 +167,7 @@ export default {
     delete_setting: function () {
       const data = { start: "00:00", end: "00:00" };
       this.$axios
-        .post("/accounts/setting/zaitaku", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/zaitaku", data, {
           headers: { "Authorization": "JWT " + this.$store.getters.getToken },
         })
         .then((response) => {

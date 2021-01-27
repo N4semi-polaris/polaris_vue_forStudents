@@ -156,7 +156,7 @@ export default {
             this.$emit('changeP',i)
         },
         submit_switch(){
-            this.$axios.get('/calendar/blocks/private/'+this.selectedEvent.bk_id+'/toAki',{
+            this.$axios.get('//17930ky.pythonanywhere.com/calendar/blocks/private/'+this.selectedEvent.bk_id+'/toAki',{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{
@@ -167,7 +167,7 @@ export default {
             })
         },
         submit_delete(){
-            this.$axios.delete('/calendar/blocks/private/'+this.selectedEvent.bk_id,{
+            this.$axios.delete('//17930ky.pythonanywhere.com/calendar/blocks/private/'+this.selectedEvent.bk_id,{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{
@@ -182,7 +182,7 @@ export default {
                 return;
             }
             const headers = {"Authorization": "JWT " + this.$store.getters.getToken}
-            var url="/calendar/blocks/private/"+this.selectedEvent.bk_id
+            var url="//17930ky.pythonanywhere.com/calendar/blocks/private/"+this.selectedEvent.bk_id
             var start_date = moment(this.selectedEvent.start).format("yyyy-MM-DD")
             var formattedtime = moment(start_date+" "+this.time, "yyyy-MM-DD HH:mm").toISOString()
             var data = {}

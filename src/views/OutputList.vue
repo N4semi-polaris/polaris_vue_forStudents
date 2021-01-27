@@ -82,7 +82,7 @@ export default {
     model: -1,
     isShow: false,
     noResults: false,
-    URL: "/recommend/",
+    URL: "//17930ky.pythonanywhere.com/recommend/",
   }),
   mounted() {
     console.log(

@@ -62,7 +62,7 @@ export default {
             this.$emit('changeP',i)
         },
         submit_delete(){
-            this.$axios.delete('/calendar/blocks/tasks/'+this.selectedEvent.bk_id+'/unset_schedule',{
+            this.$axios.delete('//17930ky.pythonanywhere.com/calendar/blocks/tasks/'+this.selectedEvent.bk_id+'/unset_schedule',{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{

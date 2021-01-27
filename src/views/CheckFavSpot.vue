@@ -88,7 +88,7 @@ export default {
         code: this.selectedFavSpot.code,
       };
       this.$axios
-        .post("/accounts/setting/favspot", data, {
+        .post("//17930ky.pythonanywhere.com/accounts/setting/favspot", data, {
           headers: headers,
         })
         .then(() => {

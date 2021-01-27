@@ -34,7 +34,7 @@ export default {
     },
     deleteFavSpot() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
-      const URL ="/accounts/setting/favspot/"+this.uuid;
+      const URL ="//17930ky.pythonanywhere.com/accounts/setting/favspot/"+this.uuid;
       console.log(
         "deleteFavSpotしたthis.uuidの型: " +
           typeof this.uuid +

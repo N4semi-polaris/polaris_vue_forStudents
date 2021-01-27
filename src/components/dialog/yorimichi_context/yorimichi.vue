@@ -68,7 +68,7 @@ export default {
             this.$emit('changeP',i)
         },
         submit_delete(){
-            this.$axios.delete('/calendar/blocks/yorimichi/'+this.selectedEvent.bk_id,{
+            this.$axios.delete('//17930ky.pythonanywhere.com/calendar/blocks/yorimichi/'+this.selectedEvent.bk_id,{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{
