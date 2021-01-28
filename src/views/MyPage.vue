@@ -190,7 +190,7 @@ export default {
       { id: "3", speed: "少しゆっくり" },
       { id: "4", speed: "ゆっくり" },
     ],
-    address: "自宅の住所を記入してください",
+    address: "",
   }),
   computed: {
     allSelected() {
