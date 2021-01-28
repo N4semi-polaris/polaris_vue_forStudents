@@ -23,12 +23,6 @@ const routes = [{
     meta: { requiresAuth: true }
   },
   {
-    path: '/bfmypage',
-    name: 'BfMyPage',
-    component: () => import('../views/BfMyPage.vue'),
-    meta: { requiresAuth: true }
-  },
-  {
     path: '/taskedit',
     name: 'TaskEdit',
     component: () => import('../views/TaskEdit.vue'),
