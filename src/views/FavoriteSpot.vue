@@ -62,7 +62,7 @@ export default {
     getFavSpots() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
-        .get("//17930ky.pythonanywhere.com/accounts/setting/favspot", {
+        .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/favspot", {
           data: {},
           headers: headers,
         })

@@ -152,7 +152,7 @@ export default {
         "Content-Type": "application/json",
         "Authorization": "JWT " + this.$store.getters.getToken,
       };
-      var url = "//17930ky.pythonanywhere.com/calendar/blocks/tasks/"+this.$route.params.uuid
+      var url = "//nakano2021seminar.pythonanywhere.com/calendar/blocks/tasks/"+this.$route.params.uuid
       this.$axios.get(url,{
         data: {},
         headers: headers,
@@ -232,7 +232,7 @@ export default {
 
       //以下axios*************************************************
       if("uuid" in this.$route.params){
-        this.$axios.patch("//17930ky.pythonanywhere.com/calendar/blocks/tasks/"+this.$route.params.uuid,body,{
+        this.$axios.patch("//nakano2021seminar.pythonanywhere.com/calendar/blocks/tasks/"+this.$route.params.uuid,body,{
           headers: headers,
         }).then(() => {
           this.$router.push({name: "Home"});
@@ -241,7 +241,7 @@ export default {
           if (error.response.status == 401) this.$store.commit("logout");
         });
       }else{
-        this.$axios.post("//17930ky.pythonanywhere.com/calendar/blocks/tasks",body,{
+        this.$axios.post("//nakano2021seminar.pythonanywhere.com/calendar/blocks/tasks",body,{
           headers: headers,
         }).then(() => {
           this.$router.push({name: "Home"});
@@ -253,7 +253,7 @@ export default {
     },
     clickedtrash: function(){
       if("uuid" in this.$route.params){
-        this.$axios.delete("//17930ky.pythonanywhere.com/calendar/blocks/tasks/"+this.$route.params.uuid,{
+        this.$axios.delete("//nakano2021seminar.pythonanywhere.com/calendar/blocks/tasks/"+this.$route.params.uuid,{
           headers: {
             "Content-Type": "application/json",
             "Authorization": "JWT " + this.$store.getters.getToken,

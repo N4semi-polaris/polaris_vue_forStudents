@@ -88,7 +88,7 @@ export default {
         code: this.selectedFavSpot.code,
       };
       this.$axios
-        .post("//17930ky.pythonanywhere.com/accounts/setting/favspot", data, {
+        .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/favspot", data, {
           headers: headers,
         })
         .then(() => {

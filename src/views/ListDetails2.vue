@@ -273,7 +273,7 @@ export default {
         genre: this.selectedResult.genre,
       };
       this.$axios
-        .post("//17930ky.pythonanywhere.com/calendar/blocks/yorimichi", data, {
+        .post("//nakano2021seminar.pythonanywhere.com/calendar/blocks/yorimichi", data, {
           headers: headers,
         })
         .then(() => {

@@ -226,7 +226,7 @@ export default {
     postSelectedSpot() {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       const url =
-        "//17930ky.pythonanywhere.com/calendar/blocks/tasks/" +
+        "//nakano2021seminar.pythonanywhere.com/calendar/blocks/tasks/" +
         this.selectedResult.taskid +
         "/schedule";//set_scheduledtimeからscheduleにdrfを変更しました
       this.calcPostTime();

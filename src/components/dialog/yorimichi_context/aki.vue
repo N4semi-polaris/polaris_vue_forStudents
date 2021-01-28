@@ -186,7 +186,7 @@ export default {
             this.$emit('changeP',i)
         },
         submit_switch(){
-            this.$axios.get('//17930ky.pythonanywhere.com/calendar/blocks/private/'+this.selectedEvent.bk_id+'/toZaitaku',{
+            this.$axios.get('//nakano2021seminar.pythonanywhere.com/calendar/blocks/private/'+this.selectedEvent.bk_id+'/toZaitaku',{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{
@@ -197,7 +197,7 @@ export default {
             })
         },
         submit_delete(){
-            this.$axios.delete('//17930ky.pythonanywhere.com/calendar/blocks/private/'+this.selectedEvent.bk_id,{
+            this.$axios.delete('//nakano2021seminar.pythonanywhere.com/calendar/blocks/private/'+this.selectedEvent.bk_id,{
                 data:{},
                 headers:{"Authorization": "JWT " + this.$store.getters.getToken}
             }).then(()=>{
@@ -209,7 +209,7 @@ export default {
         },
         submit_recommendation(){
             //ユーザが必要なデータ(住所等)を既に入力しているか確認する
-            this.$axios.get('//17930ky.pythonanywhere.com/accounts/setting/iscompleted',{
+            this.$axios.get('//nakano2021seminar.pythonanywhere.com/accounts/setting/iscompleted',{
                 data: {},
                 headers: {"Authorization": "JWT " + this.$store.getters.getToken},
             }).then((response)=>{
@@ -227,7 +227,7 @@ export default {
                 return;
             }
             const headers = {"Authorization": "JWT " + this.$store.getters.getToken}
-            var url="//17930ky.pythonanywhere.com/calendar/blocks/private/"+this.selectedEvent.bk_id
+            var url="//nakano2021seminar.pythonanywhere.com/calendar/blocks/private/"+this.selectedEvent.bk_id
             var start_date = moment(this.selectedEvent.start).format("yyyy-MM-DD")
             var formattedtime = moment(start_date+" "+this.time, "yyyy-MM-DD HH:mm").toISOString()
             var data = {}

@@ -143,7 +143,7 @@ export default {
       const data = { "genres" : this.selectSpot_Other.selected};
       console.log("postData内のthis.selectSpot_Other.selectedの中身: " + this.selectSpot_Other.selected);
       this.$axios
-        .post("//17930ky.pythonanywhere.com/accounts/setting/genre/create_fromlist", data, {
+        .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/genre/create_fromlist", data, {
           headers: headers,
         })
         .catch((error) => {
@@ -154,7 +154,7 @@ export default {
      getData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
-        .get("//17930ky.pythonanywhere.com/accounts/setting/genre", {
+        .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/genre", {
           data: {},
           headers: headers,
         })

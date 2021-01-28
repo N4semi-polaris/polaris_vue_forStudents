@@ -140,7 +140,7 @@ export default {
       Authorization: "JWT " + this.$store.getters.getToken,
     };
     this.$axios
-      .get("//17930ky.pythonanywhere.com/accounts/setting/transportation", {
+      .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/transportation", {
         headers: headers,
         data: {},
       })
@@ -167,7 +167,7 @@ export default {
       const headers = { Authorization: "JWT " + this.$store.getters.getToken };
       var data = { [item["name"].toString()]: item["check"] };
       this.$axios
-        .post("//17930ky.pythonanywhere.com/accounts/setting/transportation", data, {
+        .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/transportation", data, {
           headers: headers,
         })
         .then((error) => {

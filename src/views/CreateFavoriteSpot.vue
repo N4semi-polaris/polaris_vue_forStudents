@@ -91,7 +91,7 @@ export default {
           this.search
       );
       this.$axios
-        .post("//17930ky.pythonanywhere.com/accounts/setting/favspot/search", data, {
+        .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/favspot/search", data, {
           headers: headers,
         })
         .then((response) => {

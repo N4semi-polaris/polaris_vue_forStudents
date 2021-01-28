@@ -82,7 +82,7 @@ export default {
     model: -1,
     isShow: false,
     noResults: false,
-    URL: "//17930ky.pythonanywhere.com/recommend/",
+    URL: "//nakano2021seminar.pythonanywhere.com/recommend/",
   }),
   mounted() {
     console.log(

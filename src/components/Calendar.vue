@@ -68,7 +68,7 @@ export default {
       Authorization: "JWT " + this.$store.getters.getToken,
     };
     this.$axios
-      .post("//17930ky.pythonanywhere.com/calendar/", new URLSearchParams(), {
+      .post("//nakano2021seminar.pythonanywhere.com/calendar/", new URLSearchParams(), {
         headers: headers,
       })
       .then(() => {
@@ -117,7 +117,7 @@ export default {
         Authorization: "JWT " + this.$store.getters.getToken,
       };
       this.$axios
-        .get("//17930ky.pythonanywhere.com/calendar/", {
+        .get("//nakano2021seminar.pythonanywhere.com/calendar/", {
           headers: headers,
           data: {},
         })

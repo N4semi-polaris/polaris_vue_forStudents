@@ -102,7 +102,7 @@ export default {
       const data = { "genres" : this.selectSpot_Gourmet.selected};
       console.log("postDataしたthis.selectSpot_Gourmet.selectedの中身: " + this.selectSpot_Gourmet.selected);
       this.$axios
-        .post("//17930ky.pythonanywhere.com/accounts/setting/gourmetgenre/create_fromlist", data, {
+        .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/gourmetgenre/create_fromlist", data, {
           headers: headers,
         })
         .catch((error) => {
@@ -114,7 +114,7 @@ export default {
     getData() {
       const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
-        .get("//17930ky.pythonanywhere.com/accounts/setting/gourmetgenre", {
+        .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/gourmetgenre", {
           data: {},
           headers: headers,
         })
