@@ -146,6 +146,9 @@ export default {
         .post("/accounts/setting/genre/create_fromlist", data, {
           headers: headers,
         })
+        .then(() => {
+          this.dialog_Other_Open = false;
+        })
         .catch((error) => {
           console.log("エラーになっちゃった..: ");
           if (error.response.status == 401) this.$store.commit("logout");
