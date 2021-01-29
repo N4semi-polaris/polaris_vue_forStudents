@@ -96,8 +96,8 @@
                 <v-btn
                   class="mb-3"
                   rounded
-                  color="#0575e6"
-                  dark
+                  depressed
+                  disabled
                   block
                   @click="postSelectedSpot"
                   >ココにする
