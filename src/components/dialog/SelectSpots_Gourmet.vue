@@ -105,6 +105,9 @@ export default {
         .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/gourmetgenre/create_fromlist", data, {
           headers: headers,
         })
+        .then(() => {
+          this.dialog_Gourmet_Open = false;
+        })
         .catch((error) => {
           console.log("エラーになっちゃった..: ");
           if (error.response.status == 401) this.$store.commit("logout");

@@ -5,21 +5,33 @@
       <v-container>
         <v-form>
           <v-divider></v-divider>
-            <v-row>
-              <v-subheader>好きな施設のジャンル</v-subheader>
-            </v-row>
-            <v-row align-content="center" justify="center">
-              <v-col align="center">
-              <v-btn color="#0461cd" dark @click.stop="openGdialog" rounded class="mr-1">
+          <v-row>
+            <v-subheader>好きな施設のジャンル</v-subheader>
+          </v-row>
+          <v-row align-content="center" justify="center">
+            <v-col align="center">
+              <v-btn
+                color="#0461cd"
+                dark
+                @click.stop="openGdialog"
+                rounded
+                class="mr-1"
+              >
                 飲食店
               </v-btn>
               <selectSpotGourmet ref="GourmetDialog" />
-              <v-btn color="#0575e6" dark @click.stop="openOdialog" rounded class="ms-1">
-              飲食店以外
+              <v-btn
+                color="#0575e6"
+                dark
+                @click.stop="openOdialog"
+                rounded
+                class="ms-1"
+              >
+                飲食店以外
               </v-btn>
               <selectSpotOther ref="OtherDialog" />
-              </v-col>
-            </v-row>
+            </v-col>
+          </v-row>
           <v-divider></v-divider>
           <v-row>
             <v-col>
@@ -58,7 +70,7 @@
           </v-row>
 
           <v-divider></v-divider>
-          
+
           <v-row>
             <v-col align="center">
               <v-select
@@ -99,7 +111,7 @@
           <v-divider></v-divider>
 
           <v-row>
-              <v-subheader>その他の設定</v-subheader>
+            <v-subheader>その他の設定</v-subheader>
           </v-row>
           <v-row align-content="center" justify="center">
             <v-col align="center">
@@ -109,9 +121,7 @@
                 class="mx-auto text-center mr-1"
                 color="#0461cd"
                 dark
-                ><v-icon left>
-                  mdi-map-marker
-                </v-icon>
+                ><v-icon left> mdi-map-marker </v-icon>
                 お気に入りスポット</v-btn
               >
               <v-btn
@@ -120,10 +130,7 @@
                 class="mx-auto text-center ms-1"
                 color="#0575e6"
                 dark
-                ><v-icon left>
-                  mdi-alarm
-                </v-icon>
-                在宅時間</v-btn
+                ><v-icon left> mdi-alarm </v-icon> 在宅時間</v-btn
               >
             </v-col>
           </v-row>
@@ -245,7 +252,7 @@ export default {
     //console.log("MyPageのmountedが実行されたよ");
     const headers = {
       "Content-Type": "application/json",
-      Authorization: "JWT " + this.$store.getters.getToken,
+      "Authorization": "JWT " + this.$store.getters.getToken,
     };
     this.$axios
       .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/transportation", {
@@ -275,7 +282,7 @@ export default {
 
     ////////////////以下、歩行速度のPOSTとGET/////////////////////
     getWalkSpeedData() {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
         .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/transportation", {
           data: {},
@@ -293,7 +300,7 @@ export default {
         });
     },
     postWalkSpeedData() {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = { typeOfWalkSpeed: this.selectWalkSpeed };
       this.$axios
         .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/transportation", data, {
@@ -309,7 +316,7 @@ export default {
 
     ////////////////以下、到着時間のPOSTとGET/////////////////////
     getTimeData() {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       this.$axios
         .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/arrivaltime", {
           data: {},
@@ -327,7 +334,7 @@ export default {
         });
     },
     postTimeData() {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const postData = Number(this.selectTime);
       const data = { choice: postData };
       this.$axios
@@ -346,7 +353,7 @@ export default {
     getAddressData() {
       const headers = {
         "Content-Type": "application/json",
-        Authorization: "JWT " + this.$store.getters.getToken,
+        "Authorization": "JWT " + this.$store.getters.getToken,
       };
       this.$axios
         .get("//nakano2021seminar.pythonanywhere.com/accounts/setting/address", {
@@ -354,19 +361,20 @@ export default {
           headers: headers,
         })
         .then((response) => {
-          var result = String(response.data["address"]) ?? "";
-          this.address = result;
-          console.dir(this.result);
+          if (response.data["address"] !== undefined) {
+            var result = String(response.data["address"]);
+            this.address = result;
+          }
         })
         .catch((error) => {
-          this.address = "あああ";
+          //this.address = "あああ";
           console.log(error, "エラーになっちゃった..:＠getAddressData");
           //if (error.response.status == 401) //this.$store.commit("logout")
         });
     },
     postAddressData() {
       if (!this.address) return;
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       const data = { address: this.address };
       this.$axios
         .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/address", data, {
@@ -389,7 +397,7 @@ export default {
       this.$router.push({ name: "SettingHomeTime" });
     },
     postTransportation: function (item) {
-      const headers = { Authorization: "JWT " + this.$store.getters.getToken };
+      const headers = { "Authorization": "JWT " + this.$store.getters.getToken };
       var data = { [item["name"].toString()]: item["check"] };
       this.$axios
         .post("//nakano2021seminar.pythonanywhere.com/accounts/setting/transportation", data, {

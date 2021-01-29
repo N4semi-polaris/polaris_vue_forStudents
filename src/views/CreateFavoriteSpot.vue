@@ -3,6 +3,17 @@
     <App_bar />
     <template>
       <v-container class="pa-2">
+        <v-row>
+          <v-col  cols="3" align="left">
+          <v-btn
+            rounded
+            class="text-center"
+            color="#0461cd"
+            dark
+            @click="toFavoriteSpot"
+            ><v-icon left size="30">mdi-keyboard-return</v-icon>戻る</v-btn>
+        </v-col>
+        </v-row>
         <v-row align="center">
           <v-col align="center">
             <v-text-field
@@ -121,6 +132,9 @@ export default {
           params: { selectedFavSpot: this.items[this.model] },
         })
         .catch(() => {});
+    },
+    toFavoriteSpot() {
+      this.$router.push({ name: "FavoriteSpot"});
     },
   },
 };

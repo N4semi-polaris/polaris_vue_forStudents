@@ -9,7 +9,7 @@
             class="text-center"
             color="#0461cd"
             dark
-            @click="$router.go(-1)"
+            @click="toMyPage"
             ><v-icon left size="30">mdi-keyboard-return</v-icon>戻る</v-btn>
         </v-col>
         <v-col  cols="9" align="right">
@@ -57,6 +57,10 @@ export default {
     toCreateFavSpot() {
       //console.log("this.spotValueの中身："+this.spot[this.spotValue]);
       this.$router.push({ name: "CreateFavoriteSpot" });
+    },
+    toMyPage() {
+      //console.log("this.spotValueの中身："+this.spot[this.spotValue]);
+      this.$router.push({ name: "MyPage" });
     },
 
     getFavSpots() {
