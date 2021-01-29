@@ -1,6 +1,6 @@
 
 <template>
-  <v-dialog v-model="dialog_Other_Open" persistent width="600px">
+  <v-dialog v-model="dialog_Other_Open" persistent scrollable width="600px">
     <div class="selectSpots_dialog">
     <v-card>
       <v-card-title>
